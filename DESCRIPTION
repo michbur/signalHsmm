@@ -1,0 +1,17 @@
+Package: signal.hsmm
+Type: Package
+Title: Predict presence of signal peptides
+Version: 0.0.1
+LazyData: true
+Date: 2014-06-25
+Author: Michal Burdukiewicz, Piotr Sobczyk
+Maintainer: Michal Burdukiewicz <michalburdukiewicz@gmail.com>
+Description: 
+License: GPL-3
+Depends:
+    R (>= 3.0.0)
+Imports:
+    seqinr
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2014-04-24 15:23:52
