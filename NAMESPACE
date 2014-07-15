@@ -2,4 +2,5 @@
 
 export(find_nhc)
 export(read_uniprot)
+export(signal.hsmm)
 importFrom(seqinr,read.fasta)

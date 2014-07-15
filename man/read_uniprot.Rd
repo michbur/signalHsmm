@@ -17,5 +17,8 @@ Slot \code{sig} contains the range of signal peptide.
 \description{
 Read data saved in UniProt original flat text format.
 }
+\examples{
+signal.hsmm(benchmark_dat[sample(1L:length(benchmark_dat), 3)])
+}
 \keyword{manip}
 
