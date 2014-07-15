@@ -1,13 +1,13 @@
-#' signal-hsmm - prediction of signal peptides
+#' signal.hsmm - prediction of signal peptides
 #'
-#' signal-hsmm predicts presence of signal peptides using the hidden
+#' signal.hsmm predicts presence of signal peptides using the hidden
 #' semi-Markov models.
 #' 
 #' ...
 #' 
 #' @importFrom seqinr read.fasta
 #' @docType package
-#' @name signal-hsmm
+#' @name signal.hsmm
 
 
 
@@ -313,12 +313,12 @@ signal_hsmm_train <- function(train_data, test_data, aa_group, max.length = 32) 
   prob.sig <- exp(decisions[,1] - decisions[,2])
   
   #change output to normal decision
-  #   data.frame(signal.peptide = round(1-1/(1+prob.sig), 0) == 1, 
-  #         sig.start = 1,
-  #         sig.end = decisions[, 3])
-  data.frame(signal.peptide = prob.sig, 
-             sig.start = 1,
-             sig.end = decisions[, 3])
+    data.frame(signal.peptide = round(1-1/(1+prob.sig), 0) == 1, 
+          sig.start = 1,
+          sig.end = decisions[, 3])
+#   data.frame(signal.peptide = prob.sig, 
+#              sig.start = 1,
+#              sig.end = decisions[, 3])
 }
 
 signal_hsmm <- function(list_prot, aa_group, pipar, tpmpar, 
