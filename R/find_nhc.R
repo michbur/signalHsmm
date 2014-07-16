@@ -56,7 +56,6 @@ find_nhc <- function(protein, signal = NULL) {
     start_h <- 1
   }
   
-  #prestart_c = start_c - 1 - prevents start_h > start_c
   prestart_c <- start_c - 1
   noh <- 0
   while(noh == 0 && start_h < prestart_c) {

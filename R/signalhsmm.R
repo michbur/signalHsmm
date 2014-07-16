@@ -15,7 +15,7 @@
 #' @note Currently start of signal peptide is naively set as 1 amino acid.
 #' @export
 
-signal.hsmm.predict <- function(test_data) {
+run.signal.hsmm <- function(test_data) {
   signal.hsmm_model <- structure(list(pipar = c(1, 0, 0, 0), 
                                       tpmpar = structure(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0), .Dim = c(4L, 4L)), 
                                       od = structure(c(0.203181196494605, 0.00235316265060241, 
@@ -23,7 +23,7 @@ signal.hsmm.predict <- function(test_data) {
                                                        0.284975325524704, 0.288121595016022, 0.190922445671445, 0.0822430346385542, 
                                                        0.299423271300315, 0.230261863691714, 0.245225672458335, 0.190559111445783, 
                                                        0.345858850109995, 0.358962332402848), .Dim = c(4L, 4L)), 
-                                      overall.probs.log = structure(c(-2.09838619260539, 
+                                      overall_probs_log = structure(c(-2.09838619260539, 
                                                                       -1.24437268303286, -1.4685380799115, -1.02453781966768), .Names = c("1", 
                                                                                                                                           "2", "3", "4")), 
                                       params = structure(c(0.102263430597218, 0.180256340332697, 
@@ -54,34 +54,74 @@ signal.hsmm.predict <- function(test_data) {
                                                            0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 
                                                            0.03125), .Dim = c(32L, 4L), .Dimnames = list(NULL, c("n", "h", 
                                                                                                                  "c", "")))), 
-                                 .Names = c("pipar", "tpmpar", "od", "overall.probs.log", 
+                                 .Names = c("pipar", "tpmpar", "od", "overall_probs_log", 
                                             "params"))
   
+  if(class(test_data) == "SeqFastaAA" || 
+       class(test_data) == "character") {
+    decisions <- signal.hsmm_decision(test_data, aa_group = aaaggregation, 
+                                      pipar = signal.hsmm_model[["pipar"]], 
+                                      tpmpar = signal.hsmm_model[["tpmpar"]], 
+                                      od = signal.hsmm_model[["od"]], 
+                                      overall_probs_log = signal.hsmm_model[["overall_probs_log"]], 
+                                      params = signal.hsmm_model[["params"]])
+  } else {
+    decisions <- lapply(test_data, function(prot)
+      signal.hsmm_decision(prot, aa_group = aaaggregation, 
+                           pipar = signal.hsmm_model[["pipar"]], 
+                           tpmpar = signal.hsmm_model[["tpmpar"]], 
+                           od = signal.hsmm_model[["od"]], 
+                           overall_probs_log = signal.hsmm_model[["overall_probs_log"]], 
+                           params = signal.hsmm_model[["params"]]))
+  }
   
-  decisions <- signal.hsmm_decision(test_data, aa_group = aaaggregation, 
-                                   pipar = signal.hsmm_model[["pipar"]], 
-                                   tpmpar = signal.hsmm_model[["tpmpar"]], 
-                                   od = signal.hsmm_model[["od"]], 
-                                   overall.probs.log = signal.hsmm_model[["overall.probs.log"]], 
-                                   params = signal.hsmm_model[["params"]])
-  prob.sig <- exp(decisions[,1] - decisions[,2])
-  
-  #change output to normal decision
-  data.frame(signal.peptide = round(1-1/(1+prob.sig), 0) == 1, 
-             sig.start = 1,
-             sig.end = decisions[, 3])
+  decisions
 }
 
-signal.hsmm_decision <- function(list_prot, aa_group, pipar, tpmpar, 
-                                od, overall.probs.log, params) { 
-  t(vapply(list_prot, function(prot) {
-    probka <- as.numeric(degenerate(toupper(prot), aa_group)[1L:50])
-    probka <- na.omit(probka)
-    viterbi.res <- duration.viterbi(probka, pipar, tpmpar, od, params)
-    viterbi_path <- viterbi.res[["path"]]
-    c.site <- ifelse(any(viterbi_path==3), max(which(viterbi_path==3)), length(probka))
-    prob.signal <- viterbi.res[["viterbi"]][c.site, viterbi_path[c.site]]
-    prob.non <- Reduce(function(x, y) x + overall.probs.log[y], probka[1:c.site], 0)
-    c(prob.signal = prob.signal, prob.non = prob.non, c.site = c.site)   
-  }, c(0, 0, 0)))
+signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar, 
+                                 od, overall_probs_log, params) {
+  prot <- toupper(prot)[1L:50]
+  deg_sample <- as.numeric(degenerate(prot, aa_group))
+  #remove atypical amino acids
+  deg_sample <- na.omit(deg_sample)
+  viterbi_res <- duration_viterbi(deg_sample, pipar, tpmpar, od, params)
+  viterbi_path <- viterbi_res[["path"]]
+  c_site <- ifelse(any(viterbi_path == 3), 
+                   max(which(viterbi_path == 3)), 
+                   length(deg_sample))
+  #get probabilities of signal peptide model
+  prob.signal <- viterbi_res[["viterbi"]][c_site, viterbi_path[c_site]]
+  #get probabilities of no signal peptide model
+  prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1:c_site], 0) 
+  res <- list(signal.peptide = round(1 - 1/(1 + prob.signal), 0) == 1, 
+              sig.start = 1,
+              sig.end = c_site,
+              struc = viterbi_path,
+              prot = prot)
+  class(res) <- "hsmm_pred"
+  res
 }
+
+
+#' Plot signal.hsmm predictio
+#'
+#' Plot plot
+#'
+#' @param object of class \code{\link[signal.hsmm]{hsmm_pred}}
+#' @return Nothing.
+#' @export
+
+plot.hsmm_pred <- function(x, ...) {
+  plot(c(1, 50), c(0, 5), type="n", axes=F, ylab = "", xlab = "Amino acid")
+  axis(1, 1L:50, labels = FALSE)
+  axis(1, 1L:25*2 - 1, labels = 1L:25*2 - 1)
+  text(1L:50, 1, x[["prot"]])
+  struc <- cumsum(table(x[["struc"]]))
+  lines(c(1, struc[1]), c(1.5, 1.5), col = "blue", lwd = 5)
+  lines(c(struc[1] + 1, struc[2]), c(2, 2), col = "red", lwd = 5)
+  lines(c(struc[2] + 1, struc[3]), c(2.5, 2.5), col = "green", lwd = 5)
+  lines(c(struc[3] + 1, 50), c(3, 3), col = "orange", lwd = 5)
+  abline(v = struc[3] + 0.5, lty = "dashed")
+}
+
+
