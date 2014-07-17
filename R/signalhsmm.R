@@ -93,7 +93,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   prob.signal <- viterbi_res[["viterbi"]][c_site, viterbi_path[c_site]]
   #get probabilities of no signal peptide model
   prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1:c_site], 0) 
-  res <- list(signal.peptide = round(1 - 1/(1 + prob.signal), 0) == 1, 
+  res <- list(signal.peptide = 1 - 1/(1 + prob.signal), 
               sig.start = 1,
               sig.end = c_site,
               struc = viterbi_path,
@@ -103,25 +103,54 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 }
 
 
-#' Plot signal.hsmm predictio
+#' Plot signal.hsmm predictions
 #'
-#' Plot plot
+#' Plot objects of class \code{\link[signal.hsmm]{hsmm_pred}}.
 #'
-#' @param object of class \code{\link[signal.hsmm]{hsmm_pred}}
+#' @param object of class \code{\link[signal.hsmm]{hsmm_pred}}.
+#' @param if \code{TRUE}, legend is added to the plot.
 #' @return Nothing.
 #' @export
 
-plot.hsmm_pred <- function(x, ...) {
-  plot(c(1, 50), c(0, 5), type="n", axes=F, ylab = "", xlab = "Amino acid")
+plot.hsmm_pred <- function(x, add_legend = TRUE) {
+  plot(c(1, 50), c(1, 5), type="n", axes=F, ylab = "", xlab = "Amino acid index")
   axis(1, 1L:50, labels = FALSE)
   axis(1, 1L:25*2 - 1, labels = 1L:25*2 - 1)
   text(1L:50, 1, x[["prot"]])
-  struc <- cumsum(table(x[["struc"]]))
-  lines(c(1, struc[1]), c(1.5, 1.5), col = "blue", lwd = 5)
-  lines(c(struc[1] + 1, struc[2]), c(2, 2), col = "red", lwd = 5)
-  lines(c(struc[2] + 1, struc[3]), c(2.5, 2.5), col = "green", lwd = 5)
-  lines(c(struc[3] + 1, 50), c(3, 3), col = "orange", lwd = 5)
-  abline(v = struc[3] + 0.5, lty = "dashed")
+  #get borders of regions, add 0.5 to have countinous regions
+  struc <- cumsum(rle(x[["struc"]])[["lengths"]]) + 0.5
+  lines(c(1, struc[1] + 0.5), c(1.5, 1.5), col = "blue", lwd = 5)
+  lines(c(struc[1], struc[2]), c(1.5, 1.5), col = "red", lwd = 5)
+  lines(c(struc[2], struc[3]), c(1.5, 1.5), col = "green", lwd = 5)
+  lines(c(struc[3], 50), c(2.5, 2.5), col = "orange", lwd = 5)
+  lines(c(struc[3], struc[3]), c(1.5, 2.5), lty = "dashed", lwd = 2)
+  if (add_legend)
+    legend("left", col = c("blue", "red", "green", "orange", "black"),
+           lwd = c(5, 5, 5, 5, 2), lty = c(rep("solid", 4), "dashed"),
+           legend = c("n-region", "h-region", "c-region", "mature protein", 
+                      "cleavage site"), bty = "n")
 }
 
+#' Summarize signal.hsmm predictions
+#'
+#' Summarizes objects of class \code{\link[signal.hsmm]{hsmm_pred}}.
+#'
+#' @param object of class \code{\link[signal.hsmm]{hsmm_pred}}.
+#' @return Nothing.
+#' @export
+
+summary.hsmm_pred <- function(object, ...) {
+  struc <- rle(x[["struc"]])[["lengths"]]
+  cstruc <- cumsum(struc)
+  cat(paste0("Probability of signal peptide presence: ", 
+             object[["signal.peptide"]], "\n"))
+  cat(paste0("Start of signal peptide: ", object[["sig.start"]], "\n"))
+  cat(paste0("End of signal peptide: ", object[["sig.end"]], "\n"))
+  cat(paste0("n-region (length ", struc[1], "):\n"))
+  cat(paste0(c("         ", object[["prot"]][1L:cstruc[1]]), collapse = ""))
+  cat(paste0("\nh-region (length ", struc[2], "):\n"))
+  cat(paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""))
+  cat(paste0("\nc-region (length ", struc[3], "):\n"))
+  cat(paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]]), collapse = ""))
+}
 
