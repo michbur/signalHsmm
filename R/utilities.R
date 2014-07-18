@@ -7,12 +7,13 @@
 #' analysis, signal.hsmm is new, highly accurate signal peptide predictor in eukaryotic
 #' proteins. 
 #' @importFrom seqinr read.fasta
+#' @importFrom shiny runApp
 #' @docType package
 #' @name signal.hsmm
 #' @examples
 #' few_predictions <- run_signal.hsmm(benchmark_dat[1:3])
-#' #summary all predictions
-#' summary(few_predictions)
+#' #see all predictions
+#' pred2df(few_predictions)
 #' #summary one prediction
 #' summary(few_predictions[[1]])
 #' #plot one prediction

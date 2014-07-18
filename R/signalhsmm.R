@@ -32,7 +32,11 @@
 #' 
 #' #run signal.hsmm on list of sequences
 #' x3 <- run_signal.hsmm(benchmark_dat[1:3])
+#' #see summary of results
 #' summary(x3)
+#' #print results as data frame
+#' pred2df(x3)
+#' #summary one result
 #' summary(x3[[1]])
 #' plot(x3[[1]])
 
@@ -105,6 +109,11 @@ run_signal.hsmm <- function(test_data) {
 
 signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar, 
                                  od, overall_probs_log, params) {
+  if (length(prot) == 1) {
+    prot <- strsplit(prot, "")[[1]]
+    if (length(prot) == 1)
+      stop("Input sequence is too short.")
+  }
   prot <- toupper(prot)[1L:50]
   deg_sample <- as.numeric(degenerate(prot, aa_group))
   #remove atypical amino acids
@@ -128,3 +137,13 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 }
 
 
+#' GUI for signal.hsmm
+#'
+#' A graphical user interface for predicting presence of signal peptides/
+#' @return null.
+#' @export
+#' @seealso \code{\link{run_signal.hsmm}}
+
+gui_signal.hsmm <- function() {
+  runApp(system.file("signal_gui", package = "signal.hsmm"))
+}

@@ -11,7 +11,7 @@
 \item{...}{ignored}
 }
 \value{
-Data frame of summarized informations.
+nothing.
 }
 \description{
 Summarizes objects of class \code{\link{hsmm_pred_list}}.

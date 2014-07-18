@@ -42,7 +42,11 @@ x2 <- run_signal.hsmm(c("m", "a", "g", "k", "e", "v", "i", "f",
 
 #run signal.hsmm on list of sequences
 x3 <- run_signal.hsmm(benchmark_dat[1:3])
+#see summary of results
 summary(x3)
+#print results as data frame
+pred2df(x3)
+#summary one result
 summary(x3[[1]])
 plot(x3[[1]])
 }
