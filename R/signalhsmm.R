@@ -5,8 +5,8 @@
 #' Using the hidden semi-Markov model predict presence of signal peptide in 
 #' eukaryotic proteins.
 #'
-#' @param single protein sequence or list of sequences. May be an object of class 
-#' \code{\link[seqinr]{SeqFastaAA}}
+#' @param test_data single protein sequence or list of sequences. May be an object of 
+#' class \code{\link[seqinr]{SeqFastaAA}}.
 #' @return An object of class \code{hsmm_pred_list}.
 #' @details Function \code{signal.hsmm} returns respectively probability of presence of 
 #' signal peptide, start of signal peptide and the probable cleavage site localization.
@@ -14,6 +14,7 @@
 #' contains above values for different proteins.
 #' @note Currently start of signal peptide is naively set as 1 amino acid.
 #' @export
+#' @seealso \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}} 
 #' @examples
 #' #run signal.hsmm on one sequence
 #' x1 <- run_signal.hsmm(benchmark_dat[[1]])
@@ -31,6 +32,9 @@
 #' 
 #' #run signal.hsmm on list of sequences
 #' x3 <- run_signal.hsmm(benchmark_dat[1:3])
+#' summary(x3)
+#' summary(x3[[1]])
+#' plot(x3[[1]])
 
 run_signal.hsmm <- function(test_data) {
   signal.hsmm_model <- structure(list(pipar = c(1, 0, 0, 0), 

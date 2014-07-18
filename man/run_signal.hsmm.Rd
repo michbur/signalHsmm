@@ -6,8 +6,8 @@
 run_signal.hsmm(test_data)
 }
 \arguments{
-\item{single}{protein sequence or list of sequences. May be an object of class
-\code{\link[seqinr]{SeqFastaAA}}}
+\item{test_data}{single protein sequence or list of sequences. May be an object of
+class \code{\link[seqinr]{SeqFastaAA}}.}
 }
 \value{
 An object of class \code{hsmm_pred_list}.
@@ -42,5 +42,11 @@ x2 <- run_signal.hsmm(c("m", "a", "g", "k", "e", "v", "i", "f",
 
 #run signal.hsmm on list of sequences
 x3 <- run_signal.hsmm(benchmark_dat[1:3])
+summary(x3)
+summary(x3[[1]])
+plot(x3[[1]])
+}
+\seealso{
+\code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}}
 }
 

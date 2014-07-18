@@ -3,12 +3,14 @@
 \alias{plot.hsmm_pred}
 \title{Plot single signal.hsmm prediction}
 \usage{
-\method{plot}{hsmm_pred}(x, add_legend = TRUE)
+\method{plot}{hsmm_pred}(x, add_legend = TRUE, ...)
 }
 \arguments{
-\item{object}{of class \code{\link{hsmm_pred}}.}
+\item{x}{object of class \code{\link{hsmm_pred}}.}
 
-\item{if}{\code{TRUE}, legend is added to the plot.}
+\item{add_legend}{logical, if \code{TRUE}, legend is added to the plot.}
+
+\item{...}{ignored.}
 }
 \value{
 Nothing.
@@ -16,4 +18,5 @@ Nothing.
 \description{
 Plot objects of class \code{\link{hsmm_pred}}.
 }
+\keyword{hplot}
 

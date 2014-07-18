@@ -6,7 +6,7 @@
 read_uniprot(connection, euk)
 }
 \arguments{
-\item{\code{\link{connection}}}{to UniProt data.}
+\item{connection}{a \code{\link{connection}} to UniProt data in text format.}
 
 \item{euk}{logical value if data has eukaryotic origin.}
 }
@@ -16,9 +16,6 @@ Slot \code{sig} contains the range of signal peptide.
 }
 \description{
 Read data saved in UniProt original flat text format.
-}
-\examples{
-signal.hsmm(benchmark_dat[sample(1L:length(benchmark_dat), 3)])
 }
 \keyword{manip}
 

@@ -7,6 +7,8 @@
 }
 \arguments{
 \item{object}{of class \code{\link{hsmm_pred_list}}.}
+
+\item{...}{ignored}
 }
 \value{
 Data frame of summarized informations.
@@ -14,4 +16,5 @@ Data frame of summarized informations.
 \description{
 Summarizes objects of class \code{\link{hsmm_pred_list}}.
 }
+\keyword{manip}
 

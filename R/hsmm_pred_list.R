@@ -11,10 +11,11 @@ NULL
 #'
 #' Summarizes objects of class \code{\link{hsmm_pred_list}}.
 #'
-#' @S3method summary hsmm_pred_list
 #' @param object of class \code{\link{hsmm_pred_list}}.
+#' @param ... ignored
 #' @return Data frame of summarized informations.
 #' @export
+#' @keywords manip
 
 summary.hsmm_pred_list <- function(object, ...) {
   do.call(rbind, lapply(object, function(i)

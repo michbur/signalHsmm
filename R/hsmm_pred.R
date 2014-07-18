@@ -19,13 +19,14 @@ NULL
 #'
 #' Plot objects of class \code{\link{hsmm_pred}}.
 #'
-#' @param object of class \code{\link{hsmm_pred}}.
-#' @param if \code{TRUE}, legend is added to the plot.
-#' @S3method plot hsmm_pred
+#' @param x object of class \code{\link{hsmm_pred}}.
+#' @param add_legend logical, if \code{TRUE}, legend is added to the plot.
+#' @param ... ignored.
 #' @return Nothing.
 #' @export
+#' @keywords hplot
 
-plot.hsmm_pred <- function(x, add_legend = TRUE) {
+plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
   plot(c(1, 50), c(1, 5), type="n", axes=F, ylab = "", xlab = "Amino acid index")
   axis(1, 1L:50, labels = FALSE)
   axis(1, 1L:25*2 - 1, labels = 1L:25*2 - 1)
@@ -50,13 +51,14 @@ plot.hsmm_pred <- function(x, add_legend = TRUE) {
 #'
 #' Summarizes objects of class \code{\link{hsmm_pred}}.
 #'
-#' @S3method summary hsmm_pred
 #' @param object of class \code{\link{hsmm_pred}}.
+#' @param ... ignored
 #' @return Nothing.
 #' @export
+#' @keywords manip
 
 summary.hsmm_pred <- function(object, ...) {
-  struc <- rle(x[["struc"]])[["lengths"]]
+  struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
   cat(paste0("Probability of signal peptide presence: ", 
              object[["sp_probability"]], "\n"))

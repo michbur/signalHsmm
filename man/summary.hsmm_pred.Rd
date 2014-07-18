@@ -7,6 +7,8 @@
 }
 \arguments{
 \item{object}{of class \code{\link{hsmm_pred}}.}
+
+\item{...}{ignored}
 }
 \value{
 Nothing.
@@ -14,4 +16,5 @@ Nothing.
 \description{
 Summarizes objects of class \code{\link{hsmm_pred}}.
 }
+\keyword{manip}
 
