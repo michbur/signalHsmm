@@ -7,15 +7,32 @@
 #'
 #' @param single protein sequence or list of sequences. May be an object of class 
 #' \code{\link[seqinr]{SeqFastaAA}}
-#' @return A vector or data frame (see datails).
+#' @return An object of class \code{hsmm_pred_list}.
 #' @details Function \code{signal.hsmm} returns respectively probability of presence of 
 #' signal peptide, start of signal peptide and the probable cleavage site localization.
 #' If input consists from more than one sequence, result is a data.frame where each column
 #' contains above values for different proteins.
 #' @note Currently start of signal peptide is naively set as 1 amino acid.
 #' @export
+#' @examples
+#' #run signal.hsmm on one sequence
+#' x1 <- run_signal.hsmm(benchmark_dat[[1]])
+#' 
+#' #run signal.hsmm on one sequence, but input is a character vector
+#' x2 <- run_signal.hsmm(c("m", "a", "g", "k", "e", "v", "i", "f", 
+#' "i", "m", "a", "l", "f", "i", "a", "v", "e", "s", "s", "p", "i", 
+#' "f", "s", "f", "d", "d", "l", "v", "c", "p", "s", "v", "t", "s", 
+#' "l", "r", "v", "n", "v", "e", "k", "n", "e", "c", "s", "t", "k", 
+#' "k", "d", "c", "g", "r", "n", "l", "c", "c", "e", "n", "q", "n", 
+#' "k", "i", "n", "v", "c", "v", "g", "g", "i", "m", "p", "l", "p", 
+#' "k", "p", "n", "l", "d", "v", "n", "n", "i", "g", "g", "a", "v", 
+#' "s", "e", "s", "v", "k", "q", "k", "r", "e", "t", "a", "e", "s", 
+#' "l"))
+#' 
+#' #run signal.hsmm on list of sequences
+#' x3 <- run_signal.hsmm(benchmark_dat[1:3])
 
-run.signal.hsmm <- function(test_data) {
+run_signal.hsmm <- function(test_data) {
   signal.hsmm_model <- structure(list(pipar = c(1, 0, 0, 0), 
                                       tpmpar = structure(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0), .Dim = c(4L, 4L)), 
                                       od = structure(c(0.203181196494605, 0.00235316265060241, 
@@ -59,13 +76,17 @@ run.signal.hsmm <- function(test_data) {
   
   if(class(test_data) == "SeqFastaAA" || 
        class(test_data) == "character") {
+    #single input
     decisions <- signal.hsmm_decision(test_data, aa_group = aaaggregation, 
                                       pipar = signal.hsmm_model[["pipar"]], 
                                       tpmpar = signal.hsmm_model[["tpmpar"]], 
                                       od = signal.hsmm_model[["od"]], 
                                       overall_probs_log = signal.hsmm_model[["overall_probs_log"]], 
                                       params = signal.hsmm_model[["params"]])
+    decisions <- list(decisions)
+    names(decisions) <- attr(test_data, "name")
   } else {
+    #list input
     decisions <- lapply(test_data, function(prot)
       signal.hsmm_decision(prot, aa_group = aaaggregation, 
                            pipar = signal.hsmm_model[["pipar"]], 
@@ -74,7 +95,7 @@ run.signal.hsmm <- function(test_data) {
                            overall_probs_log = signal.hsmm_model[["overall_probs_log"]], 
                            params = signal.hsmm_model[["params"]]))
   }
-  
+  class(decisions) <- "hsmm_pred_list"
   decisions
 }
 
@@ -93,64 +114,13 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   prob.signal <- viterbi_res[["viterbi"]][c_site, viterbi_path[c_site]]
   #get probabilities of no signal peptide model
   prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1:c_site], 0) 
-  res <- list(signal.peptide = 1 - 1/(1 + prob.signal), 
-              sig.start = 1,
-              sig.end = c_site,
+  res <- list(sp_probability = 1 - 1/(1 + prob.signal), 
+              sp_start = 1,
+              sp_end = c_site,
               struc = viterbi_path,
               prot = prot)
   class(res) <- "hsmm_pred"
   res
 }
 
-
-#' Plot signal.hsmm predictions
-#'
-#' Plot objects of class \code{\link[signal.hsmm]{hsmm_pred}}.
-#'
-#' @param object of class \code{\link[signal.hsmm]{hsmm_pred}}.
-#' @param if \code{TRUE}, legend is added to the plot.
-#' @return Nothing.
-#' @export
-
-plot.hsmm_pred <- function(x, add_legend = TRUE) {
-  plot(c(1, 50), c(1, 5), type="n", axes=F, ylab = "", xlab = "Amino acid index")
-  axis(1, 1L:50, labels = FALSE)
-  axis(1, 1L:25*2 - 1, labels = 1L:25*2 - 1)
-  text(1L:50, 1, x[["prot"]])
-  #get borders of regions, add 0.5 to have countinous regions
-  struc <- cumsum(rle(x[["struc"]])[["lengths"]]) + 0.5
-  lines(c(1, struc[1] + 0.5), c(1.5, 1.5), col = "blue", lwd = 5)
-  lines(c(struc[1], struc[2]), c(1.5, 1.5), col = "red", lwd = 5)
-  lines(c(struc[2], struc[3]), c(1.5, 1.5), col = "green", lwd = 5)
-  lines(c(struc[3], 50), c(2.5, 2.5), col = "orange", lwd = 5)
-  lines(c(struc[3], struc[3]), c(1.5, 2.5), lty = "dashed", lwd = 2)
-  if (add_legend)
-    legend("left", col = c("blue", "red", "green", "orange", "black"),
-           lwd = c(5, 5, 5, 5, 2), lty = c(rep("solid", 4), "dashed"),
-           legend = c("n-region", "h-region", "c-region", "mature protein", 
-                      "cleavage site"), bty = "n")
-}
-
-#' Summarize signal.hsmm predictions
-#'
-#' Summarizes objects of class \code{\link[signal.hsmm]{hsmm_pred}}.
-#'
-#' @param object of class \code{\link[signal.hsmm]{hsmm_pred}}.
-#' @return Nothing.
-#' @export
-
-summary.hsmm_pred <- function(object, ...) {
-  struc <- rle(x[["struc"]])[["lengths"]]
-  cstruc <- cumsum(struc)
-  cat(paste0("Probability of signal peptide presence: ", 
-             object[["signal.peptide"]], "\n"))
-  cat(paste0("Start of signal peptide: ", object[["sig.start"]], "\n"))
-  cat(paste0("End of signal peptide: ", object[["sig.end"]], "\n"))
-  cat(paste0("n-region (length ", struc[1], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][1L:cstruc[1]]), collapse = ""))
-  cat(paste0("\nh-region (length ", struc[2], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""))
-  cat(paste0("\nc-region (length ", struc[3], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]]), collapse = ""))
-}
 

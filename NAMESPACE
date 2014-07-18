@@ -2,7 +2,8 @@
 
 S3method(plot,hsmm_pred)
 S3method(summary,hsmm_pred)
+S3method(summary,hsmm_pred_list)
 export(find_nhc)
 export(read_uniprot)
-export(run.signal.hsmm)
+export(run_signal.hsmm)
 importFrom(seqinr,read.fasta)
