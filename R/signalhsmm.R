@@ -114,7 +114,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
     if (length(prot) == 1)
       stop("Input sequence is too short.")
   }
-  prot <- toupper(prot)[1L:50]
+  prot <- toupper(prot)[1L:70]
   deg_sample <- as.numeric(degenerate(prot, aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)
