@@ -42,15 +42,17 @@
 
 run_signal.hsmm <- function(test_data) {
   signal.hsmm_model <- structure(list(pipar = c(1, 0, 0, 0), 
-                                      tpmpar = structure(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0), .Dim = c(4L, 4L)), 
+                                      tpmpar = structure(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0), 
+                                                         .Dim = c(4L, 4L)), 
                                       od = structure(c(0.203181196494605, 0.00235316265060241, 
                                                        0.069742553064986, 0.122654208889416, 0.360670685375614, 0.72484469126506, 
                                                        0.284975325524704, 0.288121595016022, 0.190922445671445, 0.0822430346385542, 
                                                        0.299423271300315, 0.230261863691714, 0.245225672458335, 0.190559111445783, 
-                                                       0.345858850109995, 0.358962332402848), .Dim = c(4L, 4L)), 
-                                      overall_probs_log = structure(c(-2.09838619260539, 
-                                                                      -1.24437268303286, -1.4685380799115, -1.02453781966768), .Names = c("1", 
-                                                                                                                                          "2", "3", "4")), 
+                                                       0.345858850109995, 0.358962332402848), 
+                                                     .Dim = c(4L, 4L)), 
+                                      overall_probs_log = structure(c(-2.09838619260539, -1.24437268303286, -1.4685380799115, 
+                                                                      -1.02453781966768), 
+                                                                    .Names = c("1", "2", "3", "4")), 
                                       params = structure(c(0.102263430597218, 0.180256340332697, 
                                                            0.166621216253068, 0.0910826288519226, 0.103081538041996, 0.0820834469593673, 
                                                            0.0526315789473684, 0.0597218434687756, 0.0349059176438506, 0.024815925824925, 
@@ -77,8 +79,9 @@ run_signal.hsmm <- function(test_data) {
                                                            0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 
                                                            0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 
                                                            0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 0.03125, 
-                                                           0.03125), .Dim = c(32L, 4L), .Dimnames = list(NULL, c("n", "h", 
-                                                                                                                 "c", "")))), 
+                                                           0.03125), 
+                                                         .Dim = c(32L, 4L), 
+                                                         .Dimnames = list(NULL, c("n", "h", "c", "")))), 
                                  .Names = c("pipar", "tpmpar", "od", "overall_probs_log", 
                                             "params"))
   
@@ -114,8 +117,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
     if (length(prot) == 1)
       stop("Input sequence is too short.")
   }
-  prot <- toupper(prot)[1L:70]
-  deg_sample <- as.numeric(degenerate(prot, aa_group))
+  deg_sample <- as.numeric(degenerate(toupper(prot)[1L:50], aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)
   viterbi_res <- duration_viterbi(deg_sample, pipar, tpmpar, od, params)
@@ -126,13 +128,13 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   #get probabilities of signal peptide model
   prob.signal <- viterbi_res[["viterbi"]][c_site, viterbi_path[c_site]]
   #get probabilities of no signal peptide model
-  prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1:c_site], 0)
+  prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1L:c_site], 0)
   prob.total <- exp(prob.signal - prob.non)
   res <- list(sp_probability = 1 - 1/(1 + prob.total), 
               sp_start = 1,
               sp_end = c_site,
               struc = viterbi_path,
-              prot = prot)
+              prot = prot[1L:70])
   class(res) <- "hsmm_pred"
   res
 }

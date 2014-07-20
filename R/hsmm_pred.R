@@ -46,20 +46,20 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
     text((cstruc[i] + 1):cstruc[i + 1], 1, 
          x[["prot"]][(cstruc[i] + 1):cstruc[i + 1]], 
          col = sig_colours[i])
-    lines(c(cstruc05[i], cstruc05[i + 1]), c(1.5, 1.5) + ifelse(i == 4, 1, 0), 
+    lines(c(cstruc05[i], cstruc05[i + 1]), c(1.5, 1.5) + ifelse(i == 4, 0, 1), 
           col = sig_colours[i], lwd = 5)
   }
   
   lines(c(cstruc05[4], cstruc05[4]), c(1.5, 2.5), lty = "dashed", lwd = 2)
   if (add_legend)
-    legend("left", 
+    legend("topright", 
            col = rev(c(sig_colours, "black", "white")),
            lwd = rev(c(5, 5, 5, 5, 2, 1)), 
            lty = rev(c(rep("solid", 4), "dashed", "blank")),
            legend = rev(c("n-region", "h-region", "c-region", "mature protein", 
                           "cleavage site", 
                           paste0("Signal peptide probability: ", 
-                                 round(x[["sp_probability"]], 2)))), 
+                                 signif(x[["sp_probability"]], digits = 2)))), 
            bty = "n")
 }
 
@@ -77,7 +77,7 @@ summary.hsmm_pred <- function(object, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
   cat(paste0("Probability of signal peptide presence: ", 
-             object[["sp_probability"]], "\n"))
+             format(object[["sp_probability"]], digits = 4), "\n"))
   cat(paste0("Start of signal peptide: ", object[["sp_start"]], "\n"))
   cat(paste0("End of signal peptide: ", object[["sp_end"]], "\n"))
   cat(paste0("n-region (length ", struc[1], "):\n"))
