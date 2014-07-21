@@ -84,6 +84,10 @@ run_signal.hsmm <- function(test_data) {
                                                          .Dimnames = list(NULL, c("n", "h", "c", "")))), 
                                  .Names = c("pipar", "tpmpar", "od", "overall_probs_log", 
                                             "params"))
+  if (class(test_data) == "numeric" || class(test_data) == "factor" || 
+        class(test_data) == "data.frame" || class(test_data) == "matrix")
+    stop("Input data must have class 'SeqFastaAA', 'character' or 'list'.")
+  
   
   if(class(test_data) == "SeqFastaAA" || 
        class(test_data) == "character") {
@@ -134,7 +138,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
               sp_start = 1,
               sp_end = c_site,
               struc = viterbi_path,
-              prot = prot[1L:70])
+              prot = toupper(prot[1L:70]))
   class(res) <- "hsmm_pred"
   res
 }
@@ -146,6 +150,10 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 #' @return null.
 #' @export
 #' @seealso \code{\link{run_signal.hsmm}}
+#' @examples
+#' \dontrun{
+#' gui_signal.hsmm()
+#'}
 
 gui_signal.hsmm <- function() {
   runApp(system.file("signal_gui", package = "signal.hsmm"))

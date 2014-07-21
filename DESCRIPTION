@@ -7,11 +7,11 @@ Date: 2014-06-25
 Author: Michal Burdukiewicz, Piotr Sobczyk
 Maintainer: Michal Burdukiewicz <michalburdukiewicz@gmail.com>
 Description: The signal.hsmm is a package to predict presence of signal
-    peptides in eukaryotic proteins. It can be run in batch or by GUI.
+    peptides in eukaryotic protein. The analysis can be performed both in batch mode or in GUI.
 License: GPL-3
 Depends:
     R (>= 3.0.0)
 Imports:
-    seqinr
+    seqinr, shiny
 NeedsCompilation: no
 Repository: CRAN

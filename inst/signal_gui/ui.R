@@ -1,24 +1,21 @@
 library(shiny)
 
-inputTextarea <- function(inputId, value="", nrows, ncols) {
-  tagList(
-    singleton(tags$head(tags$script(src = "textarea.js"))),
-    tags$textarea(id = inputId,
-                  class = "inputtextarea",
-                  rows = nrows,
-                  cols = ncols,
-                  as.character(value))
-  )
-}
 
 
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
 
   headerPanel("Signal.hsmm"),
   
   sidebarPanel(
-    fileInput('seq_file', 'Choose .fasta or .txt file',
-              accept=c('text/plain'))
+    tags$div(class="header", checked=NA,
+             tags$p("signal.hsmm detects signal peptides in eukaryotic proteins.")),
+    tags$div(class="header", checked=NA,
+             tags$p(" ")),
+    fileInput('seq_file', 'Choose .fasta or .txt file:',
+              accept=c('text/plain')),
+    downloadButton("download_short", "Download short output"),
+    downloadButton("download_long", "Download long output")
+
   ),
   
   mainPanel(
