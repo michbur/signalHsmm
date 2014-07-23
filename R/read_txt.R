@@ -10,7 +10,8 @@
 #' @export
 
 read_txt <- function(connection) {
-  content <- readLines("tmp.txt")
+  content <- readLines(connection)
+  if (sum(grepl(">", content, fixed = TRUE)) == 0) {
   if (content[1] != "")
     content <- c("", content)
   
@@ -18,7 +19,8 @@ read_txt <- function(connection) {
   while(content[content_end] == "i")
     content_end <- content_end - 1
   prot_names <- sapply(1L:sum(content == ""), function(i)
-    paste0(">seq", i))
+    paste0(">sequence", i))
   content[content == ""] <- prot_names
+  }
   read.fasta(textConnection(content), seqtype = "AA", as.string = FALSE)
 }

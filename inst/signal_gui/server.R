@@ -1,23 +1,55 @@
 library(shiny)
 library(signal.hsmm)
-options(shiny.maxRequestSize=15*1024^2)
+library(shinyAce)
+options(shiny.maxRequestSize=10*1024^2)
 
 shinyServer(function(input, output) {
   
-  prediction <- reactive({
-    if(grepl("fasta", input[["seq_file"]][["name"]])) {
-      input_dat <- seqinr:::read.fasta(input[["seq_file"]][["datapath"]])
-    } 
-    #todo - read from .txt files
-    run_signal.hsmm(input_dat)
+  input_area <- reactive({
+    input[["use_area"]]
+    if (input[["text_area"]] == "") {
+      NULL
+    } else {
+      seqinr:::read.fasta(textConnection(input[["text_area"]]))
+    }
   })
   
+  input_file <- reactive({
+    read_txt(input[["seq_file"]][["datapath"]])
+  })
+  
+  prediction <- reactive({
+    #     print(input_area())
+    #     print()
+    #     inputs <- list(input_area(), input_file())
+    
+    run_signal.hsmm(input_file())
+  })
+  
+  
+  output$dynamic_ui <- renderUI({
+    if (is.null(input[["seq_file"]])) {
+      div(actionButton("use_area", "Submit data from field on right..."),
+          fileInput('seq_file', '...or choose .fasta or .txt file:'))
+    } else {
+      div(downloadButton("download_short", "Download short output"),
+          downloadButton("download_long", "Download long output"))
+    }
+  })
+  
+  output$dynamic_panel <- renderUI({
+    if (is.null(input[["seq_file"]])) {
+      aceEditor("text_area", value="", height = 150)
+    } else {
+      verbatimTextOutput("summary")
+    }
+  })
   
   
   output$pred_table <- renderTable({
     if(is.null(input[["seq_file"]])) {
       data.frame(sp.probability = "No", 
-                 sp.start = "file",
+                 sp.start = "sequence",
                  sp.end = "chosen")
     } else {
       pred2df(prediction())
@@ -25,16 +57,13 @@ shinyServer(function(input, output) {
   })
   
   output$summary <- renderPrint({
-    if(is.null(input[["seq_file"]])) {
-      cat("No file chosen.")
-    } else {
       summary(prediction())
-    }
   })
+  
   
   output$pred_long <- renderPrint({
     if(is.null(input[["seq_file"]])) {
-      cat("No file chosen.")
+      cat("No sequence chosen.")
     } else {
       for (i in 1L:length(prediction())) {
         cat(names(prediction())[i])
