@@ -11,6 +11,11 @@ null.
 \description{
 A graphical user interface for predicting presence of signal peptides/
 }
+\examples{
+\dontrun{
+gui_signal.hsmm()
+}
+}
 \seealso{
 \code{\link{run_signal.hsmm}}
 }

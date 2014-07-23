@@ -1,0 +1,24 @@
+#' Read sequences from .txt file
+#'
+#' Read sequence data saved in text file.
+#'
+#' @param connection a \code{\link{connection}} to text file.
+#' @keywords manip
+#' @return a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
+#' @details Input file should contain one or more amino acid sequences separated by empty
+#' rows.
+#' @export
+
+read_txt <- function(connection) {
+  content <- readLines("tmp.txt")
+  if (content[1] != "")
+    content <- c("", content)
+  
+  content_end <- length(content)
+  while(content[content_end] == "i")
+    content_end <- content_end - 1
+  prot_names <- sapply(1L:sum(content == ""), function(i)
+    paste0(">seq", i))
+  content[content == ""] <- prot_names
+  read.fasta(textConnection(content), seqtype = "AA", as.string = FALSE)
+}
