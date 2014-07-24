@@ -5,17 +5,13 @@ options(shiny.maxRequestSize=10*1024^2)
 
 shinyServer(function(input, output) {
   
-  input_area <- reactive({
-    input[["use_area"]]
-    if (input[["text_area"]] == "") {
-      NULL
-    } else {
-      seqinr:::read.fasta(textConnection(input[["text_area"]]))
-    }
-  })
+
   
   input_file <- reactive({
-    read_txt(input[["seq_file"]][["datapath"]])
+    res <- read_txt(input[["seq_file"]][["datapath"]])
+#     input[["use_area"]]
+#     isolate(input[["text_area"]])
+    res
   })
   
   prediction <- reactive({
@@ -57,7 +53,7 @@ shinyServer(function(input, output) {
   })
   
   output$summary <- renderPrint({
-      summary(prediction())
+    summary(prediction())
   })
   
   
