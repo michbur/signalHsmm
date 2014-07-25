@@ -1,6 +1,7 @@
 library(shiny)
 library(signal.hsmm)
 library(shinyAce)
+library(knitr)
 options(shiny.maxRequestSize=10*1024^2)
 
 
@@ -32,7 +33,8 @@ shinyServer(function(input, output) {
     } else {
       div(tags$p("Be patient - your query is processed."),
           downloadButton("download_short", "Download short output"),
-          downloadButton("download_long", "Download long output (no graphics)"))
+          downloadButton("download_long", "Download long output (without graphics)"),
+          downloadButton("download_long_graph", "Download long output (with graphics)"))
     }
   })
   
@@ -117,4 +119,13 @@ shinyServer(function(input, output) {
     }
   )
   
+  output$download_long_graph <- downloadHandler(
+    filename  = function() { 
+      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
+      paste0(part_name, "_pred.html") 
+    },
+    content <- function(file) {
+      knit2html("signalhsmm_report.Rmd")
+    }
+  )
 })
