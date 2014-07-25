@@ -141,8 +141,16 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
               sp_end = c_site,
               struc = viterbi_path,
               prot = toupper(prot[1L:70]),
-              name = attr(prot, "name"))
+              name = attr(prot, "name"),
+              str_approx = 0)
   class(res) <- "hsmm_pred"
+  
+  #structure approximation - if atypical (normally negative signal peptide)
+  while(!all(1L:4 %in% res[["struc"]])) {
+    res[["struc"]] <- c(res[["struc"]], which.min(1L:4 %in% res[["struc"]]))
+    res[["str_approx"]] <- res[["str_approx"]] + 1
+  }
+  
   res
 }
 

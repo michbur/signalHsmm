@@ -32,13 +32,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
   axis(1, 1L:50, labels = FALSE)
   axis(1, 1L:25*2 - 1, labels = 1L:25*2 - 1)
   
-  #structure appriximation - if atypical (normally negative signal peptide)
-  str_approx <- 0
-  #get borders of regions, add 0.5 to have countinous regions
-  while(!all(1L:4 %in% x[["struc"]])) {
-    x[["struc"]] <- c(x[["struc"]], which.min(1L:4 %in% x[["struc"]]))
-    str_approx <- str_approx + 1
-  }
+  #get borders of regions, add 0.5 to have countinous regions for purpose of easy plotting
   cstruc <- cumsum(rle(x[["struc"]])[["lengths"]])
   cstruc05 <- c(1, cstruc + 0.5)
   cstruc <- c(0, cstruc)
@@ -70,8 +64,8 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
                           "cleavage site", 
                           paste0("Signal peptide probability: ", 
                                  signif(x[["sp_probability"]], digits = 2)),
-                          ifelse(str_approx > 0, 
-                                 paste0("Signal peptide structure interpolated"),
+                          ifelse(x[["str_approx"]] > 0, 
+                                 "Signal peptide structure interpolated",
                                  " "))), 
            bty = "n")
 }
@@ -99,5 +93,7 @@ summary.hsmm_pred <- function(object, ...) {
   cat(paste0("\nh-region (length ", struc[2], "):\n"))
   cat(paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""))
   cat(paste0("\nc-region (length ", struc[3], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]]), collapse = ""))
+  cat(paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]], "\n"), collapse = ""))
+  if(object[["str_approx"]] > 0)
+    cat("Signal peptide structure interpolated.\n")
 }
