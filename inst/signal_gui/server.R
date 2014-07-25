@@ -5,12 +5,12 @@ options(shiny.maxRequestSize=10*1024^2)
 
 shinyServer(function(input, output) {
   
-
+  
   
   input_file <- reactive({
     res <- read_txt(input[["seq_file"]][["datapath"]])
-#     input[["use_area"]]
-#     isolate(input[["text_area"]])
+    #     input[["use_area"]]
+    #     isolate(input[["text_area"]])
     res
   })
   
@@ -29,7 +29,7 @@ shinyServer(function(input, output) {
           fileInput('seq_file', '...or choose .fasta or .txt file:'))
     } else {
       div(downloadButton("download_short", "Download short output"),
-          downloadButton("download_long", "Download long output"))
+          downloadButton("download_long", "Download long output (no graphics)"))
     }
   })
   
@@ -57,17 +57,51 @@ shinyServer(function(input, output) {
   })
   
   
-  output$pred_long <- renderPrint({
+  #   output$pred_long <- renderPrint({
+  #     if(is.null(input[["seq_file"]])) {
+  #       cat("No sequence chosen.")
+  #     } else {
+  #       for (i in 1L:length(prediction())) {
+  #         cat(names(prediction())[i])
+  #         cat("\n\n")
+  #         summary(prediction()[[i]])
+  #         cat("\n\n")
+  #       }
+  #     }
+  #   })
+  
+  output$long_preds <- renderUI({
+    long_preds_list <- lapply(1L:length(prediction()), function(i) {
+      list(plotOutput(paste0("plot", i)), verbatimTextOutput(paste0("summ", i)))
+    })
+    do.call(tagList, unlist(long_preds_list, recursive = FALSE))
+  })
+  
+  # Call renderPlot for each one. Plots are only actually generated when they
+  # are visible on the web page.
+  for (i in 1L:5) {
+    # Need local so that each item gets its own number. Without it, the value
+    # of i in the renderPlot() will be the same across all instances, because
+    # of when the expression is evaluated.
+    local({
+      my_i <- i
+      
+      output[[paste0("plot", my_i)]] <- renderPlot(plot(prediction()[[my_i]]))
+      output[[paste0("summ", my_i)]] <- renderPrint(summary(prediction()[[my_i]]))
+    })
+  }
+  
+  
+  output$pred_long <- renderUI({
     if(is.null(input[["seq_file"]])) {
-      cat("No sequence chosen.")
+      verbatimTextOutput("pred_long_null")
     } else {
-      for (i in 1L:length(prediction())) {
-        cat(names(prediction())[i])
-        cat("\n\n")
-        summary(prediction()[[i]])
-        cat("\n\n")
-      }
+      uiOutput("long_preds")
     }
+  })
+  
+  output$pred_long_null <- renderPrint({
+    cat("No sequence chosen.")
   })
   
   output$download_short <- downloadHandler(

@@ -19,7 +19,7 @@ shinyUI(fluidPage(
     tabsetPanel(
       tabPanel("Data input", uiOutput("dynamic_panel")),
       tabPanel("Short output", tableOutput("pred_table")),
-      tabPanel("Long output", verbatimTextOutput("pred_long"))
+      tabPanel("Long output (with graphics)", uiOutput("pred_long"))
     )
   )
 ))

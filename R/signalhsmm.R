@@ -118,6 +118,8 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
                                  od, overall_probs_log, params) {
   if (length(prot) == 1) {
     prot <- strsplit(prot, "")[[1]]
+    if ("name" %in% names(attributes(prot)))
+      attr(prot, "name") <- "undefined_name"
     if (length(prot) == 1)
       stop("Input sequence is too short.")
   }
@@ -134,11 +136,12 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   #get probabilities of no signal peptide model
   prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1L:c_site], 0)
   prob.total <- exp(prob.signal - prob.non)
-  res <- list(sp_probability = 1 - 1/(1 + prob.total), 
+  res <- list(sp_probability = unname(1 - 1/(1 + prob.total)), 
               sp_start = 1,
               sp_end = c_site,
               struc = viterbi_path,
-              prot = toupper(prot[1L:70]))
+              prot = toupper(prot[1L:70]),
+              name = attr(prot, "name"))
   class(res) <- "hsmm_pred"
   res
 }

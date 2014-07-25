@@ -27,11 +27,18 @@ NULL
 #' @keywords hplot
 
 plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
-  plot(c(1, 50), c(1, 5), type="n", axes=F, ylab = "", xlab = "Amino acid index")
+  plot(c(1, 50), c(1, 5), type="n", axes=F, ylab = "", xlab = "Amino acid index",
+       main = x[["name"]])
   axis(1, 1L:50, labels = FALSE)
   axis(1, 1L:25*2 - 1, labels = 1L:25*2 - 1)
   
+  #structure appriximation - if atypical (normally negative signal peptide)
+  str_approx <- 0
   #get borders of regions, add 0.5 to have countinous regions
+  while(!all(1L:4 %in% x[["struc"]])) {
+    x[["struc"]] <- c(x[["struc"]], which.min(1L:4 %in% x[["struc"]]))
+    str_approx <- str_approx + 1
+  }
   cstruc <- cumsum(rle(x[["struc"]])[["lengths"]])
   cstruc05 <- c(1, cstruc + 0.5)
   cstruc <- c(0, cstruc)
@@ -53,13 +60,19 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
   lines(c(cstruc05[4], cstruc05[4]), c(1.5, 2.5), lty = "dashed", lwd = 2)
   if (add_legend)
     legend("topright", 
-           col = rev(c(sig_colours, "black", "white")),
-           lwd = rev(c(5, 5, 5, 5, 2, 1)), 
-           lty = rev(c(rep("solid", 4), "dashed", "blank")),
-           legend = rev(c("n-region", "h-region", "c-region", "mature protein", 
+           col = rev(c(sig_colours, "black", "white", "white")),
+           lwd = rev(c(5, 5, 5, 5, 2, 1, 1)), 
+           lty = rev(c(rep("solid", 4), "dashed", "blank", "blank")),
+           legend = rev(c("n-region", 
+                          "h-region", 
+                          "c-region", 
+                          "mature protein", 
                           "cleavage site", 
                           paste0("Signal peptide probability: ", 
-                                 signif(x[["sp_probability"]], digits = 2)))), 
+                                 signif(x[["sp_probability"]], digits = 2)),
+                          ifelse(str_approx > 0, 
+                                 paste0("Signal peptide structure interpolated"),
+                                 " "))), 
            bty = "n")
 }
 
@@ -76,6 +89,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
 summary.hsmm_pred <- function(object, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
+  cat(paste0(object[["name"]], "\n"))
   cat(paste0("Probability of signal peptide presence: ", 
              format(object[["sp_probability"]], digits = 4), "\n"))
   cat(paste0("Start of signal peptide: ", object[["sp_start"]], "\n"))
