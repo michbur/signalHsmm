@@ -2,6 +2,7 @@ library(shiny)
 library(signal.hsmm)
 library(shinyAce)
 library(knitr)
+library(markdown)
 options(shiny.maxRequestSize=10*1024^2)
 
 
