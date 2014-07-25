@@ -110,7 +110,6 @@ shinyServer(function(input, output) {
     content <- function(file) {
       sink(file, type = "output")
       for (i in 1L:length(prediction())) {
-        cat(names(prediction())[i])
         cat("\n\n")
         summary(prediction()[[i]])
         cat("\n\n")
@@ -125,7 +124,9 @@ shinyServer(function(input, output) {
       paste0(part_name, "_pred.html") 
     },
     content <- function(file) {
-      knit2html("signalhsmm_report.Rmd")
+      knit(input = "signalhsmm_report.Rmd", 
+                output = "signalhsmm_report.md", quiet = TRUE)
+      markdownToHTML("signalhsmm_report.md", file)
     }
   )
 })

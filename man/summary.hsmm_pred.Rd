@@ -3,7 +3,7 @@
 \alias{summary.hsmm_pred}
 \title{Summarize single signal.hsmm prediction}
 \usage{
-\method{summary}{hsmm_pred}(object, print_name = FALSE, ...)
+\method{summary}{hsmm_pred}(object, ...)
 }
 \arguments{
 \item{object}{of class \code{\link{hsmm_pred}}.}

@@ -80,11 +80,10 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
 #' @export
 #' @keywords manip
 
-summary.hsmm_pred <- function(object, print_name = FALSE, ...) {
+summary.hsmm_pred <- function(object, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
-  if(print_name)
-    cat(paste0(object[["name"]], "\n"))
+  cat(paste0(object[["name"]], "\n"))
   cat(paste0("Probability of signal peptide presence: ", 
              format(object[["sp_probability"]], digits = 4), "\n"))
   cat(paste0("Start of signal peptide: ", object[["sp_start"]], "\n"))

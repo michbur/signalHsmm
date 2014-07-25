@@ -1,10 +1,9 @@
 signal.hsmm - report
 ========================================================
 
-To plik $12*8$
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 for (i in prediction()) {
   summary(i)
-  #plot(i)
+  plot(i)
 }
 ```
