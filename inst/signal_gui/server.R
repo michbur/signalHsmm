@@ -3,6 +3,8 @@ library(signal.hsmm)
 library(shinyAce)
 options(shiny.maxRequestSize=10*1024^2)
 
+
+
 shinyServer(function(input, output) {
   
   
@@ -28,7 +30,8 @@ shinyServer(function(input, output) {
       div(actionButton("use_area", "Submit data from field on right..."),
           fileInput('seq_file', '...or choose .fasta or .txt file:'))
     } else {
-      div(downloadButton("download_short", "Download short output"),
+      div(tags$p("Be patient - your query is processed."),
+          downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (no graphics)"))
     }
   })
@@ -57,19 +60,6 @@ shinyServer(function(input, output) {
   })
   
   
-  #   output$pred_long <- renderPrint({
-  #     if(is.null(input[["seq_file"]])) {
-  #       cat("No sequence chosen.")
-  #     } else {
-  #       for (i in 1L:length(prediction())) {
-  #         cat(names(prediction())[i])
-  #         cat("\n\n")
-  #         summary(prediction()[[i]])
-  #         cat("\n\n")
-  #       }
-  #     }
-  #   })
-  
   output$long_preds <- renderUI({
     long_preds_list <- lapply(1L:length(prediction()), function(i) {
       list(plotOutput(paste0("plot", i)), verbatimTextOutput(paste0("summ", i)))
@@ -77,12 +67,8 @@ shinyServer(function(input, output) {
     do.call(tagList, unlist(long_preds_list, recursive = FALSE))
   })
   
-  # Call renderPlot for each one. Plots are only actually generated when they
-  # are visible on the web page.
-  for (i in 1L:5) {
-    # Need local so that each item gets its own number. Without it, the value
-    # of i in the renderPlot() will be the same across all instances, because
-    # of when the expression is evaluated.
+
+  for (i in 1L:400) {
     local({
       my_i <- i
       
