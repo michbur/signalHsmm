@@ -1,8 +1,6 @@
 library(shiny)
 library(signal.hsmm)
 library(shinyAce)
-library(knitr)
-library(markdown)
 options(shiny.maxRequestSize=10*1024^2)
 
 
@@ -10,25 +8,26 @@ options(shiny.maxRequestSize=10*1024^2)
 shinyServer(function(input, output) {
   
   
-  
-  input_file <- reactive({
-    res <- read_txt(input[["seq_file"]][["datapath"]])
-    #     input[["use_area"]]
-    #     isolate(input[["text_area"]])
-    res
-  })
-  
   prediction <- reactive({
     #     print(input_area())
     #     print()
     #     inputs <- list(input_area(), input_file())
     
-    run_signal.hsmm(input_file())
+    if (!is.null(input[["seq_file"]]))
+      res <- read_txt(input[["seq_file"]][["datapath"]])
+    
+    input[["use_area"]]
+    isolate({if (input[["text_area"]] != "")
+      res <- read_txt(textConnection(input[["text_area"]]))
+    })
+    
+    run_signal.hsmm(res)
+    
   })
   
   
   output$dynamic_ui <- renderUI({
-    if (is.null(input[["seq_file"]])) {
+    if(class(try(prediction(), silent = TRUE)) == "try-error") {
       div(actionButton("use_area", "Submit data from field on right..."),
           fileInput('seq_file', '...or choose .fasta or .txt file:'))
     } else {
@@ -40,7 +39,7 @@ shinyServer(function(input, output) {
   })
   
   output$dynamic_panel <- renderUI({
-    if (is.null(input[["seq_file"]])) {
+    if(class(try(prediction(), silent = TRUE)) == "try-error") {
       aceEditor("text_area", value="", height = 150)
     } else {
       verbatimTextOutput("summary")
@@ -49,7 +48,7 @@ shinyServer(function(input, output) {
   
   
   output$pred_table <- renderTable({
-    if(is.null(input[["seq_file"]])) {
+    if(class(try(prediction(), silent = TRUE)) == "try-error") {
       data.frame(sp.probability = "No", 
                  sp.start = "sequence",
                  sp.end = "chosen")
@@ -70,7 +69,7 @@ shinyServer(function(input, output) {
     do.call(tagList, unlist(long_preds_list, recursive = FALSE))
   })
   
-
+  
   for (i in 1L:400) {
     local({
       my_i <- i
@@ -82,7 +81,7 @@ shinyServer(function(input, output) {
   
   
   output$pred_long <- renderUI({
-    if(is.null(input[["seq_file"]])) {
+    if(class(try(prediction(), silent = TRUE)) == "try-error") {
       verbatimTextOutput("pred_long_null")
     } else {
       uiOutput("long_preds")
@@ -125,9 +124,9 @@ shinyServer(function(input, output) {
       paste0(part_name, "_pred.html") 
     },
     content <- function(file) {
-      knit(input = "signalhsmm_report.Rmd", 
-                output = "signalhsmm_report.md", quiet = TRUE)
-      markdownToHTML("signalhsmm_report.md", file)
+      knitr:::knit(input = "signalhsmm_report.Rmd", 
+                   output = "signalhsmm_report.md", quiet = TRUE)
+      markdown:::markdownToHTML("signalhsmm_report.md", file)
     }
   )
 })
