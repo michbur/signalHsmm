@@ -7,7 +7,7 @@ shinyUI(fluidPage(
   
   headerPanel("Signal.hsmm"),
   
-  
+  sidebarLayout(
   sidebarPanel(
     tags$div(class="header", checked=NA,
              tags$p("signal.hsmm detects signal peptides in eukaryotic proteins.")),
@@ -22,4 +22,4 @@ shinyUI(fluidPage(
       tabPanel("Long output (with graphics)", uiOutput("pred_long"))
     )
   )
-))
+)))

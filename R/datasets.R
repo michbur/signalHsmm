@@ -10,6 +10,7 @@
 #' @format a list of \code{\link[seqinr]{SeqFastaAA}} objects. 
 #' Slot \code{sig} contains the range of signal peptide (if any).
 #' @source \href{http://www.uniprot.org/}{UniProt}
+#' @examples summary(benchmark_dat)
 NULL
 
 #' @name aaaggregation

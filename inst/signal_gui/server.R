@@ -7,12 +7,9 @@ options(shiny.maxRequestSize=10*1024^2)
 
 shinyServer(function(input, output) {
   
-  
   prediction <- reactive({
- 
     if (!is.null(input[["seq_file"]]))
       res <- read_txt(input[["seq_file"]][["datapath"]])
-    
     input[["use_area"]]
     isolate({if (input[["text_area"]] != "")
       res <- read_txt(textConnection(input[["text_area"]]))
@@ -24,7 +21,6 @@ shinyServer(function(input, output) {
     } else {
       run_signal.hsmm(res)
     }
-    
   })
   
   
