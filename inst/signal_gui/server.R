@@ -9,10 +9,7 @@ shinyServer(function(input, output) {
   
   
   prediction <- reactive({
-    #     print(input_area())
-    #     print()
-    #     inputs <- list(input_area(), input_file())
-    
+ 
     if (!is.null(input[["seq_file"]]))
       res <- read_txt(input[["seq_file"]][["datapath"]])
     
@@ -21,7 +18,12 @@ shinyServer(function(input, output) {
       res <- read_txt(textConnection(input[["text_area"]]))
     })
     
-    run_signal.hsmm(res)
+    if(length(res) > 300) {
+      #dummy error, just to stop further processing
+      stop("Too many sequences.")
+    } else {
+      run_signal.hsmm(res)
+    }
     
   })
   
@@ -29,12 +31,15 @@ shinyServer(function(input, output) {
   output$dynamic_ui <- renderUI({
     if(class(try(prediction(), silent = TRUE)) == "try-error") {
       div(actionButton("use_area", "Submit data from field on right..."),
-          fileInput('seq_file', '...or choose .fasta or .txt file:'))
+          fileInput('seq_file', '...or choose .fasta or .txt file:'),
+          tags$p("Queries bigger than 300 sequences will be not processed. 
+                 Use batch mode instead."))
     } else {
-      div(tags$p("Be patient - your query is processed."),
+      div(tags$p("Be patient - bigger calculations take few minutes."),
           downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
-          downloadButton("download_long_graph", "Download long output (with graphics)"))
+          downloadButton("download_long_graph", "Download long output (with graphics)"),
+          tags$p("Refresh the page to start a new query with signal.hsmm."))
     }
   })
   
@@ -70,7 +75,7 @@ shinyServer(function(input, output) {
   })
   
   
-  for (i in 1L:400) {
+  for (i in 1L:300) {
     local({
       my_i <- i
       
