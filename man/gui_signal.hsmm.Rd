@@ -12,7 +12,7 @@ null.
 A graphical user interface for predicting presence of signal peptides/
 }
 \examples{
-\dontrun{
+\donttest{
 gui_signal.hsmm()
 }
 }

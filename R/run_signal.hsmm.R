@@ -163,7 +163,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 #' @export
 #' @seealso \code{\link{run_signal.hsmm}}
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' gui_signal.hsmm()
 #'}
 

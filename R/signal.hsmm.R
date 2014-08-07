@@ -18,4 +18,7 @@
 #' summary(few_predictions[[1]])
 #' #plot one prediction
 #' plot(few_predictions[[1]])
+#' \donttest{
+#' gui_signal.hsmm()
+#' }
 NULL
