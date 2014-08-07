@@ -4,7 +4,7 @@
 #' semi-Markov models.
 #' 
 #' @description Implementing hidden semi-Markov model and novel approach to sequence
-#' analysis, signal.hsmm is new, highly accurate signal peptide predictor in eukaryotic
+#' analysis, signal.hsmm is new, highly accurate signal peptide predictor for eukaryotic
 #' proteins. 
 #' @importFrom seqinr read.fasta
 #' @importFrom shiny runApp
@@ -19,14 +19,3 @@
 #' #plot one prediction
 #' plot(few_predictions[[1]])
 NULL
-
-
-
-degenerate <- function(seq, aa_group) {
-  for (i in 1L:length(aa_group)) {
-    seq[seq %in% aa_group[[i]]] <- i
-  }
-  seq
-}
-
-

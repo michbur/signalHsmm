@@ -6,8 +6,8 @@
 run_signal.hsmm(test_data)
 }
 \arguments{
-\item{test_data}{single protein sequence or list of sequences. May be an object of
-class \code{\link[seqinr]{SeqFastaAA}}.}
+\item{test_data}{single protein sequence (\code{character} vector) or list of
+sequences. It may be an object of class \code{\link[seqinr]{SeqFastaAA}}.}
 }
 \value{
 An object of class \code{hsmm_pred_list}.
@@ -53,4 +53,5 @@ plot(x3[[1]])
 \seealso{
 \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}}
 }
+\keyword{classif}
 

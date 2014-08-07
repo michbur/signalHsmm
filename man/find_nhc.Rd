@@ -22,7 +22,7 @@ a vector of length 4 containing positions of:
 }
 }
 \description{
-A heuristic algorithm able to find borders between distinct regions
+A heuristic algorithm is able to find borders between distinct regions
 constituting signal peptides
 }
 \references{

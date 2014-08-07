@@ -1,24 +1,22 @@
-#viterbi
+#extended viterbi algorithm
 
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
   max.duration <- dim(params)[1]
   viterbi <- matrix(nrow=length(aa_sample), ncol = 4)
   psi <- matrix(nrow=length(aa_sample), ncol = 4)
   dura <- matrix(nrow=length(aa_sample), ncol = 4)
-  for(j in 1:4) {
+  for(j in 1L:4) {
     viterbi[1,j] <- log(pipar[j]) + log(od[j,aa_sample[1]])
     psi[1,j] <- 1
     dura[1,j] <- 1
   }  
   for(i in 2:length(aa_sample)){
-    for(j in 1:4){
+    for(j in 1L:4){
       max <- -Inf
       max.i <- 0
       max.dur <- 0 
-      for(k in 1:4){
-        for(d in 1:min(max.duration, i)){
-          # poprawka na wszystkie sygnaly
-          #rozpisac na zmienne temp - krok po kroku
+      for(k in 1L:4){
+        for(d in 1L:min(max.duration, i)){
           if(i - d == 0){
             if(j == 1){
               previous <- 1

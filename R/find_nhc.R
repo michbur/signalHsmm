@@ -2,7 +2,7 @@
 
 #' Localize n-, h- and c-region in signal peptide
 #'
-#' A heuristic algorithm able to find borders between distinct regions
+#' A heuristic algorithm is able to find borders between distinct regions
 #' constituting signal peptides 
 #'
 #' @param protein a vector of amino acids or object of class 
@@ -22,7 +22,7 @@
 #' @export
 
 
-#function to find n, h and c regions in signal peptide
+#function to find n-, h- and c- regions in signal peptide
 find_nhc <- function(protein, signal = NULL) {
   if (is.null(signal)) 
     signal <- attr(protein, "sig")

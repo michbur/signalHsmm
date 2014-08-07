@@ -1,15 +1,16 @@
 Package: signal.hsmm
 Type: Package
 Title: Predict presence of signal peptides
-Version: 0.0.1
+Version: 1.0
 LazyData: true
 Date: 2014-06-25
 Author: Michal Burdukiewicz, Piotr Sobczyk
 Maintainer: Michal Burdukiewicz <michalburdukiewicz@gmail.com>
-Description: The signal.hsmm is a package to predict presence of signal
-    peptides in eukaryotic protein. The analysis can be performed both in batch
-    mode or in GUI.
+Description: The signal.hsmm predicts presence of signal peptides in eukaryotic
+    protein using hidden semi-markov models. The analysis can be performed both
+    in batch mode or in GUI.
 License: GPL-3
+URL: https://github.com/michbur/signal.hsmm
 Depends:
     R (>= 3.0.0)
 Imports:

@@ -8,6 +8,7 @@
 #' @details Input file should contain one or more amino acid sequences separated by empty
 #' rows.
 #' @export
+#' @keywords manip
 
 read_txt <- function(connection) {
   content <- readLines(connection)

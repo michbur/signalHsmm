@@ -21,4 +21,5 @@ of signal.hsmm and other signal peptide predictors.
 \examples{
 summary(benchmark_dat)
 }
+\keyword{datasets}
 

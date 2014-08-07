@@ -19,4 +19,5 @@ Nothing.
 Plot objects of class \code{\link{hsmm_pred}}.
 }
 \keyword{hplot}
+\keyword{methods}
 

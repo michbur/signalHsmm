@@ -6,7 +6,7 @@
 \title{signal.hsmm - prediction of signal peptides}
 \description{
 Implementing hidden semi-Markov model and novel approach to sequence
-analysis, signal.hsmm is new, highly accurate signal peptide predictor in eukaryotic
+analysis, signal.hsmm is new, highly accurate signal peptide predictor for eukaryotic
 proteins.
 }
 \details{

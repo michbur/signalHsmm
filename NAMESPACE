@@ -3,6 +3,7 @@
 S3method(plot,hsmm_pred)
 S3method(summary,hsmm_pred)
 S3method(summary,hsmm_pred_list)
+export(degenerate)
 export(find_nhc)
 export(gui_signal.hsmm)
 export(pred2df)

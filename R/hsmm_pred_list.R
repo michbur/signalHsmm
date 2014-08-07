@@ -15,7 +15,7 @@ NULL
 #' @param ... ignored
 #' @return nothing.
 #' @export
-#' @keywords manip
+#' @keywords print methods manip
 
 summary.hsmm_pred_list <- function(object, ...) {
   res <- pred2df(object)

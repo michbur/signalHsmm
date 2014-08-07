@@ -24,7 +24,7 @@ NULL
 #' @param ... ignored.
 #' @return Nothing.
 #' @export
-#' @keywords hplot
+#' @keywords hplot methods
 
 plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
   plot(c(1, 50), c(1, 5), type="n", axes=F, ylab = "", xlab = "Amino acid index",
@@ -78,7 +78,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
 #' @param ... ignored
 #' @return Nothing.
 #' @export
-#' @keywords manip
+#' @keywords print methods
 
 summary.hsmm_pred <- function(object, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]

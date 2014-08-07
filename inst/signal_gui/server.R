@@ -8,6 +8,7 @@ options(shiny.maxRequestSize=10*1024^2)
 shinyServer(function(input, output) {
   
   prediction <- reactive({
+    
     if (!is.null(input[["seq_file"]]))
       res <- read_txt(input[["seq_file"]][["datapath"]])
     input[["use_area"]]
@@ -26,7 +27,8 @@ shinyServer(function(input, output) {
   
   output$dynamic_ui <- renderUI({
     if(class(try(prediction(), silent = TRUE)) == "try-error") {
-      div(actionButton("use_area", "Submit data from field on right..."),
+      div(tags$p("Waiting for valid input"),
+          actionButton("use_area", "Submit data from field on right..."),
           fileInput('seq_file', '...or choose .fasta or .txt file:'),
           tags$p("Queries bigger than 300 sequences will be not processed. 
                  Use batch mode instead."))
