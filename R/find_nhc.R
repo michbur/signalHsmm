@@ -2,8 +2,8 @@
 
 #' Localize n-, h- and c-region in signal peptide
 #'
-#' A heuristic algorithm is able to find borders between distinct regions
-#' constituting signal peptides 
+#' Finds borders between distinct regions constituting signal peptides using a heuristic
+#' algorithm.
 #'
 #' @param protein a vector of amino acids or object of class 
 #' \code{\link[seqinr]{SeqFastaAA}}

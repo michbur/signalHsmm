@@ -10,7 +10,7 @@
 #' @return An object of class \code{hsmm_pred_list}.
 #' @details Function \code{signal.hsmm} returns respectively probability of presence of 
 #' signal peptide, start of signal peptide and the probable cleavage site localization.
-#' If input consists from more than one sequence, result is a data.frame where each column
+#' If input consists of more than one sequence, result is a data.frame where each column
 #' contains above values for different proteins.
 #' @note Currently start of signal peptide is naively set as 1 amino acid.
 #' @export
@@ -158,7 +158,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 
 #' GUI for signal.hsmm
 #'
-#' A graphical user interface for predicting presence of signal peptides/
+#' A graphical user interface for predicting presence of signal peptides.
 #' @return null.
 #' @export
 #' @seealso \code{\link{run_signal.hsmm}}

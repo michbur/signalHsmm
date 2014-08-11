@@ -6,7 +6,7 @@
 read_txt(connection)
 }
 \arguments{
-\item{connection}{a \code{\link{connection}} to text file.}
+\item{connection}{a \code{\link{connection}} to the text (.txt) file.}
 }
 \value{
 a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
@@ -15,8 +15,8 @@ a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
 Read sequence data saved in text file.
 }
 \details{
-Input file should contain one or more amino acid sequences separated by empty
-rows.
+The input file should contain one or more amino acid sequences separated by
+empty rows.
 }
 \keyword{manip}
 

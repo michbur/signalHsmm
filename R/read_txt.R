@@ -2,11 +2,11 @@
 #'
 #' Read sequence data saved in text file.
 #'
-#' @param connection a \code{\link{connection}} to text file.
+#' @param connection a \code{\link{connection}} to the text (.txt) file.
 #' @keywords manip
 #' @return a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
-#' @details Input file should contain one or more amino acid sequences separated by empty
-#' rows.
+#' @details The input file should contain one or more amino acid sequences separated by 
+#' empty rows.
 #' @export
 #' @keywords manip
 

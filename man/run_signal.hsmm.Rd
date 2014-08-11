@@ -19,7 +19,7 @@ eukaryotic proteins.
 \details{
 Function \code{signal.hsmm} returns respectively probability of presence of
 signal peptide, start of signal peptide and the probable cleavage site localization.
-If input consists from more than one sequence, result is a data.frame where each column
+If input consists of more than one sequence, result is a data.frame where each column
 contains above values for different proteins.
 }
 \note{

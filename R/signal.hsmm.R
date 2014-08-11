@@ -3,7 +3,7 @@
 #' signal.hsmm predicts presence of signal peptides using the hidden
 #' semi-Markov models.
 #' 
-#' @description Implementing hidden semi-Markov model and novel approach to sequence
+#' @description Implementing hidden semi-Markov model and a novel approach to sequence
 #' analysis, signal.hsmm is new, highly accurate signal peptide predictor for eukaryotic
 #' proteins. 
 #' @importFrom seqinr read.fasta
@@ -18,6 +18,8 @@
 #' summary(few_predictions[[1]])
 #' #plot one prediction
 #' plot(few_predictions[[1]])
+#' 
+#' #have fun with GUI
 #' \donttest{
 #' gui_signal.hsmm()
 #' }
