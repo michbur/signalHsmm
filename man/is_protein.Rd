@@ -12,6 +12,6 @@ is_protein(object)
 \code{TRUE} or \code{FALSE}.
 }
 \description{
-Checks if an object is a protein.
+Checks if an object is a protein (contains letters from one-letter amino acid code).
 }
 

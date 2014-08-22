@@ -3,12 +3,10 @@
 
 \begin{document}
 
-<!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{signal.hsmm Benchmarks and Supplementary Materials}
 %\VignetteDepends{signal.hsmm}
 %\VignettePackage{signal.hsmm}
--->
 
 \tableofcontents
 
