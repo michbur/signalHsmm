@@ -17,7 +17,7 @@ NULL
 
 #' Plot single signal.hsmm prediction
 #'
-#' Plot objects of class \code{\link{hsmm_pred}}.
+#' Plots objects of class \code{\link{hsmm_pred}}.
 #'
 #' @param x object of class \code{\link{hsmm_pred}}.
 #' @param add_legend logical, if \code{TRUE}, legend is added to the plot.
@@ -86,6 +86,8 @@ summary.hsmm_pred <- function(object, ...) {
   cat(paste0(object[["name"]], "\n"))
   cat(paste0("Probability of signal peptide presence: ", 
              format(object[["sp_probability"]], digits = 4), "\n"))
+  cat(paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
+      "detected.\n"))
   cat(paste0("Start of signal peptide: ", object[["sp_start"]], "\n"))
   cat(paste0("End of signal peptide: ", object[["sp_end"]], "\n"))
   cat(paste0("n-region (length ", struc[1], "):\n"))

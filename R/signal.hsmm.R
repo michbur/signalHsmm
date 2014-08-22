@@ -6,7 +6,7 @@
 #' @description Implementing hidden semi-Markov model and a novel approach to sequence
 #' analysis, signal.hsmm is new, highly accurate signal peptide predictor for eukaryotic
 #' proteins. 
-#' @importFrom seqinr read.fasta
+#' @importFrom seqinr read.fasta a
 #' @importFrom shiny runApp
 #' @docType package
 #' @name signal.hsmm

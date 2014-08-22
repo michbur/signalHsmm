@@ -124,6 +124,9 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
     if (length(prot) == 1)
       stop("Input sequence is too short.")
   }
+  if(!is_protein(prot))
+    stop("Atypical aminoacids detected, analysis cannot be performed.")
+  
   deg_sample <- as.numeric(degenerate(toupper(prot)[1L:50], aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)

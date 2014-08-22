@@ -16,7 +16,7 @@
 Nothing.
 }
 \description{
-Plot objects of class \code{\link{hsmm_pred}}.
+Plots objects of class \code{\link{hsmm_pred}}.
 }
 \keyword{hplot}
 \keyword{methods}
