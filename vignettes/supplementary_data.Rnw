@@ -88,7 +88,7 @@ After succesfull submission and analysis, panel "Data input" contains quick summ
 tabAminokwasow = function(aminokwasy, nazwyGrupy, ...) {
   tab = cbind(data.frame(1:length(aminokwasy)), data.frame(sapply(aminokwasy, function(x) paste(x, collapse=", "))))
   dimnames(tab) = list(nazwyGrupy, c("Group", "Amino acids"))
-  return(xtable(tab, align = c("r", "c", "l"), ...))
+  xtable(tab, align = c("r", "c", "l"), ...)
 }
 
 library(xtable)

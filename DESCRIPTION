@@ -19,7 +19,8 @@ Imports:
 Suggests:
     knitr,
     markdown,
-    shinyAce
+    shinyAce,
+    xtable
 VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
