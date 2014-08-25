@@ -1,6 +1,15 @@
 signal.hsmm - report
 ========================================================
 
+```{r,results='asis',echo=FALSE}
+file_name <- ifelse(is.null(input[["seq_file"]][["name"]]), "none",
+                    input[["seq_file"]][["name"]])
+cat("**Input file name**: ", file_name, "\n\n")
+cat(paste0("**Date**: ", Sys.time()), "\n\n")
+
+```
+
+
 ```{r, echo=FALSE}
 for (i in prediction()) {
   summary(i)

@@ -9,10 +9,8 @@ shinyUI(fluidPage(
   
   sidebarLayout(
   sidebarPanel(
-    tags$div(class="header", checked=NA,
-             tags$p("signal.hsmm detects signal peptides in eukaryotic proteins.")),
-    tags$p(" "),
-    uiOutput("dynamic_ui")
+    uiOutput("dynamic_ui"),
+    includeMarkdown("readme.md")
   ),
   
   mainPanel(
