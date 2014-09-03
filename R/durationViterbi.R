@@ -14,42 +14,46 @@
 #'         values of probability in all intermediate points (\emph{viterbi}),
 #'         matrix that for every signal and state gives the previous state in viterbi path (\emph{psi}),
 #'         matrix that for every signal and state gives the duration in that state on viterbi path(\emph{duration})
-#' @note Currently has very restricted application to specific input
+#' @note Currently has very restricted application to specific input. All computations are on logarithms of probabilities
 
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
   max.duration <- dim(params)[1]
-  viterbi <- matrix(nrow=length(aa_sample), ncol = 4)
-  psi <- matrix(nrow=length(aa_sample), ncol = 4)
-  dura <- matrix(nrow=length(aa_sample), ncol = 4)
+  viterbi <- matrix(nrow=length(aa_sample), ncol = 4) #probabiliy values for viterbi path that ends in specific state and signal
+  psi <- matrix(nrow=length(aa_sample), ncol = 4) #the previous state for viterbi path that ends in specific state and signal
+  dura <- matrix(nrow=length(aa_sample), ncol = 4) #the current duration for viterbi path that ends in specific state and signal
+  #first signal is treated seperately
   for(j in 1L:4) {
     viterbi[1,j] <- log(pipar[j]) + log(od[j,aa_sample[1]])
     psi[1,j] <- 1
     dura[1,j] <- 1
   }  
   for(i in 2:length(aa_sample)){
+    #For each state we will compute the probability of the viterbi path that ends in that state
     for(j in 1L:4){
       max <- -Inf
-      max.i <- 0
-      max.dur <- 0 
+      max.i <- 0 #previous state that is maximising probability
+      max.dur <- 0  #duration that is maximising probability
       for(k in 1L:4){
         for(d in 1L:min(max.duration, i)){
-          if(i - d == 0){
-            if(j == 1){
+          # for every possible previous state, and for every possible duration in current state
+          if(i - d == 0){ #if duration is as long as number of signal considered
+            if(j == 1){ #only first state is accepted
               previous <- 1
               transition <- 1
             }
-            else{
+            else{ #other states are discarded with log-probability -Inf
               previous <- -Inf
               transition <- 1
             }
           }
-          else{
-            previous <- viterbi[i - d, k]
-            transition <- log(tpmpar[k, j])
+          else{ #there is some previous state
+            previous <- viterbi[i - d, k] #previous probability on this viterbi path
+            transition <- log(tpmpar[k, j]) #probability of transition to current state from prevois state
           }
-          duration <- log(params[d, j])
-          responses <- sum(log(od[j, aa_sample[(i - d + 1):i]]))
-          if(previous + transition + duration + responses > max){
+          duration <- log(params[d, j]) #probability of duration that lasts time d
+          responses <- sum(log(od[j, aa_sample[(i - d + 1):i]])) #probability of generating d signal in current state
+          if(previous + transition + duration + responses > max){ 
+            #if that path is better than the best yet found store it
             max <- previous + transition + duration + responses
             max.i <- k
             max.dur <- d
@@ -57,20 +61,23 @@ duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
         }
         
       }
-      viterbi[i, j] <- max
+      #assign information about the best path that ends on signal i and state j
+      viterbi[i, j] <- max 
       psi[i, j] <- max.i
       dura[i, j] <- max.dur
     }  
   }
+  #now we extract information about the path. We look for the most probable path
   path <- NULL
+  #the last state
   path[length(aa_sample)] <- which.max(viterbi[length(aa_sample),])
   i <- length(aa_sample) - 1
   last <- length(aa_sample)
   while(i > 1){
-    if(last - i < dura[last, path[last]]){
+    if(last - i < dura[last, path[last]]){ #we are still in the same state
       path[i] <- path[last]
     }
-    else{
+    else{ #time to change the state for the previous, stored in matrix psi
       path[i] <- psi[last, path[last]]
       last <- i
     }
