@@ -1,5 +1,9 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{graphics}
+\usepackage{booktabs}
+\usepackage{colortbl, xcolor}
+
 
 \begin{document}
 
@@ -32,7 +36,8 @@ Typical signal peptide contains following regions~\cite{voss_mechanism_2013, jai
 
 \section{Graphical User Interface} 
 
-signal.hsmm can be used in batch mode as any other R package, but for convinience of users graphical user interface is also avaible. The GUI can be accessed directly on the web page ADDRESS or from R using command: gui\_{}signal.hsmm\({}\){}. It is powered by the shiny package and uses functions accessible in signal.hsmm package. Starting GUI directly from R requires additional packages: shinyAce, markdown and knitr.
+signal.hsmm can be used in batch mode as any other R package, but for convinience of users graphical user interface is also avaible. The GUI can be accessed directly on the web page
+https://michbur.shinyapps.io/signalhsmm/ or from R using command: gui\_{}signal.hsmm\({}\){}. It is powered by the shiny package and uses functions accessible in signal.hsmm package. Starting GUI directly from R requires additional packages: shinyAce, markdown and knitr.
 
 \begin{figure}[ht]
 \caption{signal.hsmm gui welcome screen. Data is already pasted into submit text area.}
@@ -97,6 +102,7 @@ aa5 = list('1' = c("K", "R", "H"),
 print(tabAminokwasow(aa5, c("Positively charged", "Nonpolar and aliphatic",
                             "Polar and uncharged", "Negatively charged and nonpolar"),
                      caption = "Classification of amino acids used by signal.hsmm."))
+load("pub_evaluation.RData")
 @
 
 \section{Performance measures}
@@ -113,162 +119,92 @@ Test set size: 120 proteins with signal peptide, 120 proteins without signal pep
 
 Results: table~\ref{monteCarlo}.
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rlr}
-  \hline
- & Name & value \\ 
-  \hline
-AUC & Area Under the Curve & 0.9655 \\ 
-  H & H-measure & 0.7945 \\ 
-  MCC & Matthews Correlation Coefficient & 0.8265 \\ 
-  Gini & Gini coefficient & 0.9309 \\ 
-  AUCH & Area Under the Convex Hull & 0.9727 \\ 
-  KS & Kolmogorov-Smirnoff statistic & 0.8512 \\ 
-  MER & Minimum Error Rate & 0.0744 \\ 
-  MWL & Minimum cost-Weighted Error Rate & 0.0744 \\ 
-  ER & Error Rate & 0.0873 \\ 
-  Sens & Sensitivity & 0.8946 \\ 
-  Spec & Specificity & 0.9308 \\ 
-  Precision & Precision & 0.9287 \\ 
-  Recall & Recall & 0.8946 \\ 
-  TPR & True Positive Rate & 0.8946 \\ 
-  FPR & False Positive Rate & 0.0692 \\ 
-  F & F-score & 0.9110 \\ 
-  Youden & Youden's index & 0.8254 \\ 
-  TP & True Positives & 107.3480 \\ 
-  FP & False Positives & 8.3030 \\ 
-  TN & True Negatives & 111.6970 \\ 
-  FN & False Negatives & 12.6520 \\ 
-   \hline
-   
-\end{tabular}
-\caption{Mean performance measures of signal.hsmm in random sub-sampling validation.}
-\label{monteCarlo}
-\end{table}
+<<echo = FALSE,message=FALSE,results='asis'>>=
+dat <- data.frame(colMeans(thousand_reps_measur))
+dat <- cbind(rownames(dat), dat)
+rws <- seq(1, nrow(dat), by = 2)
+colour <- rep("\\rowcolor[gray]{0.85}", length(rws))
+colnames(dat) <- c("Performance measure", "Value")
+print(xtable(dat, caption = "Mean performance measures of signal.hsmm in random sub-sampling validation.", label = "monteCarlo", align = "lcl"), include.rownames = FALSE,
+      add.to.row = list(pos = as.list(rws), command = colour),
+      booktabs = TRUE)
+@  
+
+
 
 
 
 \subsection{Comparision with other predictors}
 
 \begin{table}
-    \begin{tabular}{lll}
-    \hline
-    Classifier name  & Size of train data & Proteins added before year: \\ \hline
-    signal.hsmm-2010 & 3676               & 2010                        \\
-    signal.hsmm-2004 & 3086               & 2004                        \\
-    signal.hsmm-1997 & 2473               & 1997                        \\
-    signal.hsmm-1990 & 1189               & 1990                        \\
-    signal.hsmm-1987 & 496                & 1987                        \\    
-    \end{tabular}
+\begin{tabular}{ccc}
+\hline
+\rowcolor{white!100}
+Classifier name  & Size of train data & Proteins added before year  \\ \hline
+signal.hsmm-2010 & 3676               & 2010                        \\
+signal.hsmm-2004 & 3086               & 2004                        \\
+signal.hsmm-1997 & 2473               & 1997                        \\
+signal.hsmm-1990 & 1189               & 1990                        \\
+signal.hsmm-1987 & 496                & 1987                        \\    
+\end{tabular}
 \caption{Full table of training data sets used in training different instances of signal.hsmm.}
 \label{learningSets}
 \end{table}
 
 All measures, with the exception for Matthews Correlation Coefficient, were calculated using the hmeasure package.
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrrrrr}
-  \hline
- & AUC & H & MCC & Gini & AUCH & KS \\ 
-  \hline
-SignalP 4.1 (no tm)~\cite{petersen_signalp_2011} & 0.9679 & 0.8909 & 0.9179 & 0.9357 & 0.9679 & 0.9357 \\ 
-  SignalP 4.1 (tm)~\cite{petersen_signalp_2011} & 0.9750 & 0.9261 & 0.9517 & 0.9500 & 0.9750 & 0.9500 \\ 
-  SignalP 3.0 (nn)~\cite{DyrlovBendtsen2004783} & 0.9589 & 0.8591 & 0.8943 & 0.9179 & 0.9589 & 0.9179 \\ 
-  SignalP 3.0 (hmm)~\cite{DyrlovBendtsen2004783} & 0.9643 & 0.8813 & 0.9122 & 0.9286 & 0.9643 & 0.9286 \\ 
-  PrediSi~\cite{hiller_predisi:_2004} & 0.9411 & 0.8238 & 0.8821 & 0.8821 & 0.9411 & 0.8821 \\ 
-  Phobius~\cite{kall_combined_2004} & 0.9643 & 0.8844 & 0.9163 & 0.9286 & 0.9643 & 0.9286 \\ 
-  PredTat~\cite{bagos_combined_2010} & 0.9000 & 0.7368 & 0.8528 & 0.8000 & 0.9000 & 0.8000 \\ 
-  Philius~\cite{reynolds_transmembrane_2008} & 0.9661 & 0.8908 & 0.9213 & 0.9321 & 0.9661 & 0.9321 \\ 
-  signal-hsmm-2010 & 0.9893 & 0.8963 & 0.8734 & 0.9786 & 0.9918 & 0.9250 \\ 
-  signal-hsmm-2004 & 0.9891 & 0.8967 & 0.8689 & 0.9782 & 0.9917 & 0.9250 \\ 
-  signal-hsmm-1997 & 0.9890 & 0.8938 & 0.8643 & 0.9780 & 0.9915 & 0.9250 \\ 
-  signal-hsmm-1990 & 0.9889 & 0.8994 & 0.8689 & 0.9778 & 0.9914 & 0.9321 \\ 
-  signal-hsmm-1987 & 0.9882 & 0.9035 & 0.8827 & 0.9764 & 0.9913 & 0.9357 \\ 
-   \hline
-\end{tabular}
+<<echo = FALSE,message=FALSE,results='asis'>>=
+citations <- c("~\\cite{petersen_signalp_2011}",
+  "~\\cite{petersen_signalp_2011}",
+  "~\\cite{DyrlovBendtsen2004783}",
+  "~\\cite{DyrlovBendtsen2004783}",
+  "~\\cite{hiller_predisi:_2004}",
+  "~\\cite{kall_combined_2004}",
+  "~\\cite{bagos_combined_2010}",
+  "~\\cite{reynolds_transmembrane_2008}")
+comp_tab <- measures[c(1L:length(citations), 9, 13), c("AUC", "H", "MCC", 
+                                                       "AUCH", "KS")]
+nice_tab <- comp_tab
+rownames(nice_tab)[1L:length(citations)] <- paste0(rownames(nice_tab)[1L:length(citations)], citations)
+print(xtable(nice_tab[-(3:4), ], align = "rccccc", caption = "Comparison of Area Under the Curve, H-measure, Matthews Correlation Coefficient,  Area Under the Convex Hull and Kolmogorov-Smirnoff statistic for different classifiers."), 
+      sanitize.rownames.function = function(x) x)
+@
 
-\caption{Comparison of Area Under the Curve, H-measure, Matthews Correlation Coefficient,  Gini coefficient, Area Under the Convex Hull and Kolmogorov-Smirnoff statistic for different classifiers.}
-\end{table}
+<<echo = FALSE,message=FALSE,results='asis'>>=
+comp_tab <- measures[c(1L:length(citations), 9, 13), c("Recall", "Sens", "Spec", "Precision")]
+nice_tab <- comp_tab
+rownames(nice_tab)[1L:length(citations)] <- paste0(rownames(nice_tab)[1L:length(citations)], citations)
+print(xtable(nice_tab[-(3:4), ], align = "rcccc", caption = "Comparison of recall, sensitivity, specificity and precision for different classifiers."), sanitize.rownames.function = function(x) x)
+@
 
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrrrrr}
-  \hline
- & MER & MWL & ER & Sens & Spec & Precision \\ 
-  \hline
-SignalP 4.1 (no tm) & 0.0381 & 0.0286 & 0.0381 & 0.9857 & 0.9500 & 0.9079 \\ 
-  SignalP 4.1 (tm) & 0.0214 & 0.0222 & 0.0214 & 0.9643 & 0.9857 & 0.9712 \\ 
-  SignalP 3.0 (nn) & 0.0500 & 0.0365 & 0.0500 & 0.9857 & 0.9321 & 0.8790 \\ 
-  SignalP 3.0 (hmm) & 0.0405 & 0.0317 & 0.0405 & 0.9786 & 0.9500 & 0.9073 \\ 
-  PrediSi & 0.0524 & 0.0524 & 0.0524 & 0.9214 & 0.9607 & 0.9214 \\ 
-  Phobius & 0.0381 & 0.0317 & 0.0381 & 0.9714 & 0.9571 & 0.9189 \\ 
-  PredTat & 0.0667 & 0.0889 & 0.0667 & 0.8000 & 1.0000 & 1.0000 \\ 
-  Philius & 0.0357 & 0.0302 & 0.0357 & 0.9714 & 0.9607 & 0.9252 \\ 
-  signal-hsmm-2010 & 0.0357 & 0.0333 & 0.0595 & 0.9714 & 0.9250 & 0.8662 \\ 
-  signal-hsmm-2004 & 0.0333 & 0.0333 & 0.0619 & 0.9714 & 0.9214 & 0.8608 \\ 
-  signal-hsmm-1997 & 0.0357 & 0.0333 & 0.0643 & 0.9714 & 0.9179 & 0.8553 \\ 
-  signal-hsmm-1990 & 0.0333 & 0.0302 & 0.0619 & 0.9714 & 0.9214 & 0.8608 \\ 
-  signal-hsmm-1987 & 0.0333 & 0.0286 & 0.0548 & 0.9714 & 0.9321 & 0.8774 \\ 
-   \hline
-\end{tabular}
-\caption{Comparison of Minimum Error Rate, Minimum cost-Weighted Error Rate, Error Rate, sensitivity, specificity and precision for different classifiers.}
-\end{table}
+<<echo = FALSE,message=FALSE,results='asis'>>=
+comp_tab <- measures[c(1L:length(citations), 9, 13), c("Gini", "MER", "MWL", "ER")]
+nice_tab <- comp_tab
+rownames(nice_tab)[1L:length(citations)] <- paste0(rownames(nice_tab)[1L:length(citations)], citations)
+print(xtable(nice_tab[-(3:4), ], align = "rcccc", caption = "Comparison of Gini coefficient, Minimum Error Rate, Minimum cost-Weighted Error Rate and Error Rate for different classifiers."), sanitize.rownames.function = function(x) x)
+@
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrrrr}
-  \hline
- & Recall & TPR & FPR & F & Youden \\ 
-  \hline
-SignalP 4.1 (no tm) & 0.9857 & 0.9857 & 0.0500 & 0.9452 & 0.9357 \\ 
-  SignalP 4.1 (tm) & 0.9643 & 0.9643 & 0.0143 & 0.9677 & 0.9500 \\ 
-  SignalP 3.0 (nn) & 0.9857 & 0.9857 & 0.0679 & 0.9293 & 0.9179 \\ 
-  SignalP 3.0 (hmm) & 0.9786 & 0.9786 & 0.0500 & 0.9416 & 0.9286 \\ 
-  PrediSi & 0.9214 & 0.9214 & 0.0393 & 0.9214 & 0.8821 \\ 
-  Phobius & 0.9714 & 0.9714 & 0.0429 & 0.9444 & 0.9286 \\ 
-  PredTat & 0.8000 & 0.8000 & 0.0000 & 0.8889 & 0.8000 \\ 
-  Philius & 0.9714 & 0.9714 & 0.0393 & 0.9477 & 0.9321 \\ 
-  signal-hsmm-2010 & 0.9714 & 0.9714 & 0.0750 & 0.9158 & 0.8964 \\ 
-  signal-hsmm-2004 & 0.9714 & 0.9714 & 0.0786 & 0.9128 & 0.8929 \\ 
-  signal-hsmm-1997 & 0.9714 & 0.9714 & 0.0821 & 0.9097 & 0.8893 \\ 
-  signal-hsmm-1990 & 0.9714 & 0.9714 & 0.0786 & 0.9128 & 0.8929 \\ 
-  signal-hsmm-1987 & 0.9714 & 0.9714 & 0.0679 & 0.9220 & 0.9036 \\ 
-   \hline
-\end{tabular}
-\caption{Comparison of recall, True Positive Rate, False Positive Rate, F-score and Youden's index for different classifiers.}
-\end{table}
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrrr}
-  \hline
- & TP & FP & TN & FN \\ 
-  \hline
-SignalP 4.1 (no tm) &   138 &    14 &   266 &     2 \\ 
-  SignalP 4.1 (tm) &   135 &     4 &   276 &     5 \\ 
-  SignalP 3.0 (nn) &   138 &    19 &   261 &     2 \\ 
-  SignalP 3.0 (hmm) &   137 &    14 &   266 &     3 \\ 
-  PrediSi &   129 &    11 &   269 &    11 \\ 
-  Phobius &   136 &    12 &   268 &     4 \\ 
-  PredTat &   112 &     0 &   280 &    28 \\ 
-  Philius &   136 &    11 &   269 &     4 \\ 
-  signal-hsmm-2010 &   136 &    21 &   259 &     4 \\ 
-  signal-hsmm-2004 &   136 &    22 &   258 &     4 \\ 
-  signal-hsmm-1997 &   136 &    23 &   257 &     4 \\ 
-  signal-hsmm-1990 &   136 &    22 &   258 &     4 \\ 
-  signal-hsmm-1987 &   136 &    19 &   261 &     4 \\ 
-   \hline
-\end{tabular}
-\caption{Comparison of number of True Positives, False Positives, True Negatives and False Negatives for different classifiers.}
-\end{table}
+<<echo = FALSE,message=FALSE,results='asis'>>=
+comp_tab <- measures[c(1L:length(citations), 9, 13), c("TPR", "FPR", "F", "Youden")]
+nice_tab <- comp_tab
+rownames(nice_tab)[1L:length(citations)] <- paste0(rownames(nice_tab)[1L:length(citations)], citations)
+print(xtable(nice_tab[-(3:4), ], align = "rcccc", caption = "Comparison of True Positive Rate, False Positive Rate, F-score and Youden's index for different classifiers."), sanitize.rownames.function = function(x) x)
+@
+
+<<echo = FALSE,message=FALSE,results='asis'>>=
+comp_tab <- measures[c(1L:length(citations), 9, 13), c("TP", "FP", "TN", "FN")]
+nice_tab <- comp_tab
+rownames(nice_tab)[1L:length(citations)] <- paste0(rownames(nice_tab)[1L:length(citations)], citations)
+print(xtable(nice_tab[-(3:4), ], align = "rcccc", caption = "Comparison of number of True Positives, False Positives, True Negatives and False Negatives for different classifiers."), sanitize.rownames.function = function(x) x)
+@
+
+
 
 \clearpage
 
 \bibliographystyle{plain}
-
 \bibliography{document}
 
 \end{document}

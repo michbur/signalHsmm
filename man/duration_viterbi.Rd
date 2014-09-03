@@ -31,6 +31,6 @@ Viterbi algorithm for Hidden Markov Model with duration
 Valid only for special case on data
 }
 \note{
-Currently has very restricted application to specific input
+Currently has very restricted application to specific input All computations are on logarithms of probabilities
 }
 
