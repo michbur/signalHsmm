@@ -138,21 +138,9 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   #get probabilities of signal peptide model
   prob.signal <- viterbi_res[["viterbi"]][c_site, viterbi_path[c_site]]
   #get probabilities of no signal peptide model
-<<<<<<< HEAD:R/run_signal.hsmm.R
-<<<<<<< HEAD:R/signalhsmm.R
-  prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1:c_site], 0) 
-  temp <- exp(prob.signal-prob.non)
-  res <- list(sp_probability = 1-1/(1+temp), 
-=======
   prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1L:c_site], 0)
   prob.total <- exp(prob.signal - prob.non)
-  res <- list(sp_probability = unname(1 - 1/(1 + prob.total)), 
->>>>>>> b3a7e7cedb99a15977046b7bb8b699cddc776779:R/run_signal.hsmm.R
-=======
-  prob.non <- Reduce(function(x, y) x + overall_probs_log[y], deg_sample[1L:c_site], 0)
-  prob.total <- exp(prob.signal - prob.non)
-  res <- list(sp_probability = unname(1 - 1/(1 + prob.total)), 
->>>>>>> b3a7e7cedb99a15977046b7bb8b699cddc776779:R/run_signal.hsmm.R
+  res <- list(sp_probability = unname(1 - 1/(1 + prob.total)),
               sp_start = 1,
               sp_end = c_site,
               struc = viterbi_path,

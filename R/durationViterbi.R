@@ -1,4 +1,20 @@
-#extended viterbi algorithm
+#' Compute most probable path with extended Viterbi algorithm
+#' 
+#' Viterbi algorithm for Hidden Markov Model with duration
+#' Valid only for special case on data
+#' 
+#' @param aa_sample single protein sequence (\code{character} vector)
+#' @param pipar Probabilities of initial state in Markov Model
+#' @param tpmpar Matrix with transition probabilities between states
+#' @param od Matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1
+#' @param params Matrix of probability distribution for duration. 
+#'              Eg. params[10,2] is probability of duration of time 10 in state 2
+#' 
+#' @return A list with most probable path (\empf{path},
+#'         values of probability in all intermediate points (\emph{viterbi}),
+#'         matrix that for every signal and state gives the previous state in viterbi path (\emph{psi}),
+#'         matrix that for every signal and state gives the duration in that state on viterbi path(\emph{duration})
+#' @note Currently has very restricted application to specific input
 
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
   max.duration <- dim(params)[1]
