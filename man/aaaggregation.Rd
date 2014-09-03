@@ -9,6 +9,7 @@ aaaggregation
 }
 \description{
 Amino acids are grouped together in larger sets based on their
-physicochemical properties important in  therecognition of signal peptide.
+physicochemical properties important in  the recognition of signal peptide.
 }
+\keyword{datasets}
 

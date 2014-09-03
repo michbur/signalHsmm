@@ -5,8 +5,8 @@
 \alias{signal.hsmm-package}
 \title{signal.hsmm - prediction of signal peptides}
 \description{
-Implementing hidden semi-Markov model and novel approach to sequence
-analysis, signal.hsmm is new, highly accurate signal peptide predictor in eukaryotic
+Implementing hidden semi-Markov model and a novel approach to sequence
+analysis, signal.hsmm is new, highly accurate signal peptide predictor for eukaryotic
 proteins.
 }
 \details{
@@ -21,5 +21,10 @@ pred2df(few_predictions)
 summary(few_predictions[[1]])
 #plot one prediction
 plot(few_predictions[[1]])
+
+#have fun with GUI
+\donttest{
+gui_signal.hsmm()
+}
 }
 

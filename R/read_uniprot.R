@@ -1,64 +1,15 @@
-#READ UNIPROT DATA -----------------------------
-#helper function to get seqs from  .txt files
-preliminary_seqs <- function(all_lines, signal) {
-  prot_ids <- grep("\\<ID   ", all_lines)
-  seqs_start <- grep("\\<SQ   ", all_lines) + 1
-  seqs_end <-  grep("^//", all_lines) - 1
-  #test if protein has information regarding signal
-  
-  prot_sig <- rep(NA, length(prot_ids))
-  
-  if (signal) {
-    signals <- grep("FT   SIGNAL", all_lines)
-    all_ids <- sort(c(prot_ids, signals), method = "quick")
-    prot_sig[which(all_ids %in% signals) - 1L:length(signals)] <- signals
-  }
-  
-  rbind(prot_ids, seqs_start, seqs_end, prot_sig)
-}
-
-#removes proteins with probable or potential signal peptides
-#removes proteins without cleavage site for signalase
-#return indices of proteins which surely have signal peptide
-remove_unsure <- function(all_lines, all_seqs) {
-  signals <- all_seqs[4, ]
-  #remove with unknown signal peptide end
-  (1L:ncol(all_seqs))[-unique(unlist(lapply(c(">", "<1", "?", "Or "), function(pattern) 
-    grep(pattern, all_lines[signals], fixed = TRUE))))]
-}
-
-#proteins not encoded in nucleus
-remove_nonnuclear <- function(all_lines, all_seqs) {
-  nucl <- grep("OG   ", all_lines)
-  all_ids <- sort(c(all_seqs[1, ], nucl), method = "quick")
-  setdiff(1L:ncol(all_seqs), which(all_ids %in% nucl) - 1L:length(nucl))
-}
-
-#removes noncleavable seqs
-remove_notcleaved <- function(all_lines, all_seqs) {
-  not_cleaved <- grep("Not cleaved", all_lines)
-  all_ids <- sort(c(all_seqs[1, ], not_cleaved), method = "quick")
-  setdiff(1L:ncol(all_seqs), which(all_ids %in% not_cleaved) - 1L:length(not_cleaved))
-}
-
-
-#remove seqs with atypical and/or not identified aas
-get_atyp <- function(list_prots) {
-  which(colSums(sapply(list_prots, function(prot) 
-    sapply(c("B", "U", "X", "Z"), function(atyp_aa)
-      atyp_aa %in% prot))) > 0)
-}
-
 #' Read data from UniProt database
 #'
 #' Read data saved in UniProt original flat text format.
 #'
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
-#' @param euk logical value if data has eukaryotic origin.
+#' @param euk logical value if data has an eukaryotic origin.
 #' @keywords manip
 #' @return a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
-#' Slot \code{sig} contains the range of signal peptide.
+#' Slot \code{sig} contains the range of signal peptide. Sequence with more than one
+#' cleavage site or atypical aminoacids are removed.
 #' @export
+#' @keywords manip
 
 read_uniprot <- function(connection, euk) {
   
@@ -111,3 +62,60 @@ read_uniprot <- function(connection, euk) {
     list_prots
   }
 }
+
+
+
+
+
+
+#READ UNIPROT DATA -----------------------------
+#helper function to get seqs from  .txt files
+preliminary_seqs <- function(all_lines, signal) {
+  prot_ids <- grep("\\<ID   ", all_lines)
+  seqs_start <- grep("\\<SQ   ", all_lines) + 1
+  seqs_end <-  grep("^//", all_lines) - 1
+  #test if protein has information regarding signal
+  
+  prot_sig <- rep(NA, length(prot_ids))
+  
+  if (signal) {
+    signals <- grep("FT   SIGNAL", all_lines)
+    all_ids <- sort(c(prot_ids, signals), method = "quick")
+    prot_sig[which(all_ids %in% signals) - 1L:length(signals)] <- signals
+  }
+  
+  rbind(prot_ids, seqs_start, seqs_end, prot_sig)
+}
+
+#removes proteins with probable or potential signal peptides
+#removes proteins without cleavage site for signalase
+#return indices of proteins which surely have signal peptide
+remove_unsure <- function(all_lines, all_seqs) {
+  signals <- all_seqs[4, ]
+  #remove with unknown signal peptide end
+  (1L:ncol(all_seqs))[-unique(unlist(lapply(c(">", "<1", "?", "Or "), function(pattern) 
+    grep(pattern, all_lines[signals], fixed = TRUE))))]
+}
+
+#proteins not encoded in nucleus
+remove_nonnuclear <- function(all_lines, all_seqs) {
+  nucl <- grep("OG   ", all_lines)
+  all_ids <- sort(c(all_seqs[1, ], nucl), method = "quick")
+  setdiff(1L:ncol(all_seqs), which(all_ids %in% nucl) - 1L:length(nucl))
+}
+
+#removes noncleavable seqs
+remove_notcleaved <- function(all_lines, all_seqs) {
+  not_cleaved <- grep("Not cleaved", all_lines)
+  all_ids <- sort(c(all_seqs[1, ], not_cleaved), method = "quick")
+  setdiff(1L:ncol(all_seqs), which(all_ids %in% not_cleaved) - 1L:length(not_cleaved))
+}
+
+
+#remove seqs with atypical and/or not identified aas
+get_atyp <- function(list_prots) {
+  which(colSums(sapply(list_prots, function(prot) 
+    sapply(c("B", "U", "X", "Z"), function(atyp_aa)
+      atyp_aa %in% prot))) > 0)
+}
+

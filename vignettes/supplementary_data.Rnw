@@ -1,0 +1,274 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{signal.hsmm Benchmarks and Supplementary Materials}
+%\VignetteDepends{signal.hsmm}
+%\VignettePackage{signal.hsmm}
+
+\tableofcontents
+
+
+\section{Signal peptide structure}
+\begin{figure}[ht]
+\caption{Schematic organization of signal peptide structure.}
+\centering
+\scalebox{0.4}{
+\includegraphics{SP.png}
+}
+\end{figure}
+
+%maybe we should go with lengths calculated on our data set – 0.05 quantile, 0.95 quantile
+Typical signal peptide contains following regions~\cite{voss_mechanism_2013, jain_signal_1994}:
+\begin{itemize}
+\item n-region (5-8 residues long, mostly basic residues), 
+\item h-region (8-12 residues long, strongly hydrophobic residues),
+\item c-region (usually 6 residues long, few polar and uncharged residues),
+\item cleavage site (a very variable protein composition, but typically at -3 and -1 positions small, neutral residuals).
+\end{itemize}
+%note to self – nielsen's heuristic algorithm makes overlapping c-region and cleavage site
+
+\section{Graphical User Interface} 
+
+signal.hsmm can be used in batch mode as any other R package, but for convinience of users graphical user interface is also avaible. The GUI can be accessed directly on the web page ADDRESS or from R using command: gui\_{}signal.hsmm\({}\){}. It is powered by the shiny package and uses functions accessible in signal.hsmm package. Starting GUI directly from R requires additional packages: shinyAce, markdown and knitr.
+
+\begin{figure}[ht]
+\caption{signal.hsmm gui welcome screen. Data is already pasted into submit text area.}
+\label{gui2}
+\centering
+\scalebox{0.22}{
+\includegraphics{gui2.png}
+}
+\end{figure}
+
+The input data can be directly submitted by using text area in the middle of graphical user interface as well as by .txt or .fasta files (Fig.~\ref{gui2}). Due to the server capacity, the maximum number of sequences in the single query cannot exceed 300.
+
+\begin{figure}[ht]
+\caption{Job completed - "Data input" panel.}
+\label{gui3}
+\centering
+\scalebox{0.22}{
+\includegraphics{gui3.png}
+}
+\end{figure}
+
+After succesfull submission and analysis, panel "Data input" contains quick summary of data: number of succesfully read sequences, number of detected signal peptides and their average length (Fig.~\ref{gui3}).
+
+\begin{figure}[ht]
+\caption{"Short output" panel.}
+\label{gui4}
+\centering
+\scalebox{0.22}{
+\includegraphics{gui4.png}
+}
+\end{figure}
+
+"Short output" panel (Fig.~\ref{gui4}) contains table describing probability of signal peptide, start and end of signal peptide for each analyzed sequence. The table can be downloaded in .csv format by pressing "Download short output" button.
+
+\begin{figure}[ht]
+\caption{"Long output (with graphics)" panel.}
+\label{gui5}
+\centering
+\scalebox{0.22}{
+\includegraphics{gui5.png}
+}
+\end{figure}
+
+"Long output (with graphics)" panel (Fig.~\ref{gui5}) describes detected signal peptides in more detailed way. It provides information about length and aminoacid composition of predicted n-, h-, and c-regions. This prediction can be saved both without graphics in .txt format ("Download long output (without graphics)" button) or with additional graphical representation in .html formal ("Download long output (with graphics)" button).
+
+\clearpage
+
+\section{Amino acid aggregation} 
+
+<<echo = FALSE,message=FALSE,results='asis'>>=
+tabAminokwasow = function(aminokwasy, nazwyGrupy, ...) {
+  tab = cbind(data.frame(1:length(aminokwasy)), data.frame(sapply(aminokwasy, function(x) paste(x, collapse=", "))))
+  dimnames(tab) = list(nazwyGrupy, c("Group", "Amino acids"))
+  xtable(tab, align = c("r", "c", "l"), ...)
+}
+
+library(xtable)
+aa5 = list('1' = c("K", "R", "H"),
+           '2' = c("V","I","L","M","F","W","C"),
+           '3' = c("S", "T", "N", "Q"),
+           '4' = c("D","E","A","P","Y","G"))
+print(tabAminokwasow(aa5, c("Positively charged", "Nonpolar and aliphatic",
+                            "Polar and uncharged", "Negatively charged and nonpolar"),
+                     caption = "Classification of amino acids used by signal.hsmm."))
+@
+
+\section{Performance measures}
+
+\subsection{Random sub-sampling validation}
+
+Random sub-sampling validation was repeated 1000 times. 
+
+Total data avaible: 3816 proteins with signal peptide, 9795 proteins without a signal peptide.
+
+Training set size: 1200 proteins with signal peptide.
+
+Test set size: 120 proteins with signal peptide, 120 proteins without signal peptide.
+
+Results: table~\ref{monteCarlo}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlr}
+  \hline
+ & Name & value \\ 
+  \hline
+AUC & Area Under the Curve & 0.9655 \\ 
+  H & H-measure & 0.7945 \\ 
+  MCC & Matthews Correlation Coefficient & 0.8265 \\ 
+  Gini & Gini coefficient & 0.9309 \\ 
+  AUCH & Area Under the Convex Hull & 0.9727 \\ 
+  KS & Kolmogorov-Smirnoff statistic & 0.8512 \\ 
+  MER & Minimum Error Rate & 0.0744 \\ 
+  MWL & Minimum cost-Weighted Error Rate & 0.0744 \\ 
+  ER & Error Rate & 0.0873 \\ 
+  Sens & Sensitivity & 0.8946 \\ 
+  Spec & Specificity & 0.9308 \\ 
+  Precision & Precision & 0.9287 \\ 
+  Recall & Recall & 0.8946 \\ 
+  TPR & True Positive Rate & 0.8946 \\ 
+  FPR & False Positive Rate & 0.0692 \\ 
+  F & F-score & 0.9110 \\ 
+  Youden & Youden's index & 0.8254 \\ 
+  TP & True Positives & 107.3480 \\ 
+  FP & False Positives & 8.3030 \\ 
+  TN & True Negatives & 111.6970 \\ 
+  FN & False Negatives & 12.6520 \\ 
+   \hline
+   
+\end{tabular}
+\caption{Mean performance measures of signal.hsmm in random sub-sampling validation.}
+\label{monteCarlo}
+\end{table}
+
+
+
+\subsection{Comparision with other predictors}
+
+\begin{table}
+    \begin{tabular}{lll}
+    \hline
+    Classifier name  & Size of train data & Proteins added before year: \\ \hline
+    signal.hsmm-2010 & 3676               & 2010                        \\
+    signal.hsmm-2004 & 3086               & 2004                        \\
+    signal.hsmm-1997 & 2473               & 1997                        \\
+    signal.hsmm-1990 & 1189               & 1990                        \\
+    signal.hsmm-1987 & 496                & 1987                        \\    
+    \end{tabular}
+\caption{Full table of training data sets used in training different instances of signal.hsmm.}
+\label{learningSets}
+\end{table}
+
+All measures, with the exception for Matthews Correlation Coefficient, were calculated using the hmeasure package.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+  \hline
+ & AUC & H & MCC & Gini & AUCH & KS \\ 
+  \hline
+SignalP 4.1 (no tm)~\cite{petersen_signalp_2011} & 0.9679 & 0.8909 & 0.9179 & 0.9357 & 0.9679 & 0.9357 \\ 
+  SignalP 4.1 (tm)~\cite{petersen_signalp_2011} & 0.9750 & 0.9261 & 0.9517 & 0.9500 & 0.9750 & 0.9500 \\ 
+  SignalP 3.0 (nn)~\cite{DyrlovBendtsen2004783} & 0.9589 & 0.8591 & 0.8943 & 0.9179 & 0.9589 & 0.9179 \\ 
+  SignalP 3.0 (hmm)~\cite{DyrlovBendtsen2004783} & 0.9643 & 0.8813 & 0.9122 & 0.9286 & 0.9643 & 0.9286 \\ 
+  PrediSi~\cite{hiller_predisi:_2004} & 0.9411 & 0.8238 & 0.8821 & 0.8821 & 0.9411 & 0.8821 \\ 
+  Phobius~\cite{kall_combined_2004} & 0.9643 & 0.8844 & 0.9163 & 0.9286 & 0.9643 & 0.9286 \\ 
+  PredTat~\cite{bagos_combined_2010} & 0.9000 & 0.7368 & 0.8528 & 0.8000 & 0.9000 & 0.8000 \\ 
+  Philius~\cite{reynolds_transmembrane_2008} & 0.9661 & 0.8908 & 0.9213 & 0.9321 & 0.9661 & 0.9321 \\ 
+  signal-hsmm-2010 & 0.9893 & 0.8963 & 0.8734 & 0.9786 & 0.9918 & 0.9250 \\ 
+  signal-hsmm-2004 & 0.9891 & 0.8967 & 0.8689 & 0.9782 & 0.9917 & 0.9250 \\ 
+  signal-hsmm-1997 & 0.9890 & 0.8938 & 0.8643 & 0.9780 & 0.9915 & 0.9250 \\ 
+  signal-hsmm-1990 & 0.9889 & 0.8994 & 0.8689 & 0.9778 & 0.9914 & 0.9321 \\ 
+  signal-hsmm-1987 & 0.9882 & 0.9035 & 0.8827 & 0.9764 & 0.9913 & 0.9357 \\ 
+   \hline
+\end{tabular}
+
+\caption{Comparison of Area Under the Curve, H-measure, Matthews Correlation Coefficient,  Gini coefficient, Area Under the Convex Hull and Kolmogorov-Smirnoff statistic for different classifiers.}
+\end{table}
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrr}
+  \hline
+ & MER & MWL & ER & Sens & Spec & Precision \\ 
+  \hline
+SignalP 4.1 (no tm) & 0.0381 & 0.0286 & 0.0381 & 0.9857 & 0.9500 & 0.9079 \\ 
+  SignalP 4.1 (tm) & 0.0214 & 0.0222 & 0.0214 & 0.9643 & 0.9857 & 0.9712 \\ 
+  SignalP 3.0 (nn) & 0.0500 & 0.0365 & 0.0500 & 0.9857 & 0.9321 & 0.8790 \\ 
+  SignalP 3.0 (hmm) & 0.0405 & 0.0317 & 0.0405 & 0.9786 & 0.9500 & 0.9073 \\ 
+  PrediSi & 0.0524 & 0.0524 & 0.0524 & 0.9214 & 0.9607 & 0.9214 \\ 
+  Phobius & 0.0381 & 0.0317 & 0.0381 & 0.9714 & 0.9571 & 0.9189 \\ 
+  PredTat & 0.0667 & 0.0889 & 0.0667 & 0.8000 & 1.0000 & 1.0000 \\ 
+  Philius & 0.0357 & 0.0302 & 0.0357 & 0.9714 & 0.9607 & 0.9252 \\ 
+  signal-hsmm-2010 & 0.0357 & 0.0333 & 0.0595 & 0.9714 & 0.9250 & 0.8662 \\ 
+  signal-hsmm-2004 & 0.0333 & 0.0333 & 0.0619 & 0.9714 & 0.9214 & 0.8608 \\ 
+  signal-hsmm-1997 & 0.0357 & 0.0333 & 0.0643 & 0.9714 & 0.9179 & 0.8553 \\ 
+  signal-hsmm-1990 & 0.0333 & 0.0302 & 0.0619 & 0.9714 & 0.9214 & 0.8608 \\ 
+  signal-hsmm-1987 & 0.0333 & 0.0286 & 0.0548 & 0.9714 & 0.9321 & 0.8774 \\ 
+   \hline
+\end{tabular}
+\caption{Comparison of Minimum Error Rate, Minimum cost-Weighted Error Rate, Error Rate, sensitivity, specificity and precision for different classifiers.}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+ & Recall & TPR & FPR & F & Youden \\ 
+  \hline
+SignalP 4.1 (no tm) & 0.9857 & 0.9857 & 0.0500 & 0.9452 & 0.9357 \\ 
+  SignalP 4.1 (tm) & 0.9643 & 0.9643 & 0.0143 & 0.9677 & 0.9500 \\ 
+  SignalP 3.0 (nn) & 0.9857 & 0.9857 & 0.0679 & 0.9293 & 0.9179 \\ 
+  SignalP 3.0 (hmm) & 0.9786 & 0.9786 & 0.0500 & 0.9416 & 0.9286 \\ 
+  PrediSi & 0.9214 & 0.9214 & 0.0393 & 0.9214 & 0.8821 \\ 
+  Phobius & 0.9714 & 0.9714 & 0.0429 & 0.9444 & 0.9286 \\ 
+  PredTat & 0.8000 & 0.8000 & 0.0000 & 0.8889 & 0.8000 \\ 
+  Philius & 0.9714 & 0.9714 & 0.0393 & 0.9477 & 0.9321 \\ 
+  signal-hsmm-2010 & 0.9714 & 0.9714 & 0.0750 & 0.9158 & 0.8964 \\ 
+  signal-hsmm-2004 & 0.9714 & 0.9714 & 0.0786 & 0.9128 & 0.8929 \\ 
+  signal-hsmm-1997 & 0.9714 & 0.9714 & 0.0821 & 0.9097 & 0.8893 \\ 
+  signal-hsmm-1990 & 0.9714 & 0.9714 & 0.0786 & 0.9128 & 0.8929 \\ 
+  signal-hsmm-1987 & 0.9714 & 0.9714 & 0.0679 & 0.9220 & 0.9036 \\ 
+   \hline
+\end{tabular}
+\caption{Comparison of recall, True Positive Rate, False Positive Rate, F-score and Youden's index for different classifiers.}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & TP & FP & TN & FN \\ 
+  \hline
+SignalP 4.1 (no tm) &   138 &    14 &   266 &     2 \\ 
+  SignalP 4.1 (tm) &   135 &     4 &   276 &     5 \\ 
+  SignalP 3.0 (nn) &   138 &    19 &   261 &     2 \\ 
+  SignalP 3.0 (hmm) &   137 &    14 &   266 &     3 \\ 
+  PrediSi &   129 &    11 &   269 &    11 \\ 
+  Phobius &   136 &    12 &   268 &     4 \\ 
+  PredTat &   112 &     0 &   280 &    28 \\ 
+  Philius &   136 &    11 &   269 &     4 \\ 
+  signal-hsmm-2010 &   136 &    21 &   259 &     4 \\ 
+  signal-hsmm-2004 &   136 &    22 &   258 &     4 \\ 
+  signal-hsmm-1997 &   136 &    23 &   257 &     4 \\ 
+  signal-hsmm-1990 &   136 &    22 &   258 &     4 \\ 
+  signal-hsmm-1987 &   136 &    19 &   261 &     4 \\ 
+   \hline
+\end{tabular}
+\caption{Comparison of number of True Positives, False Positives, True Negatives and False Negatives for different classifiers.}
+\end{table}
+
+\clearpage
+
+\bibliographystyle{plain}
+
+\bibliography{document}
+
+\end{document}

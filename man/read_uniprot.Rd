@@ -8,11 +8,12 @@ read_uniprot(connection, euk)
 \arguments{
 \item{connection}{a \code{\link{connection}} to UniProt data in text format.}
 
-\item{euk}{logical value if data has eukaryotic origin.}
+\item{euk}{logical value if data has an eukaryotic origin.}
 }
 \value{
 a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
-Slot \code{sig} contains the range of signal peptide.
+Slot \code{sig} contains the range of signal peptide. Sequence with more than one
+cleavage site or atypical aminoacids are removed.
 }
 \description{
 Read data saved in UniProt original flat text format.

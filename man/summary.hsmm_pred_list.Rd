@@ -17,4 +17,6 @@ nothing.
 Summarizes objects of class \code{\link{hsmm_pred_list}}.
 }
 \keyword{manip}
+\keyword{methods}
+\keyword{print}
 

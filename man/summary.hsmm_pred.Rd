@@ -16,5 +16,6 @@ Nothing.
 \description{
 Summarizes objects of class \code{\link{hsmm_pred}}.
 }
-\keyword{manip}
+\keyword{methods}
+\keyword{print}
 

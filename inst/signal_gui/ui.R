@@ -1,31 +1,23 @@
 library(shiny)
-
-inputTextarea <- function(inputId, value="", nrows, ncols) {
-  tagList(
-    singleton(tags$head(tags$script(src = "textarea.js"))),
-    tags$textarea(id = inputId,
-                  class = "inputtextarea",
-                  rows = nrows,
-                  cols = ncols,
-                  as.character(value))
-  )
-}
+#library(shinyAce)
 
 
-shinyUI(pageWithSidebar(
 
+shinyUI(fluidPage(
+  
   headerPanel("Signal.hsmm"),
   
+  sidebarLayout(
   sidebarPanel(
-    fileInput('seq_file', 'Choose .fasta or .txt file',
-              accept=c('text/plain'))
+    uiOutput("dynamic_ui"),
+    includeMarkdown("readme.md")
   ),
   
   mainPanel(
     tabsetPanel(
-      tabPanel("Data input", verbatimTextOutput("summary")),
+      tabPanel("Data input", uiOutput("dynamic_panel")),
       tabPanel("Short output", tableOutput("pred_table")),
-      tabPanel("Long output", verbatimTextOutput("pred_long"))
+      tabPanel("Long output (with graphics)", uiOutput("pred_long"))
     )
   )
-))
+)))

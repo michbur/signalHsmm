@@ -22,8 +22,8 @@ a vector of length 4 containing positions of:
 }
 }
 \description{
-A heuristic algorithm able to find borders between distinct regions
-constituting signal peptides
+Finds borders between distinct regions constituting signal peptides using a heuristic
+algorithm.
 }
 \references{
 Henrik Nielsen, Anders Krogh (1998). Prediction of signal peptides

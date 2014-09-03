@@ -6,8 +6,8 @@
 run_signal.hsmm(test_data)
 }
 \arguments{
-\item{test_data}{single protein sequence or list of sequences. May be an object of
-class \code{\link[seqinr]{SeqFastaAA}}.}
+\item{test_data}{single protein sequence (\code{character} vector) or list of
+sequences. It may be an object of class \code{\link[seqinr]{SeqFastaAA}}.}
 }
 \value{
 An object of class \code{hsmm_pred_list}.
@@ -19,7 +19,7 @@ eukaryotic proteins.
 \details{
 Function \code{signal.hsmm} returns respectively probability of presence of
 signal peptide, start of signal peptide and the probable cleavage site localization.
-If input consists from more than one sequence, result is a data.frame where each column
+If input consists of more than one sequence, result is a data.frame where each column
 contains above values for different proteins.
 }
 \note{
@@ -53,4 +53,5 @@ plot(x3[[1]])
 \seealso{
 \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}}
 }
+\keyword{classif}
 

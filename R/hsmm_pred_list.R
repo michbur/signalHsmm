@@ -15,7 +15,7 @@ NULL
 #' @param ... ignored
 #' @return nothing.
 #' @export
-#' @keywords manip
+#' @keywords print methods manip
 
 summary.hsmm_pred_list <- function(object, ...) {
   res <- pred2df(object)
@@ -23,9 +23,9 @@ summary.hsmm_pred_list <- function(object, ...) {
              nrow(res), "\n"))
   cat(paste0("Number of proteins with signal peptide: ", 
              sum(res[["sp.probability"]] > 0.5), "\n"))
-  cat(paste0("Average length of signal peptide: ", 
-             mean(res[res[["sp.probability"]] > 0.5, "sp.end"]), "\n"))
-  cat(paste0("Median length of signal peptide: ", 
+  cat(paste0("Average length of predicted signal peptides: ", 
+             signif(mean(res[res[["sp.probability"]] > 0.5, "sp.end"]), digits = 4), "\n"))
+  cat(paste0("Median length of predicted signal peptides: ", 
              median(res[res[["sp.probability"]] > 0.5, "sp.end"]), "\n"))
 }
 

@@ -10,13 +10,16 @@
 #' @format a list of \code{\link[seqinr]{SeqFastaAA}} objects. 
 #' Slot \code{sig} contains the range of signal peptide (if any).
 #' @source \href{http://www.uniprot.org/}{UniProt}
+#' @examples summary(benchmark_dat)
+#' @keywords datasets
 NULL
 
 #' @name aaaggregation
 #' @title Scheme for amino acid aggregation
 #' @description Amino acids are grouped together in larger sets based on their 
-#' physicochemical properties important in  therecognition of signal peptide.
+#' physicochemical properties important in  the recognition of signal peptide.
 #' @docType data
 #' @usage aaaggregation
 #' @format a list of length four containing one-letter name of amino acid
+#' @keywords datasets
 NULL

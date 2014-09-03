@@ -18,4 +18,8 @@ sampled proteins without signal peptide).
 All proteins were used in benchmark test comparing the performance
 of signal.hsmm and other signal peptide predictors.
 }
+\examples{
+summary(benchmark_dat)
+}
+\keyword{datasets}
 
