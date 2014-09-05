@@ -40,27 +40,13 @@ shinyServer(function(input, output) {
       div(downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
           downloadButton("download_long_graph", "Download long output (with graphics)"),
-          tags$p("Refresh (press F5) the page to start a new query with signal.hsmm."))
-    }
-  })
-  
-  output$dynamic_panel <- renderUI({
-    if(is.null(prediction())) {
-      aceEditor("text_area", value="", height = 150)
-    } else {
-      verbatimTextOutput("summary")
+          tags$p("Refresh page (press F5) to start a new query with signal.hsmm."))
     }
   })
   
   
   output$pred_table <- renderTable({
-    if(is.null(prediction())) {
-      data.frame(sp.probability = "No", 
-                 sp.start = "sequence",
-                 sp.end = "chosen")
-    } else {
-      pred2df(prediction())
-    }
+    pred2df(prediction())
   })
   
   output$summary <- renderPrint({
@@ -87,15 +73,21 @@ shinyServer(function(input, output) {
   
   
   output$pred_long <- renderUI({
-    if(is.null(prediction())) {
-      verbatimTextOutput("pred_long_null")
-    } else {
-      uiOutput("long_preds")
-    }
+    uiOutput("long_preds")
   })
   
-  output$pred_long_null <- renderPrint({
-    cat("No sequence chosen.")
+  output$dynamic_tabset <- renderUI({
+    if(is.null(prediction())) {
+      tabsetPanel(
+        tabPanel("Data input", aceEditor("text_area", value="", height = 150))
+      )
+    } else {
+      tabsetPanel(
+        tabPanel("Input summary", verbatimTextOutput("summary")),
+        tabPanel("Short output", tableOutput("pred_table")),
+        tabPanel("Long output (with graphics)", uiOutput("pred_long"))
+      )
+    }
   })
   
   output$download_short <- downloadHandler(
