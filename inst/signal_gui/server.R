@@ -12,37 +12,40 @@ shinyServer(function(input, output) {
     if (!is.null(input[["seq_file"]]))
       res <- read_txt(input[["seq_file"]][["datapath"]])
     input[["use_area"]]
-    isolate({if (input[["text_area"]] != "")
-      res <- read_txt(textConnection(input[["text_area"]]))
+    isolate({
+      if (!is.null(input[["text_area"]]))
+        if(input[["text_area"]] != "")
+          res <- read_txt(textConnection(input[["text_area"]]))
     })
     
-    if(length(res) > 300) {
-      #dummy error, just to stop further processing
-      stop("Too many sequences.")
+    if(exists("res")) {
+      if(length(res) > 300) {
+        #dummy error, just to stop further processing
+        stop("Too many sequences.")
+      } else {
+        run_signal.hsmm(res)
+      }
     } else {
-      run_signal.hsmm(res)
+      NULL
     }
   })
   
   
   output$dynamic_ui <- renderUI({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
+    if(is.null(prediction())) {
       div(tags$p("Waiting for valid input"),
           actionButton("use_area", "Submit data from field on right..."),
-          fileInput('seq_file', '...or choose .fasta or .txt file:'),
-          tags$p("Queries bigger than 300 sequences will be not processed. 
-                 Use batch mode instead."))
+          fileInput('seq_file', '...or choose .fasta or .txt file:'))
     } else {
-      div(tags$p("Be patient - bigger calculations take few minutes."),
-          downloadButton("download_short", "Download short output"),
+      div(downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
           downloadButton("download_long_graph", "Download long output (with graphics)"),
-          tags$p("Refresh the page to start a new query with signal.hsmm."))
+          tags$p("Refresh (press F5) the page to start a new query with signal.hsmm."))
     }
   })
   
   output$dynamic_panel <- renderUI({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
+    if(is.null(prediction())) {
       aceEditor("text_area", value="", height = 150)
     } else {
       verbatimTextOutput("summary")
@@ -51,7 +54,7 @@ shinyServer(function(input, output) {
   
   
   output$pred_table <- renderTable({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
+    if(is.null(prediction())) {
       data.frame(sp.probability = "No", 
                  sp.start = "sequence",
                  sp.end = "chosen")
@@ -84,7 +87,7 @@ shinyServer(function(input, output) {
   
   
   output$pred_long <- renderUI({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
+    if(is.null(prediction())) {
       verbatimTextOutput("pred_long_null")
     } else {
       uiOutput("long_preds")
