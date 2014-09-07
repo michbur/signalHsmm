@@ -7,7 +7,7 @@
 * Queries bigger than 300 sequences will not be processed. Use batch mode instead.  
 * Be patient - calculations can take up to few minutes.  
 
-**Authors**: [Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/), [Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/)
+**Authors**: [Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/), [Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/).
 
 **Example proteins**:
 

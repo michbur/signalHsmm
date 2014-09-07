@@ -35,8 +35,8 @@ shinyServer(function(input, output) {
     if(is.null(prediction())) {
       div(tags$h3("Data input"),
           tags$p(""),
-          actionButton("use_area", "Push to submit data from field on right..."),
-          fileInput('seq_file', '...or choose .fasta or .txt file:'))
+          actionButton("use_area", "Push to submit data from field on right"),
+          fileInput('seq_file', 'or choose .fasta or .txt file:'))
     } else {
       div(tags$h3("Download results"),
           tags$p(""),
@@ -93,10 +93,20 @@ shinyServer(function(input, output) {
     }
   })
   
+  #name for downloads
+  file_name <- reactive({
+    if(is.null(input[["seq_file"]][["name"]])) {
+      part_name <- "signalhsmm_results"
+    } else {
+      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
+    }
+    part_name
+  })
+  
+  
   output$download_short <- downloadHandler(
     filename  = function() { 
-      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
-      paste0(part_name, "_pred.csv") 
+      paste0(file_name(), "_pred.csv") 
     },
     content <- function(file) {
       write.csv(pred2df(prediction()), file)
@@ -105,11 +115,13 @@ shinyServer(function(input, output) {
   
   output$download_long <- downloadHandler(
     filename  = function() { 
-      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
-      paste0(part_name, "_pred.txt") 
+      paste0(file_name(), "_pred.txt") 
     },
     content <- function(file) {
       sink(file, type = "output")
+      cat("Input file name: ", ifelse(is.null(input[["seq_file"]][["name"]]), "none",
+                                      input[["seq_file"]][["name"]]), "\n\n")
+      cat(paste0("Date: ", Sys.time()), "\n\n")
       for (i in 1L:length(prediction())) {
         cat("\n\n")
         summary(prediction()[[i]])
@@ -121,8 +133,7 @@ shinyServer(function(input, output) {
   
   output$download_long_graph <- downloadHandler(
     filename  = function() { 
-      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
-      paste0(part_name, "_pred.html") 
+      paste0(file_name(), "_pred.html") 
     },
     content <- function(file) {
       knitr:::knit(input = "signalhsmm_report.Rmd", 
