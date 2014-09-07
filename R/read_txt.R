@@ -20,6 +20,20 @@ read_txt <- function(connection) {
       if (content[1] != "")
         content <- c("", content)
       
+      #number of empty lines
+      nel <- 0
+      #content without too many empty lines
+      content2 <- c()
+      for (i in 1L:length(content)) {
+        if(content[i] == "") {
+          nel <- nel + 1
+        } else {
+          nel <- 0
+        }
+        if (nel <= 1)
+          content2 <- c(content2, content[i])
+      }
+      content <- content2
       content_end <- length(content)
       while(content[content_end] == "i")
         content_end <- content_end - 1

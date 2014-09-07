@@ -1,7 +1,4 @@
 library(shiny)
-#library(shinyAce)
-
-
 
 shinyUI(fluidPage(
   
@@ -9,8 +6,9 @@ shinyUI(fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      uiOutput("dynamic_ui"),
-      includeMarkdown("readme.md")
+      includeMarkdown("readme.md"),
+      pre(includeText("prots.txt")),
+      uiOutput("dynamic_ui")
     ),
     
     mainPanel(

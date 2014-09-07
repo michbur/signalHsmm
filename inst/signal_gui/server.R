@@ -33,11 +33,14 @@ shinyServer(function(input, output) {
   
   output$dynamic_ui <- renderUI({
     if(is.null(prediction())) {
-      div(tags$p("Waiting for valid input"),
-          actionButton("use_area", "Submit data from field on right..."),
+      div(tags$h3("Data input"),
+          tags$p(""),
+          actionButton("use_area", "Push to submit data from field on right..."),
           fileInput('seq_file', '...or choose .fasta or .txt file:'))
     } else {
-      div(downloadButton("download_short", "Download short output"),
+      div(tags$h3("Download results"),
+          tags$p(""),
+          downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
           downloadButton("download_long_graph", "Download long output (with graphics)"),
           tags$p("Refresh page (press F5) to start a new query with signal.hsmm."))
@@ -79,7 +82,7 @@ shinyServer(function(input, output) {
   output$dynamic_tabset <- renderUI({
     if(is.null(prediction())) {
       tabsetPanel(
-        tabPanel("Data input", aceEditor("text_area", value="", height = 150))
+        tabPanel("Paste sequences here:", aceEditor("text_area", value="", height = 150))
       )
     } else {
       tabsetPanel(
