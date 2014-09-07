@@ -24,7 +24,7 @@
 }
 \end{figure}
 
-%maybe we should go with lengths calculated on our data set – 0.05 quantile, 0.95 quantile
+%maybe we should go with lengths calculated on our data set 0.05 quantile, 0.95 quantile
 Typical signal peptide contains following regions~\cite{voss_mechanism_2013, jain_signal_1994}:
 \begin{itemize}
 \item n-region (5-8 residues long, mostly basic residues), 
@@ -32,7 +32,7 @@ Typical signal peptide contains following regions~\cite{voss_mechanism_2013, jai
 \item c-region (usually 6 residues long, few polar and uncharged residues),
 \item cleavage site (a very variable protein composition, but typically at -3 and -1 positions small, neutral residuals).
 \end{itemize}
-%note to self – nielsen's heuristic algorithm makes overlapping c-region and cleavage site
+%note to self: Nielsen's heuristic algorithm makes overlapping c-region and cleavage site
 
 \section{Graphical User Interface} 
 
