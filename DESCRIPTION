@@ -15,12 +15,10 @@ Depends:
     R (>= 3.0.0)
 Imports:
     seqinr,
-    shiny,
-    shinyAce
+    shiny
 Suggests:
     knitr,
     markdown,
-    xtable
-VignetteBuilder: knitr
+    shinyAce
 NeedsCompilation: no
 Repository: CRAN
