@@ -32,12 +32,7 @@ shinyServer(function(input, output) {
   
   
   output$dynamic_ui <- renderUI({
-    if(is.null(prediction())) {
-      div(tags$h3("Data input"),
-          tags$p(""),
-          actionButton("use_area", "Push to submit data from field on right"),
-          fileInput('seq_file', 'or choose .fasta or .txt file:'))
-    } else {
+    if(!is.null(prediction())) {
       div(tags$h3("Download results"),
           tags$p(""),
           downloadButton("download_short", "Download short output"),
@@ -81,9 +76,13 @@ shinyServer(function(input, output) {
   
   output$dynamic_tabset <- renderUI({
     if(is.null(prediction())) {
-      tabsetPanel(
-        tabPanel("Paste sequences here:", aceEditor("text_area", value="", height = 150))
-      )
+      
+      tabPanel("Paste sequences here:", aceEditor("text_area", value="", height = 150),
+               actionButton("use_area", "Submit data from field above"),
+               p(""),
+               fileInput('seq_file', 'Submit .fasta or .txt file:'))
+      
+      
     } else {
       tabsetPanel(
         tabPanel("Input summary", verbatimTextOutput("summary")),
