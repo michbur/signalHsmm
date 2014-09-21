@@ -1,11 +1,14 @@
 Package: signal.hsmm
 Type: Package
 Title: Predict Presence of Signal Peptides
-Version: 1.0
+Version: 1.1
 LazyData: true
-Date: 2014-06-25
-Author: Michal Burdukiewicz, Piotr Sobczyk
-Maintainer: Michal Burdukiewicz <michalburdukiewicz@gmail.com>
+Date: 2014-09-21
+Authors@R: c(
+    person("Michal", "Burdukiewicz",
+    email = "michalburdukiewicz@gmail.com", role = c("cre", "aut")),
+    person("Piotr", "Sobczyk",
+    role = "aut"))
 Description: Predicts presence of signal peptides in eukaryotic protein using
     hidden semi-Markov models. The implemented algorithm can be accessed both
     from command line and GUI.
