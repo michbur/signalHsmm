@@ -8,22 +8,25 @@ duration_viterbi(aa_sample, pipar, tpmpar, od, params)
 \arguments{
 \item{aa_sample}{\code{character} vector representing single aminoacid sequence.}
 
-\item{pipar}{Probabilities of initial state in Markov Model}
+\item{pipar}{Probabilities of initial state in Markov Model.}
 
-\item{tpmpar}{Matrix with transition probabilities between states}
+\item{tpmpar}{Matrix with transition probabilities between states.}
 
-\item{od}{Matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1}
+\item{od}{Matrix of response probabilities. Eg. od[1,2] is a
+probability of signal 2 in state 1.}
 
 \item{params}{Matrix of probability distribution for duration.
-Eg. params[10,2] is probability of duration of time 10 in state 2}
+Eg. params[10,2] is probability of duration of time 10 in state 2.}
 }
 \value{
 A list of length four:
 \itemize{
-\item{a vector of most probable path (\code{path},}
-\item{values of probability in all intermediate points (\code{viterbi}),}
-\item{matrix that for every signal and state gives the previous state in viterbi path (\code{psi}),}
-\item{matrix that for every signal and state gives the duration in that state on viterbi path(\code{duration})}
+\item{path}{ a vector of most probable path}
+\item{viterbi}{ values of probability in all intermediate points,}
+\item{psi}{ matrix that gives for every signal and state the previous state in
+viterbi path,}
+\item{duration}{ matrix that gives for every signal and state gives the duration
+in that state on viterbi path.}
 }
 }
 \description{

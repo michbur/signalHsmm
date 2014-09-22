@@ -89,7 +89,6 @@ run_signal.hsmm <- function(test_data) {
         class(test_data) == "data.frame" || class(test_data) == "matrix")
     stop("Input data must have class 'SeqFastaAA', 'character' or 'list'.")
   
-  
   if(class(test_data) == "SeqFastaAA" || 
        class(test_data) == "character") {
     #single input
