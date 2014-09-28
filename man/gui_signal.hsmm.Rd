@@ -11,6 +11,9 @@ null.
 \description{
 A graphical user interface for predicting presence of signal peptides.
 }
+\note{
+Any ad-blocking software may be cause of malfunctions.
+}
 \examples{
 \donttest{
 gui_signal.hsmm()
