@@ -23,25 +23,25 @@
 #' @note Currently has very restricted application to specific input All computations are on logarithms of probabilities
 
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
-  max.duration <- dim(params)[1]
+  max_duration <- dim(params)[1]
   nstates <- length(pipar)
-  viterbi <- matrix(nrow=length(aa_sample), ncol = nstates) #probabiliy values for viterbi path that ends in specific state and signal
-  psi <- matrix(nrow=length(aa_sample), ncol = nstates) #the previous state for viterbi path that ends in specific state and signal
-  dura <- matrix(nrow=length(aa_sample), ncol = nstates) #the current duration for viterbi path that ends in specific state and signal
+  viterbi <- matrix(nrow = length(aa_sample), ncol = nstates) #probabiliy values for viterbi path that ends in specific state and signal
+  psi <- matrix(nrow = length(aa_sample), ncol = nstates) #the previous state for viterbi path that ends in specific state and signal
+  dura <- matrix(nrow = length(aa_sample), ncol = nstates) #the current duration for viterbi path that ends in specific state and signal
   #first signal is treated seperately
   for(j in 1L:nstates) {
-    viterbi[1,j] <- log(pipar[j]) + log(od[j,aa_sample[1]])
-    psi[1,j] <- 1
-    dura[1,j] <- 1
+    viterbi[1, j] <- log(pipar[j]) + log(od[j, aa_sample[1]])
+    psi[1, j] <- 1
+    dura[1, j] <- 1
   }  
-  for(i in 2:length(aa_sample)){
+  for(i in 2L:length(aa_sample)){
     #For each state we will compute the probability of the viterbi path that ends in that state
     for(j in 1L:nstates){
       max <- -Inf
-      max.i <- 0 #previous state that is maximising probability
-      max.dur <- 0  #duration that is maximising probability
+      max_i <- 0 #previous state that is maximising probability
+      max_dur <- 0  #duration that is maximising probability
       for(k in 1L:nstates){
-        for(d in 1L:min(max.duration, i)){
+        for(d in 1L:min(max_duration, i)){
           # for every possible previous state, and for every possible duration in current state
           if(i - d == 0){ #if duration is as long as number of signal considered
             if(j == 1){ #only first state is accepted
@@ -62,16 +62,16 @@ duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
           if(previous + transition + duration + responses > max){ 
             #if that path is better than the best yet found store it
             max <- previous + transition + duration + responses
-            max.i <- k
-            max.dur <- d
+            max_i <- k
+            max_dur <- d
           }
         }
         
       }
       #assign information about the best path that ends on signal i and state j
       viterbi[i, j] <- max 
-      psi[i, j] <- max.i
-      dura[i, j] <- max.dur
+      psi[i, j] <- max_i
+      dura[i, j] <- max_dur
     }  
   }
   #now we extract information about the path. We look for the most probable path
