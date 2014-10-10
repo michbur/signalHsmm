@@ -21,22 +21,23 @@
 
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
   max.duration <- dim(params)[1]
-  viterbi <- matrix(nrow=length(aa_sample), ncol = 4) #probabiliy values for viterbi path that ends in specific state and signal
-  psi <- matrix(nrow=length(aa_sample), ncol = 4) #the previous state for viterbi path that ends in specific state and signal
-  dura <- matrix(nrow=length(aa_sample), ncol = 4) #the current duration for viterbi path that ends in specific state and signal
+  nstates <- length(pipar)
+  viterbi <- matrix(nrow=length(aa_sample), ncol = nstates) #probabiliy values for viterbi path that ends in specific state and signal
+  psi <- matrix(nrow=length(aa_sample), ncol = nstates) #the previous state for viterbi path that ends in specific state and signal
+  dura <- matrix(nrow=length(aa_sample), ncol = nstates) #the current duration for viterbi path that ends in specific state and signal
   #first signal is treated seperately
-  for(j in 1L:4) {
+  for(j in 1L:nstates) {
     viterbi[1,j] <- log(pipar[j]) + log(od[j,aa_sample[1]])
     psi[1,j] <- 1
     dura[1,j] <- 1
   }  
   for(i in 2:length(aa_sample)){
     #For each state we will compute the probability of the viterbi path that ends in that state
-    for(j in 1L:4){
+    for(j in 1L:nstates){
       max <- -Inf
       max.i <- 0 #previous state that is maximising probability
       max.dur <- 0  #duration that is maximising probability
-      for(k in 1L:4){
+      for(k in 1L:nstates){
         for(d in 1L:min(max.duration, i)){
           # for every possible previous state, and for every possible duration in current state
           if(i - d == 0){ #if duration is as long as number of signal considered
