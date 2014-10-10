@@ -4,18 +4,21 @@
 #' Valid only for special case on data
 #' 
 #' @param aa_sample \code{character} vector representing single aminoacid sequence.
-#' @param pipar Probabilities of initial state in Markov Model
-#' @param tpmpar Matrix with transition probabilities between states
-#' @param od Matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1
-#' @param params Matrix of probability distribution for duration. 
-#'              Eg. params[10,2] is probability of duration of time 10 in state 2
+#' @param pipar Probabilities of initial state in Markov Model.
+#' @param tpmpar Matrix with transition probabilities between states.
+#' @param od Matrix of response probabilities. Eg. od[1,2] is a 
+#' probability of signal 2 in state 1.
+#' @param params Matrix of probability distribution for duration.
+#' Eg. params[10,2] is probability of duration of time 10 in state 2.
 #' @export
 #' @return A list of length four:
 #' \itemize{
-#' \item{a vector of most probable path (\code{path},}
-#' \item{values of probability in all intermediate points (\code{viterbi}),}
-#' \item{matrix that for every signal and state gives the previous state in viterbi path (\code{psi}),}
-#' \item{matrix that for every signal and state gives the duration in that state on viterbi path(\code{duration})}
+#' \item{path}{ a vector of most probable path}
+#' \item{viterbi}{ values of probability in all intermediate points,}
+#' \item{psi}{ matrix that gives for every signal and state the previous state in 
+#' viterbi path,}
+#' \item{duration}{ matrix that gives for every signal and state gives the duration 
+#' in that state on viterbi path.}
 #' }
 #' @note Currently has very restricted application to specific input All computations are on logarithms of probabilities
 

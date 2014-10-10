@@ -24,6 +24,7 @@
 
 #function to find n-, h- and c- regions in signal peptide
 find_nhc <- function(protein, signal = NULL) {
+  protein <- toupper(protein)
   if (is.null(signal)) 
     signal <- attr(protein, "sig")
   

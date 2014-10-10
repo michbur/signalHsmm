@@ -12,52 +12,39 @@ shinyServer(function(input, output) {
     if (!is.null(input[["seq_file"]]))
       res <- read_txt(input[["seq_file"]][["datapath"]])
     input[["use_area"]]
-    isolate({if (input[["text_area"]] != "")
-      res <- read_txt(textConnection(input[["text_area"]]))
+    isolate({
+      if (!is.null(input[["text_area"]]))
+        if(input[["text_area"]] != "")
+          res <- read_txt(textConnection(input[["text_area"]]))
     })
     
-    if(length(res) > 300) {
-      #dummy error, just to stop further processing
-      stop("Too many sequences.")
+    if(exists("res")) {
+      if(length(res) > 300) {
+        #dummy error, just to stop further processing
+        stop("Too many sequences.")
+      } else {
+        run_signal.hsmm(res)
+      }
     } else {
-      run_signal.hsmm(res)
+      NULL
     }
   })
   
   
   output$dynamic_ui <- renderUI({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
-      div(tags$p("Waiting for valid input"),
-          actionButton("use_area", "Submit data from field on right..."),
-          fileInput('seq_file', '...or choose .fasta or .txt file:'),
-          tags$p("Queries bigger than 300 sequences will be not processed. 
-                 Use batch mode instead."))
-    } else {
-      div(tags$p("Be patient - bigger calculations take few minutes."),
+    if(!is.null(prediction())) {
+      div(tags$h3("Download results"),
+          tags$p(""),
           downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
           downloadButton("download_long_graph", "Download long output (with graphics)"),
-          tags$p("Refresh the page to start a new query with signal.hsmm."))
-    }
-  })
-  
-  output$dynamic_panel <- renderUI({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
-      aceEditor("text_area", value="", height = 150)
-    } else {
-      verbatimTextOutput("summary")
+          tags$p("Refresh page (press F5) to start a new query with signal.hsmm."))
     }
   })
   
   
   output$pred_table <- renderTable({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
-      data.frame(sp.probability = "No", 
-                 sp.start = "sequence",
-                 sp.end = "chosen")
-    } else {
-      pred2df(prediction())
-    }
+    pred2df(prediction())
   })
   
   output$summary <- renderPrint({
@@ -84,21 +71,41 @@ shinyServer(function(input, output) {
   
   
   output$pred_long <- renderUI({
-    if(class(try(prediction(), silent = TRUE)) == "try-error") {
-      verbatimTextOutput("pred_long_null")
+    uiOutput("long_preds")
+  })
+  
+  output$dynamic_tabset <- renderUI({
+    if(is.null(prediction())) {
+      
+      tabPanel("Paste sequences here:", aceEditor("text_area", value="", height = 150),
+               actionButton("use_area", "Submit data from field above"),
+               p(""),
+               fileInput('seq_file', 'Submit .fasta or .txt file:'))
+      
+      
     } else {
-      uiOutput("long_preds")
+      tabsetPanel(
+        tabPanel("Input summary", verbatimTextOutput("summary")),
+        tabPanel("Short output", tableOutput("pred_table")),
+        tabPanel("Long output (with graphics)", uiOutput("pred_long"))
+      )
     }
   })
   
-  output$pred_long_null <- renderPrint({
-    cat("No sequence chosen.")
+  #name for downloads
+  file_name <- reactive({
+    if(is.null(input[["seq_file"]][["name"]])) {
+      part_name <- "signalhsmm_results"
+    } else {
+      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
+    }
+    part_name
   })
+  
   
   output$download_short <- downloadHandler(
     filename  = function() { 
-      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
-      paste0(part_name, "_pred.csv") 
+      paste0(file_name(), "_pred.csv") 
     },
     content <- function(file) {
       write.csv(pred2df(prediction()), file)
@@ -107,11 +114,13 @@ shinyServer(function(input, output) {
   
   output$download_long <- downloadHandler(
     filename  = function() { 
-      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
-      paste0(part_name, "_pred.txt") 
+      paste0(file_name(), "_pred.txt") 
     },
     content <- function(file) {
       sink(file, type = "output")
+      cat("Input file name: ", ifelse(is.null(input[["seq_file"]][["name"]]), "none",
+                                      input[["seq_file"]][["name"]]), "\n\n")
+      cat(paste0("Date: ", Sys.time()), "\n\n")
       for (i in 1L:length(prediction())) {
         cat("\n\n")
         summary(prediction()[[i]])
@@ -123,8 +132,7 @@ shinyServer(function(input, output) {
   
   output$download_long_graph <- downloadHandler(
     filename  = function() { 
-      part_name <- strsplit(input[["seq_file"]][["name"]], ".", fixed = TRUE)[[1]][1]
-      paste0(part_name, "_pred.html") 
+      paste0(file_name(), "_pred.html") 
     },
     content <- function(file) {
       knitr:::knit(input = "signalhsmm_report.Rmd", 

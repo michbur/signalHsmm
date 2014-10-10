@@ -1,3 +1,10 @@
+#put aaaggregation here just to just R CHECK notes
+aaaggregation <- list(c("K", "R", "H"), 
+                      c("V", "I", "L", "M", "F", "W", "C", "U"),
+                      c("S", "T", "N", "Q"), 
+                      c("D", "E", "A", "P", "Y", "G"))
+names(aaaggregation) = c("1", "2", "3", "4")
+
 #' @name benchmark_dat
 #' @title Benchmark data set for signal.hsmm
 #' @description This data set lists eukaryotic proteins added to UniProt database release 

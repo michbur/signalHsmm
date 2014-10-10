@@ -89,11 +89,10 @@ run_signal.hsmm <- function(test_data) {
         class(test_data) == "data.frame" || class(test_data) == "matrix")
     stop("Input data must have class 'SeqFastaAA', 'character' or 'list'.")
   
-  
   if(class(test_data) == "SeqFastaAA" || 
        class(test_data) == "character") {
     #single input
-    decisions <- signal.hsmm_decision(test_data, aa_group = aaaggregation, 
+    decisions <- signal.hsmm_decision(test_data, aa_group = get("aaaggregation"), 
                                       pipar = signal.hsmm_model[["pipar"]], 
                                       tpmpar = signal.hsmm_model[["tpmpar"]], 
                                       od = signal.hsmm_model[["od"]], 
@@ -165,6 +164,8 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 #' @return null.
 #' @export
 #' @seealso \code{\link{run_signal.hsmm}}
+#' @note
+#' Any ad-blocking software may be cause of malfunctions. 
 #' @examples
 #' \donttest{
 #' gui_signal.hsmm()
