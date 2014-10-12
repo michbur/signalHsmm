@@ -1,10 +1,18 @@
 #' Predict sighsmm_model object
 #' 
+#' Predicts 
 #' @param object \code{sighsmm_model} object.
 #' @param newdata unknown sequence of class \code{character} or \code{character}.
 #' Alternatively, a \code{list} of sequences in mentioned formats.
 #' @param ... further arguments passed to or from other methods.
 #' @export
+#' @examples
+#' \dontrun{
+#' pos_train_ultrahard <- read_uniprot("pos_ultrahard_data.txt", euk = TRUE)
+#' model1 <- train_hsmm(pos_train_ultrahard, aa_group = aaaggregation)
+#' predict(model1, benchmark_dat[1L:5])
+#' }
+
 
 
 predict.sighsmm_model <- function(object, newdata, ...){
@@ -26,12 +34,12 @@ predict.sighsmm_model <- function(object, newdata, ...){
   } else {
     #list input
     decisions <- lapply(newdata, function(prot)
-      signal.hsmm_decision(prot, aa_group = aaaggregation, 
-                           pipar = sighsmm_model[["pipar"]], 
-                           tpmpar = sighsmm_model[["tpmpar"]], 
-                           od = sighsmm_model[["od"]], 
-                           overall_probs_log = sighsmm_model[["overall_probs_log"]], 
-                           params = sighsmm_model[["params"]]))
+      signal.hsmm_decision(prot, aa_group = object[["aa_group"]], 
+                           pipar = object[["pipar"]], 
+                           tpmpar = object[["tpmpar"]], 
+                           od = object[["od"]], 
+                           overall_probs_log = object[["overall_probs_log"]], 
+                           params = object[["params"]]))
   }
   class(decisions) <- "hsmm_pred_list"
   decisions

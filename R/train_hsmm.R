@@ -17,7 +17,7 @@ train_hsmm <- function(train_data, aa_group, max_length = 32) {
   
   overall <- t4 #table(degenerate(unlist(analized_sequences), aa5))
   overall.probs <- overall/sum(overall)          
-  overall.probs.log = log(overall.probs) #for viterbi
+  overall_probs_log = log(overall.probs) #for viterbi
   
   lengths <- ts[["lengths"]]
   params <- apply(lengths, 2, measure_region, max_length = max_length)
@@ -30,13 +30,15 @@ train_hsmm <- function(train_data, aa_group, max_length = 32) {
                      0, 0, 1, 0,
                      0, 0, 0, 1,
                      0, 0, 0, 0), 4, byrow = TRUE)
-  od <- matrix(c((t1/sum(t1))[1:4],
-                 (t2/sum(t2))[1:4],
-                 (t3/sum(t3))[1:4],
-                 (t4/sum(t4))[1:4]), 4, byrow = TRUE)
+  od <- matrix(c((t1/sum(t1))[1L:4],
+                 (t2/sum(t2))[1L:4],
+                 (t3/sum(t3))[1L:4],
+                 (t4/sum(t4))[1L:4]), 4, byrow = TRUE)
   
-  list(aa_group = aa_group, pipar = pipar, tpmpar = tpmpar, od = od, 
-       overall.probs.log = overall.probs.log, params = params)
+  res <- list(aa_group = aa_group, pipar = pipar, tpmpar = tpmpar, od = od, 
+       overall_probs_log = overall_probs_log, params = params)
+  class(res) <- "sighsmm_model"
+  res
 }
 
 calc_t <- function(list_prots, aa_list) {

@@ -14,6 +14,6 @@ Alternatively, a \code{list} of sequences in mentioned formats.}
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-Predict sighsmm_model object
+Predicts
 }
 
