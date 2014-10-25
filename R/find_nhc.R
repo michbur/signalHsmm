@@ -1,12 +1,10 @@
-# HEURISTIC ALGORITHM
-
 #' Localize n-, h- and c-region in signal peptide
 #'
 #' Finds borders between distinct regions constituting signal peptides using a heuristic
 #' algorithm.
 #'
 #' @param protein a vector of amino acids or object of class 
-#' \code{\link[seqinr]{SeqFastaAA}}
+#' \code{\link[seqinr]{SeqFastaAA}}.
 #' @param signal range of signal peptide. If \code{NULL}, the attribute \code{sig}
 #' of \code{protein} will be used.
 #' @return a vector of length 4 containing positions of:

@@ -7,7 +7,7 @@ find_nhc(protein, signal = NULL)
 }
 \arguments{
 \item{protein}{a vector of amino acids or object of class
-\code{\link[seqinr]{SeqFastaAA}}}
+\code{\link[seqinr]{SeqFastaAA}}.}
 
 \item{signal}{range of signal peptide. If \code{NULL}, the attribute \code{sig}
 of \code{protein} will be used.}

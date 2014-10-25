@@ -3,7 +3,8 @@
 \name{aaaggregation}
 \alias{aaaggregation}
 \title{Scheme for amino acid aggregation}
-\format{a list of length four containing one-letter name of amino acid}
+\format{a list of length four. Each element contains a \code{character} vector
+of amino acid names (one-letter abbreviations).}
 \usage{
 aaaggregation
 }

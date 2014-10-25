@@ -16,4 +16,11 @@ Alternatively, a \code{list} of sequences in mentioned formats.}
 \description{
 Predicts
 }
+\examples{
+\dontrun{
+pos_train_ultrahard <- read_uniprot("pos_ultrahard_data.txt", euk = TRUE)
+model1 <- train_hsmm(pos_train_ultrahard, aa_group = aaaggregation)
+predict(model1, benchmark_dat[1L:5])
+}
+}
 
