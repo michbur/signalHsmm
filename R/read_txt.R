@@ -7,7 +7,7 @@
 #' @return a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}. If
 #' connection contains no characters, function prompts warning and returns \code{NULL}.
 #' @details The input file should contain one or more amino acid sequences separated by 
-#' empty rows.
+#' empty line(s).
 #' @export
 #' @keywords manip
 

@@ -17,7 +17,7 @@ Read sequence data saved in text file.
 }
 \details{
 The input file should contain one or more amino acid sequences separated by
-empty rows.
+empty line(s).
 }
 \keyword{manip}
 
