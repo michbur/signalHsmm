@@ -35,7 +35,3 @@ All signal.hsmm functionalities can be also invoked in batch mode, for example:
 ```R
 run_signal.hsmm(benchmark_dat[1:10])
 ```
-
-
-
-

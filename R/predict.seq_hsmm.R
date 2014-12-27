@@ -7,6 +7,7 @@
 #' @param ... further arguments passed to or from other methods.
 #' @export
 #' @examples
+#' #remember to remove it
 #' \dontrun{
 #' pos_train_ultrahard <- read_uniprot("pos_ultrahard_data.txt", euk = TRUE)
 #' model1 <- train_hsmm(pos_train_ultrahard, aa_group = aaaggregation)
