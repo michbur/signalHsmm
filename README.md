@@ -21,7 +21,7 @@ You can install the latest development version of the code using the `devtools` 
 install.packages("devtools")
 
 library(devtools)
-install_github("signal.hsmm", "michbur")
+install_github("michbur/signal.hsmm")
 ```
 
 After installation GUI can be accessed locally:

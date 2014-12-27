@@ -8,6 +8,7 @@
 #' proteins. 
 #' @importFrom seqinr read.fasta a
 #' @importFrom shiny runApp
+#' @importFrom biogram degenerate
 #' @docType package
 #' @name signal.hsmm
 #' @examples
