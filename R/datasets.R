@@ -1,8 +1,8 @@
 #put aaaggregation here just to just R CHECK notes
-aaaggregation <- list(c("K", "R", "H"), 
-                      c("V", "I", "L", "M", "F", "W", "C", "U"),
-                      c("S", "T", "N", "Q"), 
-                      c("D", "E", "A", "P", "Y", "G"))
+aaaggregation <- list(c("k", "r", "h"), 
+                      c("v", "i", "l", "m", "f", "w", "c", "u"),
+                      c("s", "t", "n", "q"), 
+                      c("d", "e", "a", "p", "y", "g"))
 names(aaaggregation) = c("1", "2", "3", "4")
 
 #' @name benchmark_dat

@@ -154,6 +154,8 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
     res[["str_approx"]] <- res[["str_approx"]] + 1
   }
   
+  browser()
+  
   res
 }
 

@@ -14,6 +14,8 @@ Always a named list of five elements
 \item \code{struc} is numeric vector representing predicted structure of input
 protein.
 \item \code{prot} is character vector containing input sequence of amino acids.
+\item \code{str_approx} has value bigger than 0 if the predicted signal peptide
+structure was approximated (usually in case of sequences that have no signal peptides).
 }
 }
 \seealso{
