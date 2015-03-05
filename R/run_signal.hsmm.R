@@ -167,11 +167,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 #' @export
 #' @seealso \code{\link{run_signal.hsmm}}
 #' @note
-#' Any ad-blocking software may be cause of malfunctions. 
-#' @examples
-#' \donttest{
-#' gui_signal.hsmm()
-#'}
+#' Any ad-blocking software may be cause of malfunctions.
 
 gui_signal.hsmm <- function() {
   runApp(system.file("signal_gui", package = "signal.hsmm"))
