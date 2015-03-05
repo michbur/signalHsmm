@@ -15,10 +15,6 @@ A graphical user interface for predicting presence of signal peptides.
 \note{
 Any ad-blocking software may be cause of malfunctions.
 }
-\examples{
-if(interactive())
-  gui_signal.hsmm()
-}
 \seealso{
 \code{\link{run_signal.hsmm}}
 }
