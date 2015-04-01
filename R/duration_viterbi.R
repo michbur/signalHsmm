@@ -20,8 +20,8 @@
 #' \item{duration}{ matrix that gives for every signal and state gives the duration 
 #' in that state on viterbi path.}
 #' }
-#' @note Currently has very restricted application to specific input All computations are on logarithms of probabilities
-
+#' @note Currently has very restricted application to specific input.
+#' All computations are on logarithms of probabilities.
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params){
   max_duration <- dim(params)[1]
   nstates <- length(pipar)
