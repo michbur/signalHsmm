@@ -12,9 +12,9 @@ read_uniprot(connection, euk)
 \item{euk}{logical value if data has an eukaryotic origin.}
 }
 \value{
-a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
-Slot \code{sig} contains the range of signal peptide. Sequence with more than one
-cleavage site or atypical aminoacids are removed.
+a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
+Slot \code{sig} contains the range (start and end) of signal peptide. Sequence with more
+than one cleavage site or atypical aminoacids are removed without any notice.
 }
 \description{
 Read data saved in UniProt original flat text format.

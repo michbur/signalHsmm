@@ -7,10 +7,10 @@ names(aaaggregation) = c("1", "2", "3", "4")
 
 #' @name benchmark_dat
 #' @title Benchmark data set for signal.hsmm
-#' @description This data set lists eukaryotic proteins added to UniProt database release 
+#' @description Lists eukaryotic proteins added to UniProt database release 
 #' 2014_07 between 2011 and 2014 (140 proteins with signal peptide and 280 randomly 
 #' sampled proteins without signal peptide). 
-#' All proteins were used in benchmark test comparing the performance
+#' All proteins were used in the benchmark test to compare the performance
 #' of signal.hsmm and other signal peptide predictors.
 #' @docType data
 #' @usage benchmark_dat

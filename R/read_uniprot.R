@@ -5,9 +5,9 @@
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
 #' @param euk logical value if data has an eukaryotic origin.
 #' @keywords manip
-#' @return a list of sequences. Each element has class \code{\link[seqinr]{SeqFastaAA}}.
-#' Slot \code{sig} contains the range of signal peptide. Sequence with more than one
-#' cleavage site or atypical aminoacids are removed.
+#' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
+#' Slot \code{sig} contains the range (start and end) of signal peptide. Sequence with more 
+#' than one cleavage site or atypical aminoacids are removed without any notice.
 #' @export
 #' @keywords manip
 
