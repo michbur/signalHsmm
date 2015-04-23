@@ -13,6 +13,7 @@
 #' If input consists of more than one sequence, result is a data.frame where each column
 #' contains above values for different proteins.
 #' @note Currently start of signal peptide is naively set as 1 amino acid.
+#' @useDynLib signalHsmm
 #' @export
 #' @seealso \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}} 
 #' @keywords classif
@@ -129,8 +130,8 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   deg_sample <- as.numeric(degenerate(toupper(prot)[1L:50], aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)
-  viterbi_res <- duration_viterbi(deg_sample, pipar, tpmpar, od, params)
-  viterbi_path <- viterbi_res[["path"]]
+  viterbi_res <- duration_viterbi2(deg_sample-1, pipar, tpmpar, od, params)
+  viterbi_path <- viterbi_res[["path"]]+1
   c_site <- ifelse(any(viterbi_path == 3), 
                    max(which(viterbi_path == 3)), 
                    length(deg_sample))
