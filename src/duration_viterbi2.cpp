@@ -62,7 +62,7 @@ List duration_viterbi2(NumericVector aa_sample, NumericVector pipar, NumericMatr
       int maxInd = 0; //previous state that is maximising probability
       int maximDura = 0;  //duration that is maximising probability
       for(int k=0; k<nstates; k++){  
-        int dMax=std::min(maxDuration, i);
+        int dMax=std::min(maxDuration-1, i);
         for(int d=0; d<=dMax; d++){
           // for every possible previous state, and for every possible duration in current state
           if (i-d==0){ //if duration is as long as number of signal considered
