@@ -1,4 +1,4 @@
-Package: signal.hsmm
+Package: signalHsmm
 Type: Package
 Title: Predict Presence of Signal Peptides
 Version: 1.2
@@ -20,9 +20,10 @@ Imports:
     biogram,
     seqinr,
     shiny
+LinkingTo: Rcpp
 Suggests:
     knitr,
     markdown,
     shinyAce
-NeedsCompilation: no
+NeedsCompilation: yes
 Repository: CRAN
