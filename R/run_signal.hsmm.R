@@ -132,7 +132,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   deg_sample <- na.omit(deg_sample)
   viterbi_res <- duration_viterbi2(deg_sample-1, pipar, tpmpar, od, params)
   viterbi_path <- viterbi_res[["path"]]+1
-  c_site <- ifelse(any(viterbi_path == 3), 
+  c_site <- ifelse(any(viterbi_path == 4), 
                    max(which(viterbi_path == 3)) + 1, 
                    length(deg_sample))
   #get probabilities of signal peptide model
