@@ -1,4 +1,4 @@
-![signalHsmm](https://github.com/michbur/signal.hsmm/blob/master/inst/logo.png)
+<img src="https://github.com/michbur/signal.hsmm/blob/master/inst/logo.png" alt="signalHsmm" style="width: 200px;"/>
 
 signal.hsmm
 =========================
