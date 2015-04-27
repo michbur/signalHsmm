@@ -19,10 +19,10 @@
 #' @keywords classif
 #' @examples
 #' #run signal.hsmm on one sequence
-#' x1 <- run_signal.hsmm(benchmark_dat[[1]])
+#' x1 <- run_signalHsmm(benchmark_dat[[1]])
 #' 
-#' #run signal.hsmm on one sequence, but input is a character vector
-#' x2 <- run_signal.hsmm(c("m", "a", "g", "k", "e", "v", "i", "f", 
+#' #run signalHsmm on one sequence, but input is a character vector
+#' x2 <- run_signalHsmm(c("m", "a", "g", "k", "e", "v", "i", "f", 
 #' "i", "m", "a", "l", "f", "i", "a", "v", "e", "s", "s", "p", "i", 
 #' "f", "s", "f", "d", "d", "l", "v", "c", "p", "s", "v", "t", "s", 
 #' "l", "r", "v", "n", "v", "e", "k", "n", "e", "c", "s", "t", "k", 
@@ -33,7 +33,7 @@
 #' "l"))
 #' 
 #' #run signal.hsmm on list of sequences
-#' x3 <- run_signal.hsmm(benchmark_dat[1:3])
+#' x3 <- run_signalHsmm(benchmark_dat[1:3])
 #' #see summary of results
 #' summary(x3)
 #' #print results as data frame
@@ -42,7 +42,7 @@
 #' summary(x3[[1]])
 #' plot(x3[[1]])
 
-run_signal.hsmm <- function(test_data) {
+run_signalHsmm <- function(test_data) {
   signal.hsmm_model <- structure(list(pipar = c(1, 0, 0, 0), 
                                       tpmpar = structure(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0), 
                                                          .Dim = c(4L, 4L)), 
@@ -164,10 +164,10 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 #' A graphical user interface for predicting presence of signal peptides.
 #' @return null.
 #' @export
-#' @seealso \code{\link{run_signal.hsmm}}
+#' @seealso \code{\link{run_signalHsmm}}
 #' @note
 #' Any ad-blocking software may be cause of malfunctions.
 
-gui_signal.hsmm <- function() {
-  runApp(system.file("signal_gui", package = "signal.hsmm"))
+gui_signalHsmm <- function() {
+  runApp(system.file("signal_gui", package = "signalHsmm"))
 }

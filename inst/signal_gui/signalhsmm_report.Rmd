@@ -1,4 +1,4 @@
-signal.hsmm - report
+signalHsmm - report
 ========================================================
 
 ```{r,results='asis',echo=FALSE}

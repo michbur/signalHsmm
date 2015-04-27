@@ -10,9 +10,9 @@
 #' @importFrom shiny runApp
 #' @importFrom biogram degenerate
 #' @docType package
-#' @name signal.hsmm
+#' @name signalHsmm
 #' @examples
-#' few_predictions <- run_signal.hsmm(benchmark_dat[1:3])
+#' few_predictions <- run_signalHsmm(benchmark_dat[1:3])
 #' #see all predictions
 #' pred2df(few_predictions)
 #' #summary one prediction
@@ -21,7 +21,7 @@
 #' plot(few_predictions[[1]])
 #' 
 #' #have fun with GUI
-#' \donttest{
-#' gui_signal.hsmm()
+#' \dontrun{
+#' gui_signalHsmm()
 #' }
 NULL

@@ -1,5 +1,5 @@
 library(shiny)
-library(signal.hsmm)
+library(signalHsmm)
 library(shinyAce)
 options(shiny.maxRequestSize=10*1024^2)
 
@@ -23,7 +23,7 @@ shinyServer(function(input, output) {
         #dummy error, just to stop further processing
         stop("Too many sequences.")
       } else {
-        run_signal.hsmm(res)
+        run_signalHsmm(res)
       }
     } else {
       NULL

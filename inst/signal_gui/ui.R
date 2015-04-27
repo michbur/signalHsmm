@@ -2,7 +2,7 @@ library(shiny)
 
 shinyUI(fluidPage(
   
-  headerPanel("signal.hsmm"),
+  headerPanel("signalHsmm"),
   
   sidebarLayout(
     sidebarPanel(

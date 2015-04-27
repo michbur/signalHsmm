@@ -5,8 +5,7 @@ signal.hsmm
 Predict Presence of Signal Peptides
 -------------------------
 
-signalHsmmpredicts presence of signal peptides in eukaryotic proteins using
-hidden semi-Markov models. The implemented algorithm can be accessed as a web-based service http://michbur.shinyapps.io/signalhsmm/ 
+signalHsmm predicts presence of signal peptides in eukaryotic proteins using hidden semi-Markov models. The implemented algorithm can be accessed as a web-based service www.smorfland.uni.wroc.pl/signalHsmm 
 
 Local instance of signal.hsmm
 ------------------------
@@ -29,11 +28,11 @@ install_github("michbur/signalHsmm")
 After installation GUI can be accessed locally:
 
 ```R
-library(signal.hsmm)
-gui_signal.hsmm()
+library(signalHsmm)
+gui_signalHsmm()
 ```
 All signalHsmm functionalities can be also invoked in batch mode, for example:
 
 ```R
-run_signal.hsmm(benchmark_dat[1:10])
+run_signalHsmm(benchmark_dat[1:10])
 ```
