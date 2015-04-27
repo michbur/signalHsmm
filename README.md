@@ -1,4 +1,4 @@
-<img src="https://github.com/michbur/signal.hsmm/blob/master/inst/logo.png" alt="signalHsmm" style="width: 200px;"/>
+<img src="https://github.com/michbur/signal.hsmm/blob/master/inst/logo.png" alt="signalHsmm" style="height: 200px;"/>
 
 signal.hsmm
 =========================
