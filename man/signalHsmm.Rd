@@ -4,15 +4,21 @@
 \name{signalHsmm}
 \alias{signalHsmm}
 \alias{signalHsmm-package}
-\title{signal.hsmm - prediction of signal peptides}
+\title{signalHsmm - prediction of signal peptides}
 \description{
-Implementing hidden semi-Markov model and a novel approach to sequence
-analysis, signal.hsmm is new, highly accurate signal peptide predictor for eukaryotic
-proteins.
+Using hidden semi-Markov models as a probabilistic framework, signal.hsmm
+is new, highly accurate signal peptide predictor for eukaryotic proteins.
 }
 \details{
-signal.hsmm predicts presence of signal peptides using the hidden
-semi-Markov models.
+Secretory signal peptides are short (20-30 residues) N-terminal amino acid sequences
+tagging among others tag among others hormons, immune system proteins, structural
+proteins, and metabolic enzymes. They direct a protein to the endomembrane system and
+next to the extracellular localization. All signal peptides possess three distinct
+domains with variable length
+and characteristic amino acid composition. Despite their variability, signal peptides
+are universal enough to direct properly proteins in different secretory systems.
+For example, artifically introduced bacterial signal peptides can guide proteins in
+mammals and plants.
 }
 \examples{
 few_predictions <- run_signalHsmm(benchmark_dat[1:3])
