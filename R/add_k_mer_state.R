@@ -33,13 +33,13 @@ add_k_mer_state <- function(kMer, pipar, tpmpar, od, params, pState, nState, pTr
   od2 <- od
   params2 <- params
   for(i in 1:(length(kMer)-1)){
-    sig <- kMer[i]
+    sig <- unlist(kMer[i])
     #transition matrix
     transition <- c(rep(0, nStates+i), 1, rep(0, length(kMer)-i-1)) 
     tpmpar2 <- rbind(tpmpar2, transition)
     #response probability
     response <- rep(0, ncol(od))
-    response[sig] <- 1
+    response[sig] <- 1/length(sig)
     od2 <- rbind(od2, response)
     #duration probability
     params2 <- cbind(params2, c(1, rep(0,nrow(params)-1)))
@@ -47,13 +47,13 @@ add_k_mer_state <- function(kMer, pipar, tpmpar, od, params, pState, nState, pTr
   
   #last state
 
-  sig <- tail(kMer,1)
+  sig <- unlist(tail(kMer,1))
   transition <- rep(0, ncol(tpmpar2))
   transition[nState] <- 1
   tpmpar2 <- rbind(tpmpar2, transition)
   #observation probs
   response <- rep(0, ncol(od))
-  response[sig] <- 1
+  response[sig] <- 1/length(sig)
   od2 <- rbind(od2, response)
   #duration probability
   params2 <- cbind(params2, c(1, rep(0,nrow(params)-1)))
