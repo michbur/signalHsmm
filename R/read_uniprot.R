@@ -18,7 +18,7 @@ read_uniprot <- function(connection, what = "signal", euk) {
   
   all_lines <- readLines(connection)
   
-  all_seqs <- preliminary_seqs(all_lines, signal = TRUE) 
+  all_seqs <- preliminary_seqs(all_lines, what = what) 
   
   #remove unsure signal peptides
   only_sure <- remove_unsure(all_lines, all_seqs)
@@ -48,7 +48,9 @@ read_uniprot <- function(connection, what = "signal", euk) {
     attr(ith_seq, "class") <- "SeqFastaAA"
     
     #to do - think about something smarter than suppressWarnings
-    sig <- suppressWarnings(as.numeric(strsplit(strsplit(all_lines[sure_seqs[4,i]], "SIGNAL       ")[[1]][2], " ")[[1]]))
+    
+    sig <- suppressWarnings(as.numeric(strsplit(strsplit(all_lines[sure_seqs[4,i]], 
+                                                         paste0(toupper(what), "       "))[[1]][2], " ")[[1]]))
     sig <- as.numeric(na.omit(sig))
     attr(ith_seq, "sig") <- sig
     #line is preserved just to have an additional source of information
