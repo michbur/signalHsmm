@@ -3,6 +3,9 @@
 #' Read data saved in UniProt original flat text format.
 #'
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
+#' @param what a single \code{character} determining which information should 
+#' be extracted. Currently can have following values: \code{"signal"}, 
+#' \code{"transit"}.
 #' @param euk logical value if data has an eukaryotic origin.
 #' @keywords manip
 #' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
@@ -11,7 +14,7 @@
 #' @export
 #' @keywords manip
 
-read_uniprot <- function(connection, euk) {
+read_uniprot <- function(connection, what = "signal", euk) {
   
   all_lines <- readLines(connection)
   
@@ -70,7 +73,7 @@ read_uniprot <- function(connection, euk) {
 
 #READ UNIPROT DATA -----------------------------
 #helper function to get seqs from  .txt files
-preliminary_seqs <- function(all_lines, signal) {
+preliminary_seqs <- function(all_lines, what) {
   prot_ids <- grep("\\<ID   ", all_lines)
   seqs_start <- grep("\\<SQ   ", all_lines) + 1
   seqs_end <-  grep("^//", all_lines) - 1
@@ -78,11 +81,16 @@ preliminary_seqs <- function(all_lines, signal) {
   
   prot_sig <- rep(NA, length(prot_ids))
   
-  if (signal) {
+  if (what == "signal") {
     signals <- grep("FT   SIGNAL", all_lines)
-    all_ids <- sort(c(prot_ids, signals), method = "quick")
-    prot_sig[which(all_ids %in% signals) - 1L:length(signals)] <- signals
   }
+  
+  if (what == "transit") {
+    signals <- grep("FT   TRANSIT", all_lines)
+  }
+  
+  all_ids <- sort(c(prot_ids, signals), method = "quick")
+  prot_sig[which(all_ids %in% signals) - 1L:length(signals)] <- signals
   
   rbind(prot_ids, seqs_start, seqs_end, prot_sig)
 }
