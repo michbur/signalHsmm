@@ -9,9 +9,9 @@ read_uniprot(connection, what = "signal", euk)
 \arguments{
 \item{connection}{a \code{\link{connection}} to UniProt data in text format.}
 
-\item{what}{a single \code{character} determining which information should
-be extracted. Currently can have following values: \code{"signal"},
-\code{"transit"}.}
+\item{what}{\code{NULL} or a single \code{character} determining which information
+should be extracted. Currently can have following values: \code{"signal"},
+\code{"transit"}. \code{NULL}.}
 
 \item{euk}{logical value if data has an eukaryotic origin.}
 }
