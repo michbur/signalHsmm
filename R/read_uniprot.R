@@ -3,9 +3,9 @@
 #' Read data saved in UniProt original flat text format.
 #'
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
-#' @param what a single \code{character} determining which information should 
-#' be extracted. Currently can have following values: \code{"signal"}, 
-#' \code{"transit"}.
+#' @param what \code{NULL} or a single \code{character} determining which information 
+#' should be extracted. Currently can have following values: \code{"signal"}, 
+#' \code{"transit"}. \code{NULL}.
 #' @param euk logical value if data has an eukaryotic origin.
 #' @keywords manip
 #' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
@@ -46,13 +46,21 @@ read_uniprot <- function(connection, what = "signal", euk) {
     attr(ith_seq, "name") <- aa_name
     attr(ith_seq, "Annot") <- paste0(">", aa_name)
     attr(ith_seq, "class") <- "SeqFastaAA"
-    
     #to do - think about something smarter than suppressWarnings
     
-    sig <- suppressWarnings(as.numeric(strsplit(strsplit(all_lines[sure_seqs[4,i]], 
-                                                         paste0(toupper(what), "       "))[[1]][2], " ")[[1]]))
-    sig <- as.numeric(na.omit(sig))
-    attr(ith_seq, "sig") <- sig
+    if(!is.null(what)) {
+      sig <- suppressWarnings(as.numeric(strsplit(strsplit(all_lines[sure_seqs[4,i]], 
+                                                           paste0(toupper(what), "       "))[[1]][2], " ")[[1]]))
+      sig <- as.numeric(na.omit(sig))
+      attr(ith_seq, "sig") <- sig
+    }
+    
+    os <- all_lines[sure_seqs["os_start", i]:sure_seqs["os_end", i]]
+    attr(ith_seq, "OS") <- paste0(vapply(strsplit(os, "OS   "), function(single_os) single_os[2], "a"), collapse = " ")
+    
+    oc <- all_lines[sure_seqs["oc_start", i]:sure_seqs["oc_end", i]]
+    attr(ith_seq, "OC") <- paste0(vapply(strsplit(oc, "OC   "), function(single_oc) single_oc[2], "a"), collapse = " ")
+    
     #line is preserved just to have an additional source of information
     #attr(ith_seq, "line") <- all_lines[sure_seqs[4,i]]
     
@@ -83,18 +91,31 @@ preliminary_seqs <- function(all_lines, what) {
   
   prot_sig <- rep(NA, length(prot_ids))
   
-  if (what == "signal") {
-    signals <- grep("FT   SIGNAL", all_lines)
-  }
-  
-  if (what == "transit") {
-    signals <- grep("FT   TRANSIT", all_lines)
-  }
+  signals <- grep(paste0("FT   ", toupper(what)), all_lines)
   
   all_ids <- sort(c(prot_ids, signals), method = "quick")
   prot_sig[which(all_ids %in% signals) - 1L:length(signals)] <- signals
   
-  rbind(prot_ids, seqs_start, seqs_end, prot_sig)
+  
+  os_list <- get_block(grep("\\<OS   ", all_lines))
+  os_start <- vapply(os_list, function(i) i[1], 0)
+  os_end <- vapply(os_list, function(i) i[length(i)], 0)
+  
+
+  oc_list <- get_block(grep("\\<OC   ", all_lines))
+  oc_start <- vapply(oc_list, function(i) i[1], 0)
+  oc_end <- vapply(oc_list, function(i) i[length(i)], 0)
+  
+  res <- rbind(prot_ids, 
+               seqs_start, seqs_end, 
+               prot_sig,
+               os_start, os_end,
+               oc_start, oc_end)
+  
+  rownames(res) <- c("prot_ids", "seqs_start", "seqs_end", "prot_sig", 
+                     "os_start", "os_end",
+                     "oc_start", "oc_end")
+  res
 }
 
 #removes proteins with probable or potential signal peptides
@@ -129,3 +150,23 @@ get_atyp <- function(list_prots) {
       atyp_aa %in% prot))) > 0)
 }
 
+#gets list of starts and ends of specific blocks in UniProt data
+get_block <- function(block_indices) {
+  block_list <- list()
+  tmp_block <- c()
+  
+  for(i in block_indices) {
+    if(is.null(tmp_block[length(tmp_block)])) {
+      tmp_block <- i
+    } else {
+      if(tmp_block[length(tmp_block)] + 1 == i) {
+        tmp_block <- c(tmp_block, i)
+      } else {
+        block_list <- c(block_list, list(tmp_block))
+        tmp_block <- i
+      } 
+    }
+  }
+  
+  c(block_list, list(tmp_block))
+}
