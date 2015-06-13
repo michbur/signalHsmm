@@ -4,10 +4,14 @@
 \alias{read_uniprot}
 \title{Read data from UniProt database}
 \usage{
-read_uniprot(connection, euk)
+read_uniprot(connection, what = "signal", euk)
 }
 \arguments{
 \item{connection}{a \code{\link{connection}} to UniProt data in text format.}
+
+\item{what}{\code{NULL} or a single \code{character} determining which information
+should be extracted. Currently can have following values: \code{"signal"},
+\code{"transit"}. \code{NULL}.}
 
 \item{euk}{logical value if data has an eukaryotic origin.}
 }

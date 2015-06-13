@@ -8,7 +8,7 @@
 
 is_protein <- function(object) {
   #only amino acids
-  only_aa <- all(toupper(object) %in% a()[-1])
+  only_aa <- all(toupper(object) %in% c(a()[-1], "X", "J", "Z", "B", "U"))
   #only nucleotides
   only_nuc <- all(toupper(object) %in% c("A", "C", "G", "T"))
  
