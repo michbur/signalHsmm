@@ -14,7 +14,7 @@ benchmark_dat
 }
 \description{
 Lists eukaryotic proteins added to UniProt database release
-2014_07 between 2011 and 2014 (140 proteins with signal peptide and 280 randomly
+2014_07 between 1.01.2010 and 1.06.2015 (140 proteins with signal peptide and 280 randomly
 sampled proteins without signal peptide).
 All proteins were used in the benchmark test to compare the performance
 of signal.hsmm and other signal peptide predictors.
