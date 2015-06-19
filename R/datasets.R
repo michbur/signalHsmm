@@ -1,14 +1,14 @@
 #put aaaggregation here just to just R CHECK notes
-aaaggregation <- list(c("k", "r", "h"), 
-                      c("v", "i", "l", "m", "f", "w", "c", "u"),
-                      c("s", "t", "n", "q"), 
-                      c("d", "e", "a", "p", "y", "g"))
+aaaggregation <- list(c("r", "n", "d", "q", "e", "h", "k"), 
+                      c("g", "p", "s", "t", "y"), 
+                      c("i", "l", "m", "f", "w", "v"), 
+                      c("a", "c"))
 names(aaaggregation) = c("1", "2", "3", "4")
 
 #' @name benchmark_dat
 #' @title Benchmark data set for signal.hsmm
 #' @description Lists eukaryotic proteins added to UniProt database release 
-#' 2014_07 between 2011 and 2014 (140 proteins with signal peptide and 280 randomly 
+#' 2014_07 between 1.01.2010 and 1.06.2015 (140 proteins with signal peptide and 280 randomly 
 #' sampled proteins without signal peptide). 
 #' All proteins were used in the benchmark test to compare the performance
 #' of signal.hsmm and other signal peptide predictors.
