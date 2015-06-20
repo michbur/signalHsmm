@@ -4,7 +4,7 @@
 \alias{add_k_mer_state}
 \title{Adds k-mer hidden state to signalHsmm model}
 \usage{
-add_k_mer_state(kMer, pipar, tpmpar, od, params, pState, nState, pTrans)
+add_k_mer_state(kMer, pipar, tpmpar, od, params, pState, nState, pTrans, d)
 }
 \arguments{
 \item{kMer}{\code{character} vector representing k-mer aminoacid sequence.}
