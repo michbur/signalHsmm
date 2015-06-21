@@ -23,7 +23,9 @@ Eg. params[10,2] is probability of duration of time 10 in state 2.}
 
 \item{nState}{number denoting hidden state right after k-mer.}
 
-\item{pTrans}{Probability of change from pState to k-mer hidden state}
+\item{pTrans}{Probability of change from pState to k-mer hidden state.}
+
+\item{d}{Duration of the state.}
 }
 \value{
 A list of length four:

@@ -12,7 +12,8 @@
 #' Eg. params[10,2] is probability of duration of time 10 in state 2.
 #' @param pState number denoting hidden state right before k-mer.
 #' @param nState number denoting hidden state right after k-mer.
-#' @param pTrans Probability of change from pState to k-mer hidden state
+#' @param pTrans Probability of change from pState to k-mer hidden state.
+#' @param d Duration of the state.
 #' @export
 #' @return A list of length four:
 #' \itemize{

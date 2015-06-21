@@ -43,7 +43,7 @@
 #' plot(x3[[1]])
 
 run_signalHsmm <- function(test_data) {
-  signal.hsmm_model <- signalHsmm:::signalHsmm_model
+  chosen_model <- signalHsmm_main_model
   
   if (class(test_data) == "numeric" || class(test_data) == "factor" || 
       class(test_data) == "data.frame" || class(test_data) == "matrix")
@@ -52,23 +52,23 @@ run_signalHsmm <- function(test_data) {
   if(class(test_data) == "SeqFastaAA" || 
      class(test_data) == "character") {
     #single input
-    decisions <- signal.hsmm_decision(test_data, aa_group = signal.hsmm_model[["aa_group"]], 
-                                      pipar = signal.hsmm_model[["pipar"]], 
-                                      tpmpar = signal.hsmm_model[["tpmpar"]], 
-                                      od = signal.hsmm_model[["od"]], 
-                                      overall_probs_log = signal.hsmm_model[["overall_probs_log"]], 
-                                      params = signal.hsmm_model[["params"]])
+    decisions <- signal.hsmm_decision(test_data, aa_group = chosen_model[["aa_group"]], 
+                                      pipar = chosen_model[["pipar"]], 
+                                      tpmpar = chosen_model[["tpmpar"]], 
+                                      od = chosen_model[["od"]], 
+                                      overall_probs_log = chosen_model[["overall_probs_log"]], 
+                                      params = chosen_model[["params"]])
     decisions <- list(decisions)
     names(decisions) <- attr(test_data, "name")
   } else {
     #list input
     decisions <- lapply(test_data, function(prot)
-      signal.hsmm_decision(prot, aa_group = signal.hsmm_model[["aa_group"]], 
-                           pipar = signal.hsmm_model[["pipar"]], 
-                           tpmpar = signal.hsmm_model[["tpmpar"]], 
-                           od = signal.hsmm_model[["od"]], 
-                           overall_probs_log = signal.hsmm_model[["overall_probs_log"]], 
-                           params = signal.hsmm_model[["params"]]))
+      signal.hsmm_decision(prot, aa_group = chosen_model[["aa_group"]], 
+                           pipar = chosen_model[["pipar"]], 
+                           tpmpar = chosen_model[["tpmpar"]], 
+                           od = chosen_model[["od"]], 
+                           overall_probs_log = chosen_model[["overall_probs_log"]], 
+                           params = chosen_model[["params"]]))
   }
   class(decisions) <- "hsmm_pred_list"
   decisions
@@ -131,7 +131,7 @@ gui_signalHsmm <- function() {
   runApp(system.file("signal_gui", package = "signalHsmm"))
 }
 
-signalHsmm_model <- structure(list(aa_group = structure(list(`1` = c("r", "n", "d", 
+signalHsmm_main_model <- structure(list(aa_group = structure(list(`1` = c("r", "n", "d", 
                                                                       "q", "e", "h", "k"), `2` = c("g", "p", "s", "t", "y"), `3` = c("i", 
                                                                                                                                      "l", "m", "f", "w", "v"), `4` = c("a", "c")), .Names = c("1", 
                                                                                                                                                                                               "2", "3", "4")), pipar = c(1, 0, 0, 0), 
