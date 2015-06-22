@@ -4,7 +4,7 @@ using namespace Rcpp;
 //' Compute most probable path with extended Viterbi algorithm.
 //' 
 //' Viterbi algorithm for Hidden Markov Model with duration
-//' @param aa_sample character vector representing single aminoacid sequence
+//' @param aa_sample \code{character} vector representing single aminoacid sequence.
 //' @param pipar Probabilities of initial state in Markov Model.
 //' @param tpmpar Matrix with transition probabilities between states.
 //' @param od Matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1.
@@ -17,8 +17,9 @@ using namespace Rcpp;
 //'  \item{psi}{ matrix that gives for every signal and state the previous state in viterbi path,}
 //'  \item{duration}{ matrix that gives for every signal and state gives the duration in that state on viterbi path.}
 //'  }
+//' @note All computations are on logarithms of probabilities..
 // [[Rcpp::export]]
-List duration_viterbi2(NumericVector aa_sample, NumericVector pipar, NumericMatrix tpmpar, NumericMatrix od, NumericMatrix params) {
+List duration_viterbi(NumericVector aa_sample, NumericVector pipar, NumericMatrix tpmpar, NumericMatrix od, NumericMatrix params) {
   int maxDuration = params.nrow();
   int nstates = pipar.length();
   
@@ -109,10 +110,10 @@ List duration_viterbi2(NumericVector aa_sample, NumericVector pipar, NumericMatr
   IntegerVector path(aa_sample.size());
   //the last state
   int seqLength = aa_sample.length();
-  NumericVector dupa = viterbi(seqLength-1,_);
+  NumericVector prob_path = viterbi(seqLength-1,_);
   
-//  for(int i=0; i<dupa.length(); i++){
-//    Rprintf("%f ", dupa(i));
+//  for(int i=0; i<prob_path.length(); i++){
+//    Rprintf("%f ", prob_path(i));
 //  }
 //  Rprintf("\n %d \n", which_max(viterbi(seqLength-1,_)));
   

@@ -5,9 +5,9 @@
 
 using namespace Rcpp;
 
-// duration_viterbi2
-List duration_viterbi2(NumericVector aa_sample, NumericVector pipar, NumericMatrix tpmpar, NumericMatrix od, NumericMatrix params);
-RcppExport SEXP signalHsmm_duration_viterbi2(SEXP aa_sampleSEXP, SEXP piparSEXP, SEXP tpmparSEXP, SEXP odSEXP, SEXP paramsSEXP) {
+// duration_viterbi
+List duration_viterbi(NumericVector aa_sample, NumericVector pipar, NumericMatrix tpmpar, NumericMatrix od, NumericMatrix params);
+RcppExport SEXP signalHsmm_duration_viterbi(SEXP aa_sampleSEXP, SEXP piparSEXP, SEXP tpmparSEXP, SEXP odSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -16,7 +16,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type tpmpar(tpmparSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type od(odSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type params(paramsSEXP);
-    __result = Rcpp::wrap(duration_viterbi2(aa_sample, pipar, tpmpar, od, params));
+    __result = Rcpp::wrap(duration_viterbi(aa_sample, pipar, tpmpar, od, params));
     return __result;
 END_RCPP
 }
