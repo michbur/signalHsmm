@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' Compute most probable path with extended Viterbi algorithm
+//' Compute most probable path with extended Viterbi algorithm.
 //' 
 //' Viterbi algorithm for Hidden Markov Model with duration
 //' @param aa_sample character vector representing single aminoacid sequence

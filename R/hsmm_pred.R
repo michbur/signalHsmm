@@ -1,6 +1,6 @@
 #' hsmm_pred class
 #'
-#' A single prediction of \code{signal.hsmm}.
+#' A single prediction of \code{signalHsmm}.
 #'
 #' @details Always a named list of five elements
 #' \enumerate{
@@ -17,7 +17,7 @@
 #' @name hsmm_pred
 NULL
 
-#' Plot single signal.hsmm prediction
+#' Plot single signalHsmm prediction
 #'
 #' Plots objects of class \code{\link{hsmm_pred}}.
 #'
@@ -72,7 +72,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, ...) {
            bty = "n")
 }
 
-#' Summarize single signal.hsmm prediction
+#' Summarize single signalHsmm prediction
 #'
 #' Summarizes objects of class \code{\link{hsmm_pred}}.
 #'

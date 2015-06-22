@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_signalHsmm.R
 \name{gui_signalHsmm}
 \alias{gui_signalHsmm}
-\title{GUI for signal.hsmm}
+\title{GUI for signalHsmm}
 \usage{
 gui_signalHsmm()
 }

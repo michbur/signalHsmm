@@ -2,7 +2,7 @@
 % Please edit documentation in R/hsmm_pred_list.R
 \name{pred2df}
 \alias{pred2df}
-\title{Convert list of signal.hsmm predictions}
+\title{Convert list of signalHsmm predictions}
 \usage{
 pred2df(object)
 }

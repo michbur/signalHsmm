@@ -6,7 +6,7 @@
 \alias{signalHsmm-package}
 \title{signalHsmm - prediction of signal peptides}
 \description{
-Using hidden semi-Markov models as a probabilistic framework, signal.hsmm
+Using hidden semi-Markov models as a probabilistic framework, signalHsmm
 is new, highly accurate signal peptide predictor for eukaryotic proteins.
 }
 \details{

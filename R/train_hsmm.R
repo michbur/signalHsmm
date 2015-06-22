@@ -4,7 +4,7 @@
 #' @param aa_group method of aggregating amino acids.
 #' @param max_length maximum length of signal peptide.
 #' @export
-#' @return object of class \code{sighsmm_model}
+#' @return object of class \code{sighsmm_model}.
 
 train_hsmm <- function(train_data, aa_group, max_length = 32) {
   train_data <- lapply(train_data, toupper)

@@ -1,6 +1,6 @@
 #' Predict sighsmm_model object
 #' 
-#' Predicts 
+#' Predicts the presence of signal peptides using signalHsmm models.
 #' @param object \code{sighsmm_model} object.
 #' @param newdata unknown sequence of class \code{character} or \code{character}.
 #' Alternatively, a \code{list} of sequences in mentioned formats.
@@ -24,7 +24,7 @@ predict.sighsmm_model <- function(object, newdata, ...){
   if(class(newdata) == "SeqFastaAA" || 
        class(newdata) == "character") {
     #single input
-    decisions <- signal.hsmm_decision(newdata, aa_group = object[["aa_group"]], 
+    decisions <- signalHsmm_decision(newdata, aa_group = object[["aa_group"]], 
                                       pipar = object[["pipar"]], 
                                       tpmpar = object[["tpmpar"]], 
                                       od = object[["od"]], 
@@ -35,7 +35,7 @@ predict.sighsmm_model <- function(object, newdata, ...){
   } else {
     #list input
     decisions <- lapply(newdata, function(prot)
-      signal.hsmm_decision(prot, aa_group = object[["aa_group"]], 
+      signalHsmm_decision(prot, aa_group = object[["aa_group"]], 
                            pipar = object[["pipar"]], 
                            tpmpar = object[["tpmpar"]], 
                            od = object[["od"]], 
@@ -45,5 +45,3 @@ predict.sighsmm_model <- function(object, newdata, ...){
   class(decisions) <- "hsmm_pred_list"
   decisions
 }
-
-

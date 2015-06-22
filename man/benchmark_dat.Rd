@@ -3,7 +3,7 @@
 \docType{data}
 \name{benchmark_dat}
 \alias{benchmark_dat}
-\title{Benchmark data set for signal.hsmm}
+\title{Benchmark data set for signalHsmm}
 \format{a list of \code{\link[seqinr]{SeqFastaAA}} objects.
 Slot \code{sig} contains the range of signal peptide (if any).}
 \source{
@@ -17,7 +17,7 @@ Lists eukaryotic proteins added to UniProt database release
 2015_06 between 1.01.2010 and 1.06.2015 (140 proteins with signal peptide and 280 randomly
 sampled proteins without signal peptide).
 All proteins were used in the benchmark test to compare the performance
-of signal.hsmm and other signal peptide predictors.
+of signalHsmm and other signal peptide predictors.
 }
 \examples{
 summary(benchmark_dat)

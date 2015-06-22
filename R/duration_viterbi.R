@@ -1,7 +1,7 @@
 #' Compute most probable path with extended Viterbi algorithm
 #' 
-#' Viterbi algorithm for Hidden Markov Model with duration
-#' Valid only for special case on data
+#' Viterbi algorithm for Hidden Markov Model with duration. Appropriate 
+#' only for signal peptides model.
 #' 
 #' @param aa_sample \code{character} vector representing single aminoacid sequence.
 #' @param pipar Probabilities of initial state in Markov Model.

@@ -4,7 +4,7 @@
 \alias{hsmm_pred}
 \title{hsmm_pred class}
 \description{
-A single prediction of \code{signal.hsmm}.
+A single prediction of \code{signalHsmm}.
 }
 \details{
 Always a named list of five elements

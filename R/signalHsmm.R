@@ -11,7 +11,7 @@
 #' For example, artifically introduced bacterial signal peptides can guide proteins in 
 #' mammals and plants. 
 #' 
-#' @description Using hidden semi-Markov models as a probabilistic framework, signal.hsmm 
+#' @description Using hidden semi-Markov models as a probabilistic framework, signalHsmm 
 #' is new, highly accurate signal peptide predictor for eukaryotic proteins. 
 #' @importFrom seqinr read.fasta a
 #' @importFrom shiny runApp

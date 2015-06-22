@@ -2,7 +2,7 @@
 % Please edit documentation in R/hsmm_pred_list.R
 \name{summary.hsmm_pred_list}
 \alias{summary.hsmm_pred_list}
-\title{Summarize list of signal.hsmm predictions}
+\title{Summarize list of signalHsmm predictions}
 \usage{
 \method{summary}{hsmm_pred_list}(object, ...)
 }

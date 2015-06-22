@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{duration_viterbi2}
 \alias{duration_viterbi2}
-\title{Compute most probable path with extended Viterbi algorithm}
+\title{Compute most probable path with extended Viterbi algorithm.}
 \usage{
 duration_viterbi2(aa_sample, pipar, tpmpar, od, params)
 }

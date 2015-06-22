@@ -2,7 +2,7 @@
 % Please edit documentation in R/hsmm_pred.R
 \name{summary.hsmm_pred}
 \alias{summary.hsmm_pred}
-\title{Summarize single signal.hsmm prediction}
+\title{Summarize single signalHsmm prediction}
 \usage{
 \method{summary}{hsmm_pred}(object, ...)
 }

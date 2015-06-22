@@ -2,7 +2,7 @@
 % Please edit documentation in R/hsmm_pred.R
 \name{plot.hsmm_pred}
 \alias{plot.hsmm_pred}
-\title{Plot single signal.hsmm prediction}
+\title{Plot single signalHsmm prediction}
 \usage{
 \method{plot}{hsmm_pred}(x, add_legend = TRUE, ...)
 }

@@ -14,7 +14,7 @@ train_hsmm(train_data, aa_group, max_length = 32)
 \item{max_length}{maximum length of signal peptide.}
 }
 \value{
-object of class \code{sighsmm_model}
+object of class \code{sighsmm_model}.
 }
 \description{
 Train sighsmm_model object

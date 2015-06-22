@@ -15,7 +15,7 @@ Alternatively, a \code{list} of sequences in mentioned formats.}
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-Predicts
+Predicts the presence of signal peptides using signalHsmm models.
 }
 \examples{
 #remember to remove it

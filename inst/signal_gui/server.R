@@ -38,7 +38,7 @@ shinyServer(function(input, output) {
           downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
           downloadButton("download_long_graph", "Download long output (with graphics)"),
-          tags$p("Refresh page (press F5) to start a new query with signal.hsmm."))
+          tags$p("Refresh page (press F5) to start a new query with signalHsmm."))
     }
   })
   

@@ -74,8 +74,8 @@ add_k_mer_state <- function(kMer, pipar, tpmpar, od, params, pState, nState, pTr
   #duration probability
   params2 <- cbind(params2, c(1, rep(0,nrow(params)-1)))
   
-  return(list(pipar=pipar2,
-              tpmpar=tpmpar2,
-              od=od2,
-              params=params2))
+  list(pipar=pipar2,
+       tpmpar=tpmpar2,
+       od=od2,
+       params=params2)
 }

@@ -7,7 +7,7 @@
 #' @name hsmm_pred_list
 NULL
 
-#' Summarize list of signal.hsmm predictions
+#' Summarize list of signalHsmm predictions
 #'
 #' Summarizes objects of class \code{\link{hsmm_pred_list}}.
 #'
@@ -29,7 +29,7 @@ summary.hsmm_pred_list <- function(object, ...) {
              median(res[res[["sp.probability"]] > 0.5, "sp.end"]), "\n"))
 }
 
-#' Convert list of signal.hsmm predictions
+#' Convert list of signalHsmm predictions
 #'
 #' Converts objects of class \code{\link{hsmm_pred_list}} to data frame.
 #'

@@ -6,5 +6,5 @@ citEntry(entry = "Manual",
   year = "2014",
   note = "R package version 1.2",
   url = "http://CRAN.R-project.org/package=signalHsmm",
-  textVersion = "Burdukiewicz M and Sobczyk P (2014). signalHsmm: prediction of signal peptides. R package version 1.2, <URL: http://CRAN.R-project.org/package=signal.hsmm>."
+  textVersion = "Burdukiewicz M and Sobczyk P (2014). signalHsmm: prediction of signal peptides. R package version 1.2, <URL: http://CRAN.R-project.org/package=signalHsmm>."
 )

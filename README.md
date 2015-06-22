@@ -5,7 +5,7 @@ Predict Presence of Signal Peptides
 
 signalHsmm predicts presence of signal peptides in eukaryotic proteins using hidden semi-Markov models. The implemented algorithm can be accessed as a web-based service www.smorfland.uni.wroc.pl/signalHsmm 
 
-Local instance of signal.hsmm
+Local instance of signalHsmm
 ------------------------
 signalHsmm can be also used locally as the R package. It can be installed from CRAN using:
 

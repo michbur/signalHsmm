@@ -31,8 +31,8 @@ in that state on viterbi path.}
 }
 }
 \description{
-Viterbi algorithm for Hidden Markov Model with duration
-Valid only for special case on data
+Viterbi algorithm for Hidden Markov Model with duration. Appropriate
+only for signal peptides model.
 }
 \note{
 Currently has very restricted application to specific input.

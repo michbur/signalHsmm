@@ -8,7 +8,7 @@
 #' @param test_data single protein sequence (\code{character} vector) or list of 
 #' sequences. It may be an object of class \code{\link[seqinr]{SeqFastaAA}}.
 #' @return An object of class \code{hsmm_pred_list}.
-#' @details Function \code{signal.hsmm} returns respectively probability of presence of 
+#' @details Function \code{signalHsmm} returns respectively probability of presence of 
 #' signal peptide, start of signal peptide and the probable cleavage site localization.
 #' If input consists of more than one sequence, result is a data.frame where each column
 #' contains above values for different proteins.
@@ -18,7 +18,7 @@
 #' @seealso \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}} 
 #' @keywords classif
 #' @examples
-#' #run signal.hsmm on one sequence
+#' #run signalHsmm on one sequence
 #' x1 <- run_signalHsmm(benchmark_dat[[1]])
 #' 
 #' #run signalHsmm on one sequence, but input is a character vector
@@ -32,7 +32,7 @@
 #' "s", "e", "s", "v", "k", "q", "k", "r", "e", "t", "a", "e", "s", 
 #' "l"))
 #' 
-#' #run signal.hsmm on list of sequences
+#' #run signalHsmm on list of sequences
 #' x3 <- run_signalHsmm(benchmark_dat[1:3])
 #' #see summary of results
 #' summary(x3)
@@ -52,7 +52,7 @@ run_signalHsmm <- function(test_data) {
   if(class(test_data) == "SeqFastaAA" || 
      class(test_data) == "character") {
     #single input
-    decisions <- signal.hsmm_decision(test_data, aa_group = chosen_model[["aa_group"]], 
+    decisions <- signalHsmm_decision(test_data, aa_group = chosen_model[["aa_group"]], 
                                       pipar = chosen_model[["pipar"]], 
                                       tpmpar = chosen_model[["tpmpar"]], 
                                       od = chosen_model[["od"]], 
@@ -63,7 +63,7 @@ run_signalHsmm <- function(test_data) {
   } else {
     #list input
     decisions <- lapply(test_data, function(prot)
-      signal.hsmm_decision(prot, aa_group = chosen_model[["aa_group"]], 
+      signalHsmm_decision(prot, aa_group = chosen_model[["aa_group"]], 
                            pipar = chosen_model[["pipar"]], 
                            tpmpar = chosen_model[["tpmpar"]], 
                            od = chosen_model[["od"]], 
@@ -74,7 +74,7 @@ run_signalHsmm <- function(test_data) {
   decisions
 }
 
-signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar, 
+signalHsmm_decision <- function(prot, aa_group, pipar, tpmpar, 
                                  od, overall_probs_log, params) {
   if (length(prot) == 1) {
     prot <- strsplit(prot, "")[[1]]
@@ -118,7 +118,7 @@ signal.hsmm_decision <- function(prot, aa_group, pipar, tpmpar,
 }
 
 
-#' GUI for signal.hsmm
+#' GUI for signalHsmm
 #'
 #' A graphical user interface for predicting presence of signal peptides.
 #' @return null.

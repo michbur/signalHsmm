@@ -18,7 +18,7 @@ Using the hidden semi-Markov model predict presence of signal peptide in
 eukaryotic proteins.
 }
 \details{
-Function \code{signal.hsmm} returns respectively probability of presence of
+Function \code{signalHsmm} returns respectively probability of presence of
 signal peptide, start of signal peptide and the probable cleavage site localization.
 If input consists of more than one sequence, result is a data.frame where each column
 contains above values for different proteins.
@@ -27,7 +27,7 @@ contains above values for different proteins.
 Currently start of signal peptide is naively set as 1 amino acid.
 }
 \examples{
-#run signal.hsmm on one sequence
+#run signalHsmm on one sequence
 x1 <- run_signalHsmm(benchmark_dat[[1]])
 
 #run signalHsmm on one sequence, but input is a character vector
@@ -41,7 +41,7 @@ x2 <- run_signalHsmm(c("m", "a", "g", "k", "e", "v", "i", "f",
 "s", "e", "s", "v", "k", "q", "k", "r", "e", "t", "a", "e", "s",
 "l"))
 
-#run signal.hsmm on list of sequences
+#run signalHsmm on list of sequences
 x3 <- run_signalHsmm(benchmark_dat[1:3])
 #see summary of results
 summary(x3)
