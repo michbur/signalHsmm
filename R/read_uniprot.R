@@ -5,12 +5,14 @@
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
 #' @param what \code{NULL} or a single \code{character} determining which information 
 #' should be extracted. Currently can have following values: \code{"signal"}, 
-#' \code{"transit"}. \code{NULL}.
+#' \code{"transit"} or \code{NULL}.
 #' @param euk logical value if data has an eukaryotic origin.
 #' @keywords manip
 #' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
-#' Slot \code{sig} contains the range (start and end) of signal peptide. Sequence with more 
-#' than one cleavage site or atypical aminoacids are removed without any notice.
+#' Attribute \code{sig} contains the range (start and end) of signal peptide. Attributes 
+#' \code{OS} and \code{OC} represents respectively OS and OC fields in the protein
+#' description. Sequence with more than one cleavage site or atypical aminoacids 
+#' are removed without any notice.
 #' @export
 #' @keywords manip
 
