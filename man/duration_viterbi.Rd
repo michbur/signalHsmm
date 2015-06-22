@@ -9,13 +9,13 @@ duration_viterbi(aa_sample, pipar, tpmpar, od, params)
 \arguments{
 \item{aa_sample}{\code{character} vector representing single aminoacid sequence.}
 
-\item{pipar}{Probabilities of initial state in Markov Model.}
+\item{pipar}{probabilities of initial state in Markov Model.}
 
-\item{tpmpar}{Matrix with transition probabilities between states.}
+\item{tpmpar}{matrix of transition probabilities between states.}
 
-\item{od}{Matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1.}
+\item{od}{matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1.}
 
-\item{params}{Matrix of probability distribution for duration. Eg. params[10,2] is probability of duration of time 10 in state 2.}
+\item{params}{matrix of probability distribution for duration. Eg. params[10,2] is probability of duration of time 10 in state 2.}
 }
 \value{
 A list of length four:
@@ -30,6 +30,6 @@ A list of length four:
 Viterbi algorithm for Hidden Markov Model with duration
 }
 \note{
-All computations are on logarithms of probabilities..
+All computations are on logarithms of probabilities.
 }
 

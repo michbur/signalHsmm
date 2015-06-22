@@ -5,10 +5,10 @@ using namespace Rcpp;
 //' 
 //' Viterbi algorithm for Hidden Markov Model with duration
 //' @param aa_sample \code{character} vector representing single aminoacid sequence.
-//' @param pipar Probabilities of initial state in Markov Model.
-//' @param tpmpar Matrix with transition probabilities between states.
-//' @param od Matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1.
-//' @param params Matrix of probability distribution for duration. Eg. params[10,2] is probability of duration of time 10 in state 2.
+//' @param pipar probabilities of initial state in Markov Model.
+//' @param tpmpar matrix of transition probabilities between states.
+//' @param od matrix of response probabilities. Eg. od[1,2] is a probability of signal 2 in state 1.
+//' @param params matrix of probability distribution for duration. Eg. params[10,2] is probability of duration of time 10 in state 2.
 //' @export
 //' @return A list of length four:
 //' \itemize{
@@ -17,7 +17,7 @@ using namespace Rcpp;
 //'  \item{psi}{ matrix that gives for every signal and state the previous state in viterbi path,}
 //'  \item{duration}{ matrix that gives for every signal and state gives the duration in that state on viterbi path.}
 //'  }
-//' @note All computations are on logarithms of probabilities..
+//' @note All computations are on logarithms of probabilities.
 // [[Rcpp::export]]
 List duration_viterbi(NumericVector aa_sample, NumericVector pipar, NumericMatrix tpmpar, NumericMatrix od, NumericMatrix params) {
   int maxDuration = params.nrow();
