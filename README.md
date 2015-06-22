@@ -1,4 +1,4 @@
-<img src="https://github.com/michbur/signal.hsmm/blob/master/inst/logo.png" alt="signalHsmm" style="height: 200px;"/>
+<img src="https://github.com/michbur/signalHsmm/blob/master/inst/logo.png" alt="signalHsmm" style="height: 200px;"/>
 
 Predict Presence of Signal Peptides
 -------------------------
