@@ -18,8 +18,11 @@ Depends:
     R (>= 3.0.0)
 Imports:
     biogram,
+    graphics,
     seqinr,
-    shiny
+    shiny,
+    stats,
+    utils
 LinkingTo: Rcpp
 Suggests:
     knitr,

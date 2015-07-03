@@ -16,6 +16,9 @@
 #' @importFrom seqinr read.fasta a
 #' @importFrom shiny runApp
 #' @importFrom biogram degenerate
+#' @importFrom utils tail
+#' @importFrom stats sd median na.omit
+#' @importFrom graphics plot axis text lines legend 
 #' @docType package
 #' @name signalHsmm
 #' @examples
