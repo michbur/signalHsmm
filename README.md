@@ -1,6 +1,6 @@
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/signalhsmm)](http://cran.r-project.org/web/packages/signalhsmm)
-[![Downloads](http://cranlogs.r-pkg.org/badges/signalhsmm)](http://cran.rstudio.com/package=signalhsmm)
-[![Build Status](https://api.travis-ci.org/michbur/signalhsmm.png)](https://travis-ci.org/michbur/signalhsmm)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/signalHsmm)](http://cran.r-project.org/web/packages/signalHsmm)
+[![Downloads](http://cranlogs.r-pkg.org/badges/signalHsmm)](http://cran.rstudio.com/package=signalHsmm)
+[![Build Status](https://api.travis-ci.org/michbur/signalHsmm.png)](https://travis-ci.org/michbur/signalHsmm)
 
 <img src="https://github.com/michbur/signalHsmm/blob/master/inst/logo.png" alt="signalHsmm" style="height: 200px;"/>
 
