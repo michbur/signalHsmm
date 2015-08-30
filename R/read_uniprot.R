@@ -43,14 +43,6 @@ read_uniprot <- function(connection, ft_names) {
     attr(ith_seq, "name") <- aa_name
     attr(ith_seq, "Annot") <- paste0(">", aa_name)
     attr(ith_seq, "class") <- "SeqFastaAA"
-    #to do - think about something smarter than suppressWarnings
-    
-    #     if(!is.null(what)) {
-    #       sig <- suppressWarnings(as.numeric(strsplit(strsplit(all_lines[sure_seqs[4,i]], 
-    #                                                            paste0(toupper(what), "       "))[[1]][2], " ")[[1]]))
-    #       sig <- as.numeric(na.omit(sig))
-    #       attr(ith_seq, "sig") <- sig
-    #     }
     
     os <- all_lines[sure_seqs[i, "os_start"]:sure_seqs[i, "os_end"]]
     attr(ith_seq, "OS") <- paste0(vapply(strsplit(os, "OS   "), function(single_os) 
@@ -60,11 +52,16 @@ read_uniprot <- function(connection, ft_names) {
     attr(ith_seq, "OC") <- paste0(vapply(strsplit(oc, "OC   "), function(single_oc) 
       single_oc[2], "a"), collapse = " ")
     
-    #line is preserved just to have an additional source of information
-    #attr(ith_seq, "line") <- all_lines[sure_seqs[4,i]]
-    
     ith_seq
   })
+  
+  for(feature_id in 1L:length(ft_names)) {
+    #use only validated features
+    sure_fts <- fts[[feature_id]][all_seqs[, "valres"] == 1]
+    for(i in 1L:length(list_prots)) {
+      attr(list_prots[[i]], ft_names[feature_id]) <- as.numeric(strsplit(sure_fts[[i]], "[ ]+")[[1]][3L:4])
+    }
+  }
   
   names(list_prots) <- sapply(list_prots, function(i) attr(i, "name"))
   atypical <- get_atyp(list_prots)
