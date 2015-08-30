@@ -4,21 +4,17 @@
 \alias{read_uniprot}
 \title{Read data from UniProt database}
 \usage{
-read_uniprot(connection, what = "signal", euk)
+read_uniprot(connection, ft_names)
 }
 \arguments{
 \item{connection}{a \code{\link{connection}} to UniProt data in text format.}
 
-\item{what}{\code{NULL} or a single \code{character} determining which information
-should be extracted. Currently can have following values: \code{"signal"},
-\code{"transit"} or \code{NULL}.}
-
-\item{euk}{logical value if data has an eukaryotic origin.}
+\item{ft_names}{a character vector of UuniProt features to be extracted, for example
+\code{"signal"}, \code{"transit"}, \code{"propep"}. The case is not matched.}
 }
 \value{
 a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
-Attribute \code{sig} contains the range (start and end) of signal peptide. Attributes
-\code{OS} and \code{OC} represents respectively OS and OC fields in the protein
+Attributes \code{OS} and \code{OC} represents respectively OS and OC fields in the protein
 description. Sequence with more than one cleavage site or atypical aminoacids
 are removed without any notice.
 }
