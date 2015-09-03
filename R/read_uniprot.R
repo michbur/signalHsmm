@@ -5,6 +5,8 @@
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
 #' @param ft_names a character vector of UuniProt features to be extracted, for example 
 #' \code{"signal"}, \code{"transit"}, \code{"propep"}. The case is not matched.
+#' @param kwds a \code{NULL} or character vector of keywords (not UniProt keywords, 
+#' but words of interest, that may occur in the protein description).
 #' @keywords manip
 #' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
 #' Attributes \code{OS} and \code{OC} represents respectively OS and OC fields in the protein
@@ -13,24 +15,33 @@
 #' @export
 #' @keywords manip
 
-read_uniprot <- function(connection, ft_names) {
+read_uniprot <- function(connection, ft_names, kwds = NULL) {
   
   all_lines <- readLines(connection)
   
   prot_ids <- grep("\\<ID   ", all_lines)
   
-  #features
+  # get features
   fts <- lapply(ft_names, function(single_ft) {
     get_ft(all_lines, prot_ids, single_ft)
   })
   
+  # validate features
   validated_prots <- apply(sapply(fts, validate_ft, donts_symbols = c(">", "<1", "?", "Or ", "Not cleaved")), 
                            1, all)
+  #validation results
+  valres <- matrix(c(prot_ids, validated_prots), ncol = 2, dimnames = list(NULL, c("id", "selected")))
   
-  all_seqs <- cbind(matrix(c(prot_ids, validated_prots), ncol = 2, dimnames = list(NULL, c("id", "valres"))),
-                    get_add_id(all_lines))
+  if(!is.null(kwds)) {
+    kwd_list <- do.call(cbind, lapply(kwds, function(single_ft) {
+      get_keyword(all_lines, prot_ids, single_ft)
+    }))
+    valres[, "selected"] <- valres[, "selected"] & apply(kwd_list, 1, any)
+  }
   
-  sure_seqs <- all_seqs[all_seqs[, "valres"] == 1, ]
+  all_seqs <- cbind(valres, get_add_id(all_lines))
+  
+  sure_seqs <- all_seqs[all_seqs[, "selected"] == 1, ]
   
   list_prots <- lapply(1L:nrow(sure_seqs), function(i) {
     start_seq <- sure_seqs[i, "seq_start"]
@@ -57,7 +68,7 @@ read_uniprot <- function(connection, ft_names) {
   
   for(feature_id in 1L:length(ft_names)) {
     #use only validated features
-    sure_fts <- fts[[feature_id]][all_seqs[, "valres"] == 1]
+    sure_fts <- fts[[feature_id]][all_seqs[, "selected"] == 1]
     for(i in 1L:length(list_prots)) {
       attr(list_prots[[i]], ft_names[feature_id]) <- as.numeric(strsplit(sure_fts[[i]], "[ ]+")[[1]][3L:4])
     }
@@ -146,4 +157,13 @@ get_block <- function(block_indices) {
   }
   
   c(block_list, list(tmp_block))
+}
+
+#get keyword
+get_keyword <- function(all_lines, prot_ids, keyword) {
+  prot_ids <- c(prot_ids, length(all_lines) + 1)
+  sapply(2L:length(prot_ids), function(id) {
+    sublines <- all_lines[prot_ids[id - 1]:(prot_ids[id] - 1)]
+    sum(grepl(keyword, sublines)) > 0
+  })
 }

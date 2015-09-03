@@ -4,13 +4,16 @@
 \alias{read_uniprot}
 \title{Read data from UniProt database}
 \usage{
-read_uniprot(connection, ft_names)
+read_uniprot(connection, ft_names, kwds = NULL)
 }
 \arguments{
 \item{connection}{a \code{\link{connection}} to UniProt data in text format.}
 
 \item{ft_names}{a character vector of UuniProt features to be extracted, for example
 \code{"signal"}, \code{"transit"}, \code{"propep"}. The case is not matched.}
+
+\item{kwds}{a \code{NULL} or character vector of keywords (not UniProt keywords,
+but words of interest, that may occur in the protein description).}
 }
 \value{
 a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
