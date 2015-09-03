@@ -9,9 +9,9 @@
 #' but words of interest, that may occur in the protein description).
 #' @keywords manip
 #' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
-#' Attributes \code{OS} and \code{OC} represents respectively OS and OC fields in the protein
-#' description. Sequence with more than one cleavage site or atypical aminoacids 
-#' are removed without any notice.
+#' Attributes \code{OS} and \code{OC} represents respectively OS and OC fields in the 
+#' protein description. A value of each feature is preserved as an attribute named 
+#' after the feature.
 #' @export
 #' @keywords manip
 
