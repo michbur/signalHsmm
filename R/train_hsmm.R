@@ -7,6 +7,7 @@
 #' @return object of class \code{sighsmm_model}.
 
 train_hsmm <- function(train_data, aa_group, max_length = 32) {
+  ngroups <- length(aa_group)
   train_data <- lapply(train_data, toupper)
   ts <- calc_t(train_data, aa_group)
   
@@ -30,10 +31,10 @@ train_hsmm <- function(train_data, aa_group, max_length = 32) {
                      0, 0, 1, 0,
                      0, 0, 0, 1,
                      0, 0, 0, 0), 4, byrow = TRUE)
-  od <- matrix(c((t1/sum(t1))[1L:4],
-                 (t2/sum(t2))[1L:4],
-                 (t3/sum(t3))[1L:4],
-                 (t4/sum(t4))[1L:4]), 4, byrow = TRUE)
+  od <- matrix(c((t1/sum(t1))[1L:ngroups],
+                 (t2/sum(t2))[1L:ngroups],
+                 (t3/sum(t3))[1L:ngroups],
+                 (t4/sum(t4))[1L:ngroups]), 4, byrow = TRUE)
   
   res <- list(aa_group = aa_group, pipar = pipar, tpmpar = tpmpar, od = od, 
        overall_probs_log = overall_probs_log, params = params)
