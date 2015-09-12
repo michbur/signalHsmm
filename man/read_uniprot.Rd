@@ -18,7 +18,7 @@ in the protein description, like 'toxin' or 'blood'.}
 \value{
 a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
 Attributes \code{OS} and \code{OC} represents respectively OS and OC fields in the
-protein description. A value of each feature is preserved as an attribute named
+protein description. The value of each feature is preserved as an attribute named
 after the feature.
 }
 \description{
