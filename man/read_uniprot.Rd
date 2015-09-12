@@ -9,11 +9,11 @@ read_uniprot(connection, ft_names, kwds = NULL)
 \arguments{
 \item{connection}{a \code{\link{connection}} to UniProt data in text format.}
 
-\item{ft_names}{a character vector of UuniProt features to be extracted, for example
-\code{"signal"}, \code{"transit"}, \code{"propep"}. The case is not matched.}
+\item{ft_names}{a character vector of UniProt features to be extracted, for example
+\code{"signal"}, \code{"transit"} or \code{"propep"}. The case is not matched.}
 
-\item{kwds}{a \code{NULL} or character vector of keywords (not UniProt keywords,
-but words of interest, that may occur in the protein description).}
+\item{kwds}{a \code{NULL} or character vector of words of interest, that may occur
+in the protein description, like 'toxin' or 'blood'.}
 }
 \value{
 a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.

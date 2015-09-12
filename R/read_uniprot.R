@@ -3,10 +3,10 @@
 #' Read data saved in UniProt original flat text format.
 #'
 #' @param connection a \code{\link{connection}} to UniProt data in text format.
-#' @param ft_names a character vector of UuniProt features to be extracted, for example 
-#' \code{"signal"}, \code{"transit"}, \code{"propep"}. The case is not matched.
-#' @param kwds a \code{NULL} or character vector of keywords (not UniProt keywords, 
-#' but words of interest, that may occur in the protein description).
+#' @param ft_names a character vector of UniProt features to be extracted, for example 
+#' \code{"signal"}, \code{"transit"} or \code{"propep"}. The case is not matched.
+#' @param kwds a \code{NULL} or character vector of words of interest, that may occur 
+#' in the protein description, like 'toxin' or 'blood'.
 #' @keywords manip
 #' @return a list of sequences. Each element has a class \code{\link[seqinr]{SeqFastaAA}}.
 #' Attributes \code{OS} and \code{OC} represents respectively OS and OC fields in the 
@@ -27,7 +27,8 @@ read_uniprot <- function(connection, ft_names, kwds = NULL) {
   })
   
   # validate features
-  validated_prots <- apply(sapply(fts, validate_ft, donts_symbols = c(">", "<1", "?", "Or ", "Not cleaved")), 
+  validated_prots <- apply(sapply(fts, validate_ft, 
+                                  donts_symbols = c(">", "<1", "?", "Or ", "Not cleaved")), 
                            1, all)
   #validation results
   valres <- matrix(c(prot_ids, validated_prots), ncol = 2, dimnames = list(NULL, c("id", "selected")))
@@ -119,6 +120,8 @@ get_ft <- function(all_lines, prot_ids, ft) {
 
 #validate feature
 #returns TRUE if feature is positively validated
+#proteins with features containing donts_symbols are removed
+#proteins with features occuring more often than ft_length are removed
 validate_ft <- function(ft_list, donts_symbols, ft_length = 2) {
   #single feature line
   #donts_symbols symbols which should be not used
