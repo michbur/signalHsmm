@@ -4,12 +4,15 @@
 \alias{plot.hsmm_pred}
 \title{Plot single signalHsmm prediction}
 \usage{
-\method{plot}{hsmm_pred}(x, add_legend = TRUE, ...)
+\method{plot}{hsmm_pred}(x, add_legend = TRUE, only_sure = TRUE, ...)
 }
 \arguments{
 \item{x}{object of class \code{\link{hsmm_pred}}.}
 
 \item{add_legend}{logical, if \code{TRUE}, legend is added to the plot.}
+
+\item{only_sure}{logical, if \code{FALSE} does not draw signal peptide structure
+when probability is smaller than 0.5.}
 
 \item{...}{ignored.}
 }
