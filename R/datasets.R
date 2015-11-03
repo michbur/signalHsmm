@@ -3,11 +3,10 @@
 #' @description Lists eukaryotic proteins added to UniProt database release 
 #' 2015_06 between 1.01.2010 and 1.06.2015 (214 proteins with signal peptide and 
 #' 214 randomly sampled proteins without signal peptide). 
-#' Proteins longer than 80 amino were truncated to 80 amino acids.
+#' Proteins longer than 80 amino acids were truncated to 80 amino acids.
 #' @docType data
 #' @usage benchmark_dat
-#' @format a list of \code{\link[seqinr]{SeqFastaAA}} objects. 
-#' Slot \code{sig} contains the range of signal peptide (if any).
+#' @format a list of \code{\link[seqinr]{SeqFastaAA}} objects.  
 #' @source \href{http://www.uniprot.org/}{UniProt}
 #' @examples summary(benchmark_dat)
 #' @keywords datasets
