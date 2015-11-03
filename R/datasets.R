@@ -1,10 +1,9 @@
 #' @name benchmark_dat
 #' @title Benchmark data set for signalHsmm
 #' @description Lists eukaryotic proteins added to UniProt database release 
-#' 2015_06 between 1.01.2010 and 1.06.2015 (140 proteins with signal peptide and 280 randomly 
-#' sampled proteins without signal peptide). 
-#' All proteins were used in the benchmark test to compare the performance
-#' of signalHsmm and other signal peptide predictors.
+#' 2015_06 between 1.01.2010 and 1.06.2015 (214 proteins with signal peptide and 
+#' 214 randomly sampled proteins without signal peptide). 
+#' Proteins longer than 80 amino were truncated to 80 amino acids.
 #' @docType data
 #' @usage benchmark_dat
 #' @format a list of \code{\link[seqinr]{SeqFastaAA}} objects. 
