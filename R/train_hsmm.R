@@ -44,40 +44,34 @@ train_hsmm <- function(train_data, aa_group, max_length = 32) {
 
 calc_t <- function(list_prots, aa_list) {
   nhc <- t(vapply(list_prots, find_nhc, rep(0, 4)))
+
+  n_region <- unlist(lapply(1L:length(list_prots), function(single_protein) {
+    list_prots[[single_protein]][1:(nhc[single_protein, 2] - 1)]
+  })) 
   
-  n_region <- NULL
-  h_region <- NULL
-  c_region <- NULL
-  rest <- NULL
+  h_region <- unlist(lapply(1L:length(list_prots), function(single_protein) {
+    list_prots[[single_protein]][nhc[single_protein, 2]:(nhc[single_protein, 3] - 1)]
+  })) 
   
-  for(i in 1L:length(list_prots)){
-    region_starts <- nhc[i, ]
-    n_region <- c(n_region, list_prots[[i]][1:(region_starts[2] - 1)])
-    h_region <- c(h_region, list_prots[[i]][region_starts[2]:(region_starts[3] - 1)])
-    c_region <- c(c_region, list_prots[[i]][region_starts[3]:(region_starts[4] - 1)])
-    rest <- c(rest, list_prots[[i]][region_starts[4]:length(list_prots[[i]])])
+  c_region <- unlist(lapply(1L:length(list_prots), function(single_protein) {
+    list_prots[[single_protein]][nhc[single_protein, 3]:(nhc[single_protein, 4] - 1)]
+  })) 
+  
+  rest <- unlist(lapply(1L:length(list_prots), function(single_protein) {
+    list_prots[[single_protein]][nhc[single_protein, 4]:length(list_prots[[single_protein]])]
+  })) 
+  
+  calc_single_t <- function(region, aa_list) {
+    res <- as.vector(table(degenerate(region, aa_list)))
+    names(res) <- 1:length(aa_list)
+    res
   }
   
-  t1 <- rep(0, length(aa_list))
-  temp <- table(degenerate(tolower(n_region), aa_list))
-  t1[as.numeric(names(temp))] <- temp
-  names(t1) <- 1:length(aa_list)
-  
-  t2 <- rep(0, length(aa_list))
-  temp <- table(degenerate(tolower(n_region), aa_list))
-  t2[as.numeric(names(temp))] <- temp
-  names(t2) <- 1:length(aa_list)
-  
-  t3 <- rep(0, length(aa_list))
-  temp <- table(degenerate(tolower(n_region), aa_list))
-  t3[as.numeric(names(temp))] <- temp
-  names(t3) <- 1:length(aa_list)
-  
-  t4 <- rep(0, length(aa_list))
-  temp <- table(degenerate(tolower(rest), aa_list))
-  t4[as.numeric(names(temp))] <- temp
-  names(t4) <- 1:length(aa_list)
-  
+  t1 <- calc_single_t(n_region, aa_list)
+  t2 <- calc_single_t(h_region, aa_list)
+  t3 <- calc_single_t(c_region, aa_list)
+  t4 <- calc_single_t(rest, aa_list)
+
   len_c <- nhc[, "cs"] - nhc[, "start_c"]
   len_h <- nhc[, "start_c"] - nhc[, "start_h"]
   len_n <- nhc[, "start_h"] - nhc[, "start_n"]
