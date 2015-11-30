@@ -43,35 +43,7 @@
 #' plot(x3[[1]])
 
 run_signalHsmm <- function(test_data) {
-  chosen_model <- signalHsmm_main_model
-  
-  if (class(test_data) == "numeric" || class(test_data) == "factor" || 
-      class(test_data) == "data.frame" || class(test_data) == "matrix")
-    stop("Input data must have class 'SeqFastaAA', 'character' or 'list'.")
-  
-  if(class(test_data) == "SeqFastaAA" || 
-     class(test_data) == "character") {
-    #single input
-    decisions <- signalHsmm_decision(test_data, aa_group = chosen_model[["aa_group"]], 
-                                     pipar = chosen_model[["pipar"]], 
-                                     tpmpar = chosen_model[["tpmpar"]], 
-                                     od = chosen_model[["od"]], 
-                                     overall_probs_log = chosen_model[["overall_probs_log"]], 
-                                     params = chosen_model[["params"]])
-    decisions <- list(decisions)
-    names(decisions) <- attr(test_data, "name")
-  } else {
-    #list input
-    decisions <- lapply(test_data, function(prot)
-      signalHsmm_decision(prot, aa_group = chosen_model[["aa_group"]], 
-                          pipar = chosen_model[["pipar"]], 
-                          tpmpar = chosen_model[["tpmpar"]], 
-                          od = chosen_model[["od"]], 
-                          overall_probs_log = chosen_model[["overall_probs_log"]], 
-                          params = chosen_model[["params"]]))
-  }
-  class(decisions) <- "hsmm_pred_list"
-  decisions
+  predict.sighsmm_model(test_data, signalHsmm_main_model)
 }
 
 signalHsmm_decision <- function(prot, aa_group, pipar, tpmpar, 
@@ -85,7 +57,7 @@ signalHsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   }
   if(!is_protein(prot))
     stop("Atypical aminoacids detected, analysis cannot be performed.")
-  
+
   deg_sample <- as.numeric(degenerate(tolower(prot)[1L:ifelse(length(prot) > 50, 50, length(prot))], aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)
