@@ -43,7 +43,7 @@
 #' plot(x3[[1]])
 
 run_signalHsmm <- function(test_data) {
-  predict.sighsmm_model(test_data, signalHsmm_main_model)
+  predict.sighsmm_model(signalHsmm_main_model, test_data)
 }
 
 signalHsmm_decision <- function(prot, aa_group, pipar, tpmpar, 
