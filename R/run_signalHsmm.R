@@ -58,11 +58,11 @@ signalHsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   if(!is_protein(prot))
     stop("Atypical aminoacids detected, analysis cannot be performed.")
   
-  deg_sample <- as.numeric(degenerate(toupper(prot)[1L:50], aa_group))
+  deg_sample <- as.numeric(degenerate(toupper(prot)[1L:ifelse(length(prot) > 50, 50, length(prot))], aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)
-  viterbi_res <- duration_viterbi(deg_sample-1, pipar, tpmpar, od, params)
-  viterbi_path <- viterbi_res[["path"]]+1
+  viterbi_res <- duration_viterbi(deg_sample - 1, pipar, tpmpar, od, params)
+  viterbi_path <- viterbi_res[["path"]] + 1
   c_site <- ifelse(any(viterbi_path == 4), 
                    max(which(viterbi_path == 3)) + 1, 
                    length(deg_sample))
