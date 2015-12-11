@@ -22,8 +22,8 @@ NULL
 #' Plots objects of class \code{\link{hsmm_pred}}.
 #'
 #' @param x object of class \code{\link{hsmm_pred}}.
-#' @param add_legend logical, if \code{TRUE}, legend is added to the plot.
-#' @param only_sure logical, if \code{FALSE} does not draw signal peptide structure
+#' @param add_legend \code{logical}, if \code{TRUE}, legend is added to the plot.
+#' @param only_sure \code{logical}, if \code{FALSE} does not draw signal peptide structure
 #' when probability is smaller than 0.5.
 #' @param ... ignored.
 #' @return Nothing.
@@ -45,24 +45,24 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
   #old boring black text
   #text(1L:50, 1, x[["prot"]])
   # 
-    if(only_sure & x[["sp_probability"]] < 0.5) {
-      text(1L:50, 1, 
-           x[["prot"]][1L:50], 
-           col = sig_colours[4])
-      lines(c(cstruc05[1], cstruc05[5]), c(1.5, 1.5), 
-            col = sig_colours[4], lwd = 5)
-      
-    } else {
-      for(i in 1L:4) {
-        #print amino acids in color!
-        text((cstruc[i] + 1):cstruc[i + 1], 1, 
-             x[["prot"]][(cstruc[i] + 1):cstruc[i + 1]], 
-             col = sig_colours[i])
-        lines(c(cstruc05[i], cstruc05[i + 1]), c(1.5, 1.5) + ifelse(i == 4, 0, 1), 
-              col = sig_colours[i], lwd = 5)
-        lines(c(cstruc05[4], cstruc05[4]), c(1.5, 2.5), lty = "dashed", lwd = 2)
-      }
+  if(only_sure & x[["sp_probability"]] < 0.5) {
+    text(1L:50, 1, 
+         x[["prot"]][1L:50], 
+         col = sig_colours[4])
+    lines(c(cstruc05[1], cstruc05[5]), c(1.5, 1.5), 
+          col = sig_colours[4], lwd = 5)
+    
+  } else {
+    for(i in 1L:4) {
+      #print amino acids in color!
+      text((cstruc[i] + 1):cstruc[i + 1], 1, 
+           x[["prot"]][(cstruc[i] + 1):cstruc[i + 1]], 
+           col = sig_colours[i])
+      lines(c(cstruc05[i], cstruc05[i + 1]), c(1.5, 1.5) + ifelse(i == 4, 0, 1), 
+            col = sig_colours[i], lwd = 5)
+      lines(c(cstruc05[4], cstruc05[4]), c(1.5, 2.5), lty = "dashed", lwd = 2)
     }
+  }
   
   
   if (add_legend)
@@ -100,7 +100,7 @@ summary.hsmm_pred <- function(object, ...) {
   cat(paste0("Probability of signal peptide presence: ", 
              format(object[["sp_probability"]], digits = 4), "\n"))
   cat(paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
-      "detected.\n"))
+             "detected.\n"))
   cat(paste0("Start of signal peptide: ", object[["sp_start"]], "\n"))
   cat(paste0("End of signal peptide: ", object[["sp_end"]], "\n"))
   cat(paste0("n-region (length ", struc[1], "):\n"))

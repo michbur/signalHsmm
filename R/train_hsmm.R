@@ -9,6 +9,7 @@
 train_hsmm <- function(train_data, aa_group, max_length = 32) {
   ngroups <- length(aa_group)
   train_data <- lapply(train_data, toupper)
+  aa_group <- lapply(aa_group, toupper)
   ts <- calc_t(train_data, aa_group)
   
   t1 <- ts[["t1"]]
