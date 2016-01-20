@@ -22,15 +22,14 @@
 #' x1 <- run_signalHsmm(benchmark_dat[[1]])
 #' 
 #' #run signalHsmm on one sequence, but input is a character vector
-#' x2 <- run_signalHsmm(c("m", "a", "g", "k", "e", "v", "i", "f", 
-#' "i", "m", "a", "l", "f", "i", "a", "v", "e", "s", "s", "p", "i", 
-#' "f", "s", "f", "d", "d", "l", "v", "c", "p", "s", "v", "t", "s", 
-#' "l", "r", "v", "n", "v", "e", "k", "n", "e", "c", "s", "t", "k", 
-#' "k", "d", "c", "g", "r", "n", "l", "c", "c", "e", "n", "q", "n", 
-#' "k", "i", "n", "v", "c", "v", "g", "g", "i", "m", "p", "l", "p", 
-#' "k", "p", "n", "l", "d", "v", "n", "n", "i", "g", "g", "a", "v", 
-#' "s", "e", "s", "v", "k", "q", "k", "r", "e", "t", "a", "e", "s", 
-#' "l"))
+#' x2 <- run_signalHsmm(c("M", "A", "G", "K", "E", "V", "I", "F", "I", "M", "A", "L", 
+#' "F", "I", "A", "V", "E", "S", "S", "P", "I", "F", "S", "F", "D", 
+#' "D", "L", "V", "C", "P", "S", "V", "T", "S", "L", "R", "V", "N", 
+#' "V", "E", "K", "N", "E", "C", "S", "T", "K", "K", "D", "C", "G", 
+#' "R", "N", "L", "C", "C", "E", "N", "Q", "N", "K", "I", "N", "V", 
+#' "C", "V", "G", "G", "I", "M", "P", "L", "P", "K", "P", "N", "L", 
+#' "D", "V", "N", "N", "I", "G", "G", "A", "V", "S", "E", "S", "V", 
+#' "K", "Q", "K", "R", "E", "T", "A", "E", "S", "L"))
 #' 
 #' #run signalHsmm on list of sequences
 #' x3 <- run_signalHsmm(benchmark_dat[1:3])
@@ -58,7 +57,7 @@ signalHsmm_decision <- function(prot, aa_group, pipar, tpmpar,
   if(!is_protein(prot))
     stop("Atypical aminoacids detected, analysis cannot be performed.")
   
-  deg_sample <- as.numeric(degenerate(tolower(prot)[1L:ifelse(length(prot) > 50, 50, length(prot))], aa_group))
+  deg_sample <- as.numeric(degenerate(prot[1L:ifelse(length(prot) > 50, 50, length(prot))], aa_group))
   #remove atypical amino acids
   deg_sample <- na.omit(deg_sample)
   viterbi_res <- duration_viterbi(deg_sample - 1, pipar, tpmpar, od, params)
@@ -103,10 +102,11 @@ gui_signalHsmm <- function() {
   runApp(system.file("signal_gui", package = "signalHsmm"))
 }
 
-signalHsmm_main_model <- structure(list(aa_group = structure(list(`1` = c("r", "n", "d", 
-                                                                          "q", "e", "h", "k"), `2` = c("g", "p", "s", "t", "y"), `3` = c("i", 
-                                                                                                                                         "l", "m", "f", "w", "v"), `4` = c("a", "c")), .Names = c("1", 
-                                                                                                                                                                                                  "2", "3", "4")), pipar = c(1, 0, 0, 0), 
+signalHsmm_main_model <- structure(list(aa_group = list(`1` = c("R", "N", "D", "Q", "E", "H", "K"), 
+                                                        `2` = c("G", "P", "S", "T", "Y"), 
+                                                        `3` = c("I", "L", "M", "F", "W", "V"), 
+                                                        `4` = c("A", "C")),
+                                        pipar = c(1, 0, 0, 0), 
                                         tpmpar = structure(c(0, 
                                                              0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0), .Dim = c(4L, 4L
                                                              )), 

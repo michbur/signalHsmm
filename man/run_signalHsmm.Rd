@@ -31,15 +31,14 @@ Currently start of signal peptide is naively set as 1 amino acid.
 x1 <- run_signalHsmm(benchmark_dat[[1]])
 
 #run signalHsmm on one sequence, but input is a character vector
-x2 <- run_signalHsmm(c("m", "a", "g", "k", "e", "v", "i", "f", 
-"i", "m", "a", "l", "f", "i", "a", "v", "e", "s", "s", "p", "i", 
-"f", "s", "f", "d", "d", "l", "v", "c", "p", "s", "v", "t", "s", 
-"l", "r", "v", "n", "v", "e", "k", "n", "e", "c", "s", "t", "k", 
-"k", "d", "c", "g", "r", "n", "l", "c", "c", "e", "n", "q", "n", 
-"k", "i", "n", "v", "c", "v", "g", "g", "i", "m", "p", "l", "p", 
-"k", "p", "n", "l", "d", "v", "n", "n", "i", "g", "g", "a", "v", 
-"s", "e", "s", "v", "k", "q", "k", "r", "e", "t", "a", "e", "s", 
-"l"))
+x2 <- run_signalHsmm(c("M", "A", "G", "K", "E", "V", "I", "F", "I", "M", "A", "L", 
+"F", "I", "A", "V", "E", "S", "S", "P", "I", "F", "S", "F", "D", 
+"D", "L", "V", "C", "P", "S", "V", "T", "S", "L", "R", "V", "N", 
+"V", "E", "K", "N", "E", "C", "S", "T", "K", "K", "D", "C", "G", 
+"R", "N", "L", "C", "C", "E", "N", "Q", "N", "K", "I", "N", "V", 
+"C", "V", "G", "G", "I", "M", "P", "L", "P", "K", "P", "N", "L", 
+"D", "V", "N", "N", "I", "G", "G", "A", "V", "S", "E", "S", "V", 
+"K", "Q", "K", "R", "E", "T", "A", "E", "S", "L"))
 
 #run signalHsmm on list of sequences
 x3 <- run_signalHsmm(benchmark_dat[1:3])
