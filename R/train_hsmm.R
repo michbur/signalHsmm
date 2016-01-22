@@ -88,17 +88,17 @@ measure_region <- function(region, max_length = 32) {
   start_l <- min(as.numeric(names(lengths)))
   end_l <- max(as.numeric(names(lengths)))
   if(prod(start_l:end_l %in% as.numeric(names(lengths)))){
-    max_length <- length(lengths) #if all lengths are present in training set
+    max_length_real <- length(lengths) #if all lengths are present in training set
   } else{
-    max_length <- 1
+    max_length_real <- 1
     sl <- sum(lengths)
-    while(sum(lengths[1:max_length])/sl <= 0.51) {
-      max_length <- which.min(start_l:end_l %in% as.numeric(names(lengths))) - 1
-      start_l <- start_l + 1  #to assure that max_length wouldn't be too small
-      max_length <- ifelse(max_length == 0, length(lengths), max_length)
+    while(sum(lengths[1:max_length_real])/sl <= 0.51) {
+      max_length_real <- which.min(start_l:end_l %in% as.numeric(names(lengths))) - 1
+      start_l <- start_l + 1  #to assure that max_length_real wouldn't be too small
+      max_length_real <- ifelse(max_length_real == 0, length(lengths), max_length_real)
     }
   }
-  max_length <- min(max_length, max_length)
+  max_length <- min(max_length, max_length_real)
   
   prop_lengths <- lengths[1:max_length]/sum(lengths[1:max_length])
   res[as.numeric(names(prop_lengths))] <- prop_lengths
