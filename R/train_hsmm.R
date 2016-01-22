@@ -81,7 +81,8 @@ calc_t <- function(list_prots, aa_list, region_fun) {
 }
 
 measure_region <- function(region, max_length = 32) {
-  lengths <- table(region)
+  lengths_df <- data.frame(table(region))
+  lengths <- structure(lengths_df[["Freq"]], names = as.character(lengths_df[["region"]]))
   res <- rep(0, max_length)
   lengths <- lengths[as.numeric(names(lengths))>0] #removing lengths smaller than 1
   
@@ -100,7 +101,9 @@ measure_region <- function(region, max_length = 32) {
   }
   max_length <- min(max_length, max_length_real)
   
-  prop_lengths <- lengths[1:max_length]/sum(lengths[1:max_length])
+  prop_lengths <- lengths[as.character(1L:max_length)]/sum(lengths[as.character(1L:max_length)], na.rm = TRUE)
+  # NA are introduced by lengths not present in vector 1:max_length
+  prop_lengths <- prop_lengths[!is.na(prop_lengths)]
   res[as.numeric(names(prop_lengths))] <- prop_lengths
   res
 }
