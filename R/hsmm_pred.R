@@ -96,19 +96,22 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
 summary.hsmm_pred <- function(object, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
-  cat(paste0(object[["name"]], "\n"))
-  cat(paste0("Probability of signal peptide presence: ", 
-             format(object[["sp_probability"]], digits = 4), "\n"))
-  cat(paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
-             "detected.\n"))
-  cat(paste0("Start of signal peptide: ", object[["sp_start"]], "\n"))
-  cat(paste0("End of signal peptide: ", object[["sp_end"]], "\n"))
-  cat(paste0("n-region (length ", struc[1], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][1L:cstruc[1]]), collapse = ""))
-  cat(paste0("\nh-region (length ", struc[2], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""))
-  cat(paste0("\nc-region (length ", struc[3], "):\n"))
-  cat(paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]], "\n"), collapse = ""))
+  cat(object[["name"]],
+      paste0("Probability of signal peptide presence: ", 
+             format(object[["sp_probability"]], digits = 4)),
+      paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
+             "detected."),
+      "\nThe prediction of a cleavage site is an experimental feature, use on your own risk.",
+      paste0("Start of signal peptide: ", object[["sp_start"]]),
+      paste0("End of signal peptide: ", object[["sp_end"]]),
+      paste0("n-region (length ", struc[1], "):"),
+      paste0(c("         ", object[["prot"]][1L:cstruc[1]]), collapse = ""),
+      paste0("\nh-region (length ", struc[2], "):"),
+      paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""),
+      paste0("\nc-region (length ", struc[3], "):"),
+      paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]], "\n"), collapse = ""),
+      sep = "\n"
+  )
   if(object[["str_approx"]] > 0)
     cat("Signal peptide structure interpolated.\n")
 }

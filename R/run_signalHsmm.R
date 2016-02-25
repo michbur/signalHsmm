@@ -12,7 +12,8 @@
 #' signal peptide, start of signal peptide and the probable cleavage site localization.
 #' If input consists of more than one sequence, result is a data.frame where each column
 #' contains above values for different proteins.
-#' @note Currently start of signal peptide is naively set as 1 amino acid.
+#' @note Currently start of signal peptide is naively set as 1 amino acid. The prediction 
+#' of a cleavage site is still an experimental feature, use on your own risk.
 #' @useDynLib signalHsmm
 #' @export
 #' @seealso \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}} 

@@ -24,7 +24,8 @@ If input consists of more than one sequence, result is a data.frame where each c
 contains above values for different proteins.
 }
 \note{
-Currently start of signal peptide is naively set as 1 amino acid.
+Currently start of signal peptide is naively set as 1 amino acid. The prediction 
+of a cleavage site is still an experimental feature, use on your own risk.
 }
 \examples{
 #run signalHsmm on one sequence
