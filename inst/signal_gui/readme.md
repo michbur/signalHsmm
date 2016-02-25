@@ -1,4 +1,4 @@
-![logo](http://raw.githubusercontent.com/michbur/signalHsmm/master/inst/logo.png)
+![logo](logo.png)
 
 ## Readme  
   
