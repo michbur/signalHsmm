@@ -77,7 +77,11 @@ shinyServer(function(input, output) {
   output$dynamic_tabset <- renderUI({
     if(is.null(prediction())) {
       
-      tabPanel("Paste sequences here:", aceEditor("text_area", value="", height = 150),
+      tabPanel(title = "Sequence input",
+               h3("Paste sequences (FASTA format required) into the field below:"), 
+               tags$style(type="text/css", "textarea {width:100%}"),
+               tags$textarea(id = "text_area", rows = 22, cols = 60, ""),
+               p(""),
                actionButton("use_area", "Submit data from field above"),
                p(""),
                fileInput('seq_file', 'Submit .fasta or .txt file:'))
