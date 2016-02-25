@@ -15,7 +15,6 @@
 #' is new, highly accurate signal peptide predictor for eukaryotic proteins. 
 #' @importFrom seqinr read.fasta a
 #' @importFrom shiny runApp
-#' @importFrom biogram degenerate
 #' @importFrom utils tail
 #' @importFrom stats sd median na.omit
 #' @importFrom graphics plot axis text lines legend 
