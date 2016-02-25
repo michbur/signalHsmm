@@ -40,7 +40,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
   cstruc <- cumsum(rle(x[["struc"]])[["lengths"]])
   cstruc05 <- c(1, cstruc + 0.5)
   cstruc <- c(0, cstruc)
-  sig_colours <- c("blue", "red", "green", "orange")
+  sig_colours <- c("#73DC4AFF", "#30E9E9FF", "#FCC753FF", "red")
   
   #old boring black text
   #text(1L:50, 1, x[["prot"]])
@@ -101,7 +101,7 @@ summary.hsmm_pred <- function(object, ...) {
              format(object[["sp_probability"]], digits = 4)),
       paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
              "detected."),
-      "\nThe prediction of a cleavage site is an experimental feature, use on your own risk.",
+      "\nThe prediction of the regional structure is an experimental feature, use at your own risk.",
       paste0("Start of signal peptide: ", object[["sp_start"]]),
       paste0("End of signal peptide: ", object[["sp_end"]]),
       paste0("n-region (length ", struc[1], "):"),

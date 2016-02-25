@@ -10,6 +10,10 @@ You may paste sequences directly into the field on right or use **Submit .fasta 
 Queries bigger than 300 sequences will not be processed. Use batch mode instead.  
 Be patient - calculations can take up to few minutes.  
 
+### Warning
+
+The exact prediction of the regional structure of signal peptides (including position of the cleavage site) is still an experimental feature and should be used with caution.
+
 ### Authors
 [Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/)  
 [Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/)  

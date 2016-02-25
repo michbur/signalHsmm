@@ -3,8 +3,6 @@
 #' @description Lists eukaryotic proteins added to UniProt database release 
 #' 2015_06 between 1.01.2010 and 1.06.2015 (140 proteins with signal peptide and 280 randomly 
 #' sampled proteins without signal peptide). 
-#' All proteins were used in the benchmark test to compare the performance
-#' of signalHsmm and other signal peptide predictors.
 #' @docType data
 #' @usage benchmark_dat
 #' @format a list of \code{\link[seqinr]{SeqFastaAA}} objects. 
@@ -15,7 +13,7 @@
 NULL
 
 #' @name aaaggregation
-#' @title Scheme for amino acid aggregation
+#' @title Reduced amino acid alphabet
 #' @description Amino acids are grouped together in larger sets based on their 
 #' physicochemical properties important in  the recognition of signal peptide.
 #' @docType data

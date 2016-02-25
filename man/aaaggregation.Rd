@@ -3,7 +3,7 @@
 \docType{data}
 \name{aaaggregation}
 \alias{aaaggregation}
-\title{Scheme for amino acid aggregation}
+\title{Reduced amino acid alphabet}
 \format{a list of length four. Each element contains a \code{character} vector 
 of amino acid names (one-letter abbreviations).}
 \usage{
