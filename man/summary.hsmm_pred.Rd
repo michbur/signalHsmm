@@ -4,10 +4,13 @@
 \alias{summary.hsmm_pred}
 \title{Summarize single signalHsmm prediction}
 \usage{
-\method{summary}{hsmm_pred}(object, ...)
+\method{summary}{hsmm_pred}(object, only_sure = TRUE, ...)
 }
 \arguments{
 \item{object}{of class \code{\link{hsmm_pred}}.}
+
+\item{only_sure}{\code{logical}, if \code{FALSE} does not draw signal peptide structure
+when probability is smaller than 0.5.}
 
 \item{...}{ignored}
 }

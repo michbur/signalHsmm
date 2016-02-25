@@ -1,6 +1,6 @@
 library(shiny)
 library(signalHsmm)
-library(shinyAce)
+library(DT)
 options(shiny.maxRequestSize=10*1024^2)
 
 
@@ -43,12 +43,16 @@ shinyServer(function(input, output) {
   })
   
   
-  output$pred_table <- renderTable({
-    pred2df(prediction())
+  output$pred_table <- DT::renderDataTable({
+    dat <- pred2df(prediction())
+    dat <- cbind(rownames(dat), dat)
+    colnames(dat) <- c("Protein name", "Signal peptide probability", 
+                       "Signal peptide detected", "SP start", "SP end")
+    datatable(dat, rownames = FALSE)
   })
   
   output$summary <- renderPrint({
-    summary(prediction())
+    datatable(summary(prediction()))
   })
   
   
@@ -90,7 +94,7 @@ shinyServer(function(input, output) {
     } else {
       tabsetPanel(
         tabPanel("Input summary", verbatimTextOutput("summary")),
-        tabPanel("Short output", tableOutput("pred_table")),
+        tabPanel("Short output", DT::dataTableOutput("pred_table")),
         tabPanel("Long output (with graphics)", uiOutput("pred_long"))
       )
     }
@@ -139,9 +143,10 @@ shinyServer(function(input, output) {
       paste0(file_name(), "_pred.html") 
     },
     content <- function(file) {
-      knitr:::knit(input = "signalhsmm_report.Rmd", 
-                   output = "signalhsmm_report.md", quiet = TRUE)
-      markdown:::markdownToHTML("signalhsmm_report.md", file)
+#       knitr:::knit(input = "signalhsmm_report.Rmd", 
+#                    output = "signalhsmm_report.md", quiet = TRUE)
+#       markdown:::markdownToHTML("signalhsmm_report.md", file)
+      render("signalhsmm_report.Rmd", output_format = "html_document", file, quiet = TRUE)
     }
   )
 })

@@ -1,5 +1,23 @@
-signalHsmm - report
-========================================================
+---
+title: "signalHsmm - report"
+output:
+  html_document:
+    self_contained: true
+---
+
+<style>
+img {
+    max-width: none;
+
+    /* other options:
+    max-width: 200%;
+    max-width: 700px;
+    max-width: 9in;
+    max-width: 25cm;
+    etc
+    */
+}
+</style>
 
 ```{r,results='asis',echo=FALSE}
 file_name <- ifelse(is.null(input[["seq_file"]][["name"]]), "none",
@@ -10,7 +28,7 @@ cat(paste0("**Date**: ", Sys.time()), "\n\n")
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE,fig.width=10}
 for (i in prediction()) {
   summary(i)
   plot(i)

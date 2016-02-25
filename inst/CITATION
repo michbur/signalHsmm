@@ -3,8 +3,8 @@ citHeader("To cite signalHsmm in publications, please use:")
 citEntry(entry = "Manual",
   author = "Michal Burdukiewicz and Piotr Sobczyk",
   title = "signalHsmm: prediction of signal peptides",
-  year = "2014",
+  year = "2016",
   note = "R package version 1.4",
   url = "http://CRAN.R-project.org/package=signalHsmm",
-  textVersion = "Burdukiewicz M and Sobczyk P (2014). signalHsmm: prediction of signal peptides. R package version 1.4, <URL: http://CRAN.R-project.org/package=signalHsmm>."
+  textVersion = "Burdukiewicz M and Sobczyk P (2016). signalHsmm: prediction of signal peptides. R package version 1.4, <URL: http://CRAN.R-project.org/package=signalHsmm>."
 )

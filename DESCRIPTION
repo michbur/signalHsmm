@@ -24,6 +24,7 @@ Imports:
     utils
 LinkingTo: Rcpp
 Suggests:
+    DT,
     knitr,
     markdown
 NeedsCompilation: yes

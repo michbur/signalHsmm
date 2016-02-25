@@ -1,4 +1,4 @@
-![logo](logo.png)
+<img src="logo.png" alt="logo" style="width: 200px;"/>
 
 ## Readme  
   

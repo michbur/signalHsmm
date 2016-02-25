@@ -23,10 +23,10 @@ summary.hsmm_pred_list <- function(object, ...) {
              nrow(res), "\n"))
   cat(paste0("Number of proteins with signal peptide: ", 
              sum(res[["sp.probability"]] > 0.5), "\n"))
-  cat(paste0("Average length of predicted signal peptides: ", 
-             signif(mean(res[res[["sp.probability"]] > 0.5, "sp.end"]), digits = 4), "\n"))
-  cat(paste0("Median length of predicted signal peptides: ", 
-             median(res[res[["sp.probability"]] > 0.5, "sp.end"]), "\n"))
+#   cat(paste0("Average length of predicted signal peptides: ", 
+#              signif(mean(res[res[["sp.probability"]] > 0.5, "sp.end"]), digits = 4), "\n"))
+#   cat(paste0("Median length of predicted signal peptides: ", 
+#              median(res[res[["sp.probability"]] > 0.5, "sp.end"]), "\n"))
 }
 
 #' Convert list of signalHsmm predictions
@@ -42,6 +42,7 @@ summary.hsmm_pred_list <- function(object, ...) {
 pred2df <- function(object) {
   do.call(rbind, lapply(object, function(i)
     data.frame(sp.probability = i[["sp_probability"]], 
+               is.signal = i[["sp_probability"]] > 0.5,
                sp.start = i[["sp_start"]],
                sp.end = i[["sp_end"]])))
 }

@@ -50,7 +50,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
          x[["prot"]][1L:50], 
          col = sig_colours[4])
     lines(c(cstruc05[1], cstruc05[5]), c(1.5, 1.5), 
-          col = sig_colours[4], lwd = 5)
+          col = sig_colours[4], lwd = 8)
     
   } else {
     for(i in 1L:4) {
@@ -59,7 +59,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
            x[["prot"]][(cstruc[i] + 1):cstruc[i + 1]], 
            col = sig_colours[i])
       lines(c(cstruc05[i], cstruc05[i + 1]), c(1.5, 1.5) + ifelse(i == 4, 0, 1), 
-            col = sig_colours[i], lwd = 5)
+            col = sig_colours[i], lwd = 8)
       lines(c(cstruc05[4], cstruc05[4]), c(1.5, 2.5), lty = "dashed", lwd = 2)
     }
   }
@@ -88,12 +88,14 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
 #' Summarizes objects of class \code{\link{hsmm_pred}}.
 #'
 #' @param object of class \code{\link{hsmm_pred}}.
+#' @param only_sure \code{logical}, if \code{FALSE} does not draw signal peptide structure
+#' when probability is smaller than 0.5.
 #' @param ... ignored
 #' @return Nothing.
 #' @export
 #' @keywords print methods
 
-summary.hsmm_pred <- function(object, ...) {
+summary.hsmm_pred <- function(object, only_sure = TRUE, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
   cat(object[["name"]],
@@ -101,17 +103,22 @@ summary.hsmm_pred <- function(object, ...) {
              format(object[["sp_probability"]], digits = 4)),
       paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
              "detected."),
-      "\nThe prediction of the regional structure is an experimental feature, use at your own risk.",
-      paste0("Start of signal peptide: ", object[["sp_start"]]),
-      paste0("End of signal peptide: ", object[["sp_end"]]),
-      paste0("n-region (length ", struc[1], "):"),
-      paste0(c("         ", object[["prot"]][1L:cstruc[1]]), collapse = ""),
-      paste0("\nh-region (length ", struc[2], "):"),
-      paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""),
-      paste0("\nc-region (length ", struc[3], "):"),
-      paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]], "\n"), collapse = ""),
       sep = "\n"
   )
-  if(object[["str_approx"]] > 0)
-    cat("Signal peptide structure interpolated.\n")
+  
+  if(only_sure & object[["sp_probability"]] > 0.5) {
+    cat("\nThe prediction of the regional structure is an experimental feature, use at your own risk.",
+        paste0("Start of signal peptide: ", object[["sp_start"]]),
+        paste0("End of signal peptide: ", object[["sp_end"]]),
+        paste0("n-region (length ", struc[1], "):"),
+        paste0(c("         ", object[["prot"]][1L:cstruc[1]]), collapse = ""),
+        paste0("\nh-region (length ", struc[2], "):"),
+        paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""),
+        paste0("\nc-region (length ", struc[3], "):"),
+        paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]], "\n"), collapse = ""),
+        sep = "\n"
+    )
+    if(object[["str_approx"]] > 0)
+      cat("Signal peptide structure interpolated.\n")
+  }
 }
