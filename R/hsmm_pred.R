@@ -76,7 +76,7 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
                           "mature protein", 
                           "cleavage site", 
                           paste0("Signal peptide probability: ", 
-                                 signif(x[["sp_probability"]], digits = 2)),
+                                 formatC(x[["sp_probability"]], digits = 2, format = "f")),
                           ifelse(x[["str_approx"]] > 0, 
                                  "Signal peptide structure interpolated",
                                  " "))), 
