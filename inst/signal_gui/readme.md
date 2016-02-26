@@ -15,9 +15,10 @@ Be patient - calculations can take up to few minutes.
 The exact prediction of the regional structure of signal peptides (including position of the cleavage site) is still an experimental feature and should be used with caution.
 
 ### Authors
-[Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/)  
-[Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/)  
+[Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/), [Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/).  
 signalHsmm is hosted by [Department of Genomics](http://www.smorfland.uni.wroc.pl/), [University of Wroc&#322;aw](http://www.uni.wroc.pl/).
+
+This project was funded by [National Science Center](https://www.ncn.gov.pl/) (2015/17/N/NZ2/01845).
 
 ### Example proteins
 

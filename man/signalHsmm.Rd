@@ -18,7 +18,10 @@ domains with variable length
 and characteristic amino acid composition. Despite their variability, signal peptides 
 are universal enough to direct properly proteins in different secretory systems. 
 For example, artifically introduced bacterial signal peptides can guide proteins in 
-mammals and plants.
+mammals and plants. 
+
+The development of signalHsmm was funded by National Science Center 
+(2015/17/N/NZ2/01845).
 }
 \examples{
 few_predictions <- run_signalHsmm(benchmark_dat[1:3])
