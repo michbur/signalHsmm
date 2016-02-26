@@ -25,8 +25,7 @@ Imports:
 LinkingTo: Rcpp
 Suggests:
     DT,
-    knitr,
-    markdown
+    rmarkdown
 NeedsCompilation: yes
 Repository: CRAN
 RoxygenNote: 5.0.1

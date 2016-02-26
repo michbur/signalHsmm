@@ -1,6 +1,7 @@
 library(shiny)
 library(signalHsmm)
 library(DT)
+library(rmarkdown)
 options(shiny.maxRequestSize=10*1024^2)
 
 
