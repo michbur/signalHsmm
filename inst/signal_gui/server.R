@@ -144,10 +144,18 @@ shinyServer(function(input, output) {
       paste0(file_name(), "_pred.html") 
     },
     content <- function(file) {
+      src <- normalizePath("signalhsmm_report.Rmd")
+      
+      # temporarily switch to the temp dir, in case you do not have write
+      # permission to the current working directory
+      owd <- setwd(tempdir())
+      on.exit(setwd(owd))
+      file.copy(src, "signalhsmm_report.Rmd")
 #       knitr:::knit(input = "signalhsmm_report.Rmd", 
 #                    output = "signalhsmm_report.md", quiet = TRUE)
 #       markdown:::markdownToHTML("signalhsmm_report.md", file)
-      render("signalhsmm_report.Rmd", output_format = "html_document", file, quiet = TRUE)
+      out <- render("signalhsmm_report.Rmd", output_format = "html_document", file, quiet = TRUE)
+      file.rename(out, file)
     }
   )
 })
