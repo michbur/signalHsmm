@@ -7,7 +7,7 @@
 Predict Presence of Signal Peptides
 -------------------------
 
-signalHsmm predicts presence of signal peptides in eukaryotic proteins using hidden semi-Markov models. The implemented algorithm can be accessed as a web-based service www.smorfland.uni.wroc.pl/signalHsmm 
+signalHsmm predicts presence of signal peptides in eukaryotic proteins using hidden semi-Markov models. The implemented algorithm can be accessed as a web-based service http://smorfland.uni.wroc.pl/shiny/signalHsmm/.
 
 Local instance of signalHsmm
 ------------------------
