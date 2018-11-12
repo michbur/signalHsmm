@@ -2,7 +2,10 @@
 title: "signalHsmm - report"
 output:
   html_document:
+    theme: united
     self_contained: true
+    toc: true
+    toc_float: true
 ---
 
 <style>
@@ -30,7 +33,7 @@ cat(paste0("**Date**: ", Sys.time()), "\n\n")
 
 ```{r, echo=FALSE, fig.width=10, results='asis'}
 for (i in prediction()) {
-  cat("## ", sep = "")
+  cat("\n\n## ", sep = "")
   summary(i, double_linebreak = TRUE)
   plot(i)
 }

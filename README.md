@@ -17,23 +17,19 @@ signalHsmm can be also used locally as the R package. It can be installed from C
 install.packages("signalHsmm")
 ```
 
-You can install the latest development version of the code using the `devtools` R package.
+You can install the latest development version of the package directly from github:
 
 ```R
-# Install devtools, if you haven't already.
-install.packages("devtools")
-
-library(devtools)
-install_github("michbur/signalHsmm")
+source("https://install-github.me/michbur/signalHsmm")
 ```
 
-After installation GUI can be accessed locally:
+After the installation, the GUI can be accessed locally:
 
 ```R
 library(signalHsmm)
 gui_signalHsmm()
 ```
-All signalHsmm functionalities can be also invoked in batch mode, for example:
+All signalHsmm functionalities can be also invoked in the batch mode, for example:
 
 ```R
 run_signalHsmm(benchmark_dat[1:10])

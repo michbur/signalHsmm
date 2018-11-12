@@ -42,11 +42,7 @@ shinyServer(function(input, output) {
   
   output$dynamic_ui <- renderUI({
     if(!is.null(prediction())) {
-      div(tags$h3("Download results"),
-          tags$p(""),
-          downloadButton("download_long", "Download long output (without graphics)"),
-          downloadButton("download_long_graph", "Download long output (with graphics)"),
-          tags$p(HTML("<h3><A HREF=\"javascript:history.go(0)\">Start a new query</A></h3>")))
+      tags$p(HTML("<h3><A HREF=\"javascript:history.go(0)\">Start a new query</A></h3>"))
     } else {
       div(tags$h3("Example proteins:"),
           tags$p(""),
@@ -71,9 +67,11 @@ shinyServer(function(input, output) {
   
   output$long_preds <- renderUI({
     long_preds_list <- lapply(1L:length(prediction()), function(i) {
-      list(plotOutput(paste0("plot", i)), verbatimTextOutput(paste0("summ", i)))
-    })
-    do.call(tagList, unlist(long_preds_list, recursive = FALSE))
+                           list(plotOutput(paste0("plot", i)), verbatimTextOutput(paste0("summ", i)))
+                         })
+  c(list(downloadButton("download_long", "Download long output (without graphics)"),
+         downloadButton("download_long_graph", "Download long output (with graphics)")),
+    do.call(tagList, unlist(long_preds_list, recursive = FALSE)))
   })
   
   
@@ -122,16 +120,6 @@ shinyServer(function(input, output) {
     }
     part_name
   })
-  
-  
-  output$download_short <- downloadHandler(
-    filename  = function() { 
-      paste0(file_name(), "_pred.csv") 
-    },
-    content <- function(file) {
-      write.csv(pred2df(prediction()), file)
-    }
-  )
   
   output$download_long <- downloadHandler(
     filename  = function() { 

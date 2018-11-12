@@ -4,11 +4,15 @@ Title: Predict Presence of Signal Peptides
 Version: 1.5
 LazyData: true
 Date: 2018-11-11
-Authors@R: c(
-    person("Michal", "Burdukiewicz",
-    email = "michalburdukiewicz@gmail.com", role = c("cre", "aut")),
-    person("Piotr", "Sobczyk",
-    role = "aut"))
+Authors@R: c(person("Michal", "Burdukiewicz", 
+    email = "michalburdukiewicz@gmail.com", 
+    role = c("cre", "aut"),
+    comment = c(ORCID = "0000-0001-8926-582X")),
+    person("Piotr", "Sobczyk", email = "sobbombo@gmail.com", role = "aut"),
+    person("Jaroslaw", "Chilimoniuk", 
+           email = "jaroslaw.chilimoniuk@gmail.com", 
+           comment = c(ORCID = "0000-0001-5467-018X"),
+           role = c("ctb")))
 Description: Predicts the presence of signal peptides in eukaryotic protein
     using hidden semi-Markov models. The implemented algorithm can be accessed from
     both the command line and GUI.
