@@ -90,12 +90,14 @@ plot.hsmm_pred <- function(x, add_legend = TRUE, only_sure = TRUE, ...) {
 #' @param object of class \code{\link{hsmm_pred}}.
 #' @param only_sure \code{logical}, if \code{FALSE} does not draw signal peptide structure
 #' when probability is smaller than 0.5.
+#' @param double_linebreak \code{logical}, if \code{TRUE} adds aestically pleasing (in .Rmd)
+#' double linebreaks between the elements of summary.
 #' @param ... ignored
 #' @return Nothing.
 #' @export
 #' @keywords print methods
 
-summary.hsmm_pred <- function(object, only_sure = TRUE, ...) {
+summary.hsmm_pred <- function(object, only_sure = TRUE, double_linebreak = FALSE, ...) {
   struc <- rle(object[["struc"]])[["lengths"]]
   cstruc <- cumsum(struc)
   cat(object[["name"]],
@@ -103,7 +105,7 @@ summary.hsmm_pred <- function(object, only_sure = TRUE, ...) {
              format(object[["sp_probability"]], digits = 4)),
       paste0("Signal peptide", ifelse(object[["sp_probability"]] < 0.5, " not ", " "), 
              "detected."),
-      sep = "\n"
+      sep = ifelse(double_linebreak, "\n\n", "\n")
   )
   
   if(only_sure & object[["sp_probability"]] > 0.5) {
@@ -116,9 +118,9 @@ summary.hsmm_pred <- function(object, only_sure = TRUE, ...) {
         paste0(c("         ", object[["prot"]][(cstruc[1] + 1):cstruc[2]]), collapse = ""),
         paste0("\nc-region (length ", struc[3], "):"),
         paste0(c("         ", object[["prot"]][(cstruc[2] + 1):cstruc[3]], "\n"), collapse = ""),
-        sep = "\n"
+        sep = ifelse(double_linebreak, "\n\n", "\n")
     )
     if(object[["str_approx"]] > 0)
-      cat("Signal peptide structure interpolated.\n")
+      cat("Signal peptide structure interpolated.\n\n")
   }
 }

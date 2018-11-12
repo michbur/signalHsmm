@@ -12,4 +12,3 @@ A named list. Each element belongs to the \code{\link{hsmm_pred}} class.
 \seealso{
 \code{\link{summary.hsmm_pred_list}}, \code{\link{pred2df}}
 }
-

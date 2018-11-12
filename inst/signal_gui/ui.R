@@ -3,7 +3,7 @@ library(DT)
 
 shinyUI(fluidPage(
   title = "signalHsmm",
-  theme = shinythemes::shinytheme("sandstone"),
+  theme = shinythemes::shinytheme("yeti"),
   
   sidebarLayout(
     sidebarPanel(

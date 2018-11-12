@@ -39,4 +39,3 @@ is probability of duration of time 10 in state 2.
 
 \code{\link{train_hsmm}} \code{\link{predict.sighsmm_model}}
 }
-

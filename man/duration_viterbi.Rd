@@ -32,4 +32,3 @@ Viterbi algorithm for Hidden Markov Model with duration
 \note{
 All computations are on logarithms of probabilities.
 }
-

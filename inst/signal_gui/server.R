@@ -44,7 +44,6 @@ shinyServer(function(input, output) {
     if(!is.null(prediction())) {
       div(tags$h3("Download results"),
           tags$p(""),
-          downloadButton("download_short", "Download short output"),
           downloadButton("download_long", "Download long output (without graphics)"),
           downloadButton("download_long_graph", "Download long output (with graphics)"),
           tags$p(HTML("<h3><A HREF=\"javascript:history.go(0)\">Start a new query</A></h3>")))
@@ -57,6 +56,7 @@ shinyServer(function(input, output) {
   
   
   output$pred_table <- DT::renderDataTable({
+    
     dat <- pred2df(prediction())
     dat <- cbind(rownames(dat), dat)
     colnames(dat) <- c("Protein name", "Signal peptide probability", 

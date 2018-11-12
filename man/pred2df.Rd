@@ -17,4 +17,3 @@ peptide presence as well as the start and the end of predicted signal peptide.
 Converts objects of class \code{\link{hsmm_pred_list}} to data frame.
 }
 \keyword{manip}
-

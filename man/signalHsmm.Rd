@@ -37,4 +37,3 @@ plot(few_predictions[[1]])
 gui_signalHsmm()
 }
 }
-

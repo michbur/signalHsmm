@@ -31,4 +31,3 @@ Henrik Nielsen, Anders Krogh (1998). Prediction of signal peptides
 and signal anchors by a hidden Markov model. \emph{Proc. Sixth Int. Conf. on 
 Intelligent Systems for Molecular Biology}.
 }
-

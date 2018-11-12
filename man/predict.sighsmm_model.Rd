@@ -25,4 +25,3 @@ model1 <- train_hsmm(pos_train_ultrahard, aa_group = aaaggregation)
 predict(model1, benchmark_dat[1L:5])
 }
 }
-

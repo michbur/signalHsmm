@@ -28,9 +28,10 @@ cat(paste0("**Date**: ", Sys.time()), "\n\n")
 ```
 
 
-```{r, echo=FALSE,fig.width=10}
+```{r, echo=FALSE, fig.width=10, results='asis'}
 for (i in prediction()) {
-  summary(i)
+  cat("## ", sep = "")
+  summary(i, double_linebreak = TRUE)
   plot(i)
 }
 ```

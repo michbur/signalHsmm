@@ -25,4 +25,3 @@ after the feature.
 Read data saved in UniProt original flat text format.
 }
 \keyword{manip}
-

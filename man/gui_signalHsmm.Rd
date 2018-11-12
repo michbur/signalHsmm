@@ -18,4 +18,3 @@ Any ad-blocking software may be cause of malfunctions.
 \seealso{
 \code{\link{run_signalHsmm}}
 }
-

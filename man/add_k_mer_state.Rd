@@ -43,4 +43,3 @@ add k-mer
 \note{
 Currently add only k-mers without distance.
 }
-

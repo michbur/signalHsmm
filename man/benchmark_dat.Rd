@@ -21,4 +21,3 @@ sampled proteins without signal peptide).
 summary(benchmark_dat)
 }
 \keyword{datasets}
-

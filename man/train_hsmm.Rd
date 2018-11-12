@@ -4,7 +4,8 @@
 \alias{train_hsmm}
 \title{Train sighsmm_model object}
 \usage{
-train_hsmm(train_data, aa_group, max_length = 32, region_fun = find_nhc)
+train_hsmm(train_data, aa_group, max_length = 32,
+  region_fun = find_nhc)
 }
 \arguments{
 \item{train_data}{training data.}
@@ -21,4 +22,3 @@ object of class \code{sighsmm_model}.
 \description{
 Train sighsmm_model object
 }
-

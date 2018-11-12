@@ -55,4 +55,3 @@ plot(x3[[1]])
 \code{\link{hsmm_pred_list}} \code{\link{hsmm_pred}}
 }
 \keyword{classif}
-
