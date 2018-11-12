@@ -19,6 +19,6 @@
 #'  }
 #' @note All computations are on logarithms of probabilities.
 duration_viterbi <- function(aa_sample, pipar, tpmpar, od, params) {
-    .Call('signalHsmm_duration_viterbi', PACKAGE = 'signalHsmm', aa_sample, pipar, tpmpar, od, params)
+    .Call('_signalHsmm_duration_viterbi', PACKAGE = 'signalHsmm', aa_sample, pipar, tpmpar, od, params)
 }
 
