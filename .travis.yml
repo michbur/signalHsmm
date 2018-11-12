@@ -1,31 +1,24 @@
 ## Sample .travis.yml file for use with metacran/r-builder
 ## See https://github.com/metacran/r-builder for details.
 
-language: c
-sudo: required
+language: r
+
+r:
+  - oldrel
+  - release
+  - devel
+
+r_github_packages:
+  - r-lib/covr
 
 before_install:
-  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
-  - chmod 755 pkg-build.sh
-  - ./pkg-build.sh bootstrap
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sudo apt-get -qq update
+  - sudo apt-get install libnlopt-dev ghostscript
 
-install:
-  - ./pkg-build.sh install_deps
-
-script:
-  - ./pkg-build.sh run_tests
-
-after_failure:
-  - ./pkg-build.sh dump_logs
 
 notifications:
   email:
     on_success: change
     on_failure: change
-
-env:
-  matrix:
-    - RVERSION=oldrel
-    - RVERSION=release
-    - RVERSION=devel
-    
