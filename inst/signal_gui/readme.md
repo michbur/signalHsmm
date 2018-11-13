@@ -1,3 +1,5 @@
+<span style="color:red">**For the best experience, use Mozilla Firefox or Google Chrome internet browsers.**</span>
+
 <img src="logo.png" alt="logo" style="width: 200px;"/>
 
 ## Readme  
