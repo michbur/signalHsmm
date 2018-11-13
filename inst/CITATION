@@ -1,10 +1,24 @@
 citHeader("To cite signalHsmm in publications, please use:")
 
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("signalHsmm") 
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date) 
+vers <- paste("R package version", meta$Version)
+title <- paste0(meta[["Package"]], ": ", tolower(meta[["Title"]]))
+url <- paste0("https://cran.r-project.org/package=", meta[["Package"]])
+
 citEntry(entry = "Manual",
   author = "Michal Burdukiewicz and Piotr Sobczyk",
-  title = "signalHsmm: prediction of signal peptides",
-  year = "2016",
-  note = "R package version 1.4",
-  url = "http://CRAN.R-project.org/package=signalHsmm",
-  textVersion = "Burdukiewicz M and Sobczyk P (2016). signalHsmm: prediction of signal peptides. R package version 1.4, <URL: http://CRAN.R-project.org/package=signalHsmm>."
+  title = title,
+  year = year, 
+  note = vers,
+  url = "https://CRAN.R-project.org/package=signalHsmm",
+  textVersion = paste0("Burdukiewicz M and Sobczyk P (", 
+           year, 
+           "). ", 
+           title,
+           ". ",
+           vers, 
+           ". ", 
+           url,
+           ".")
 )
