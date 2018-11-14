@@ -1,5 +1,5 @@
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/signalHsmm)](http://cran.r-project.org/package=signalHsmm)
-[![Downloads](http://cranlogs.r-pkg.org/badges/signalHsmm)](http://cran.rstudio.com/package=signalHsmm)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/signalHsmm)](https://cran.r-project.org/package=signalHsmm)
+[![Downloads](http://cranlogs.r-pkg.org/badges/signalHsmm)](https://cran.rstudio.com/package=signalHsmm)
 [![Build Status](https://api.travis-ci.org/michbur/signalHsmm.png)](https://travis-ci.org/michbur/signalHsmm)
 
 <img src="https://github.com/michbur/signalHsmm/blob/master/inst/signal_gui/logo.png" alt="signalHsmm" style="height: 200px;"/>
