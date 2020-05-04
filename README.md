@@ -40,5 +40,5 @@ Citation
 
 [Burdukiewicz M, Sobczyk P, Chilimoniuk J, Gagat P, Mackiewicz P. Prediction of Signal Peptides in Proteins from Malaria Parasites. International Journal of Molecular Sciences. 2018; 19(12):3709.](https://www.mdpi.com/1422-0067/19/12/3709)
 
-
+@article{Burdukiewicz_2018, title={Prediction of Signal Peptides in Proteins from Malaria Parasites}, volume={19}, ISSN={1422-0067}, url={http://dx.doi.org/10.3390/ijms19123709}, DOI={10.3390/ijms19123709}, number={12}, journal={International Journal of Molecular Sciences}, publisher={MDPI AG}, author={Burdukiewicz, Michał and Sobczyk, Piotr and Chilimoniuk, Jarosław and Gagat, Przemysław and Mackiewicz, Paweł}, year={2018}, month={Nov}, pages={3709}}
 
