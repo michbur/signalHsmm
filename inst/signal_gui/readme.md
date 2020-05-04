@@ -21,3 +21,7 @@ The exact prediction of the regional structure of signal peptides (including pos
 signalHsmm is hosted by [Department of Genomics](http://www.smorfland.uni.wroc.pl/), [University of Wroc&#322;aw](http://www.uni.wroc.pl/).
 
 This project was funded by [National Science Center](https://www.ncn.gov.pl/) (2015/17/N/NZ2/01845 and 2017/24/T/NZ2/00003).
+
+
+### Citation:
+[Burdukiewicz M, Sobczyk P, Chilimoniuk J, Gagat P, Mackiewicz P. Prediction of Signal Peptides in Proteins from Malaria Parasites. International Journal of Molecular Sciences. 2018; 19(12):3709.](https://www.mdpi.com/1422-0067/19/12/3709)

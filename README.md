@@ -34,3 +34,11 @@ All signalHsmm functionalities can be also invoked in the batch mode, for exampl
 ```R
 run_signalHsmm(benchmark_dat[1:10])
 ```
+
+Citation
+------------------------
+
+[Burdukiewicz M, Sobczyk P, Chilimoniuk J, Gagat P, Mackiewicz P. Prediction of Signal Peptides in Proteins from Malaria Parasites. International Journal of Molecular Sciences. 2018; 19(12):3709.](https://www.mdpi.com/1422-0067/19/12/3709)
+
+
+
