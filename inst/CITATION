@@ -1,16 +1,16 @@
 citHeader("To cite signalHsmm in publications, please use:")
 
-citEntry(entry = "article",
-  title={Prediction of Signal Peptides in Proteins from Malaria Parasites}, 
-  volume={19}, 
-  ISSN={1422-0067}, 
-  url={http://dx.doi.org/10.3390/ijms19123709}, 
-  DOI={10.3390/ijms19123709}, 
-  number={12}, 
-  journal={International Journal of Molecular Sciences}, 
-  publisher={MDPI AG}, 
-  author={Burdukiewicz, Michał and Sobczyk, Piotr and Chilimoniuk, Jarosław and Gagat, Przemysław and Mackiewicz, Paweł}, 
-  year={2018}, 
-  month={Nov}, 
-  pages={3709}}
+citEntry(entry = "Article",
+  title="Prediction of Signal Peptides in Proteins from Malaria Parasites", 
+  volume="19", 
+  ISSN="1422-0067", 
+  url="http://dx.doi.org/10.3390/ijms19123709", 
+  DOI="10.3390/ijms19123709", 
+  number="12", 
+  journal="International Journal of Molecular Sciences", 
+  publisher="MDPI AG", 
+  author="Burdukiewicz, Michał and Sobczyk, Piotr and Chilimoniuk, Jarosław and Gagat, Przemysław and Mackiewicz, Paweł", 
+  year="2018", 
+  month="Nov", 
+  pages="3709""
 )
